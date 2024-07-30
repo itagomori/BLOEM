@@ -3,7 +3,7 @@
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)\
 [![DOI](https://zenodo.org/badge/504185615.svg)](https://zenodo.org/badge/latestdoi/504185615)
 
-_Author: Isabela Schmidt Tagomori_\
+_Author: Isabela Schmidt Tagomori & Aline Carvalho_\
 _Contact: Isabela Schmidt Tagomori - isabela.tagomori@pbl.nl | [@IsabelaTagomori](https://twitter.com/isabelatagomori)_\
 _Contact: Aline Carvalho - alinecarvalho@ppe.ufrj.br_
 
