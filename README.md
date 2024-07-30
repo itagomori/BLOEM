@@ -20,7 +20,7 @@ BLOEM is a model developed to evaluate pathways for bioenergy deployment. Theref
 - Providing contributions to long-term climate policy design, given the opportunity of competitive advantages in low carbon scenarios.
 
 ## Spatial Resolution
-The model formulation here presented is applied to the Brazilian spatial configuration, but it can be applied to different regions, spatial resolutions and time frames, according to the availability of required data and computational effort. The model can be used for standalone runs, but it can also be coupled with different levels (global, regional, national) of integrated assessment models (IAMs), through soft-link.
+The model formulation can be applied to different regions, spatial resolutions and time frames, according to the availability of required data and computational effort. The model can be used for standalone runs, but it can also be coupled with different levels (global, regional, national) of integrated assessment models (IAMs), through soft-link.
 
 ## Folder Structure and Scripts
 This repository is organized as follows:
