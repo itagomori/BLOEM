@@ -1,13 +1,6 @@
 $ontext
 * ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-* Bioenergy Allocation Spatially Explicit Model - BLOEM
-* Author: Isabela Schmidt Tagomori
-* Last update: 12.05.2021
-* Version: 1.0
-* Coupled IAM: BLUES
-* Region: Brazil 
-* Time frame: 2020-2050
-* Module: Emissions
+* BLOEM-China
 * ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 $offtext
 
@@ -35,10 +28,11 @@ Parameters
 
 
 * Set fuel consumption for biomass production fp(r):
-
-Parameter fp(r)    / sugarcane   0.293534,
-                     oilcrops    7.283893,
-                     wood        0.056621 /;
+# need calibrate
+Parameter fp(r)    / agriRes   0.293534, 
+                     foresRes  0.3, 
+                     egrass    0.6,
+                     ewood     0.5 /;
 ;
 
 
@@ -53,32 +47,29 @@ Scalar nf     /298/ ;
 
 
 * Set emission factor for biomass transportation eft(r):
-
-Parameter eft(r)   / sugarcane   0.003226,
-                     oilcrops    0.002985,
-                     wood        0.002956 /;
+# need calibrate
+Parameter eft(r)   / agriRes   0.003226,
+                     foresRes    0.002985,
+                     egrass        0.002956,
+                     ewood         0.002956 /;
 ;
 
 
 * Set emission factor for biofuel transportation efw(r):
-
-Parameter efw(r)   / ethanol1g          0.003534,
-                     ethanol2g          0.003893,
-                     biojet             0.006622,
-                     dieselbiofuel      0.006621,
-                     biodiesel          0.006621,
-                     bioelectricity     0.006621 /;
+# need calibrate
+Parameter efw(r)   / biojet             0.006622,
+                     biomethanol      0.006621,
+                     bioelectricity     0.006621,
+                     biochar          0.006621 /;
 ;
 
 
 * Set emission factor for biomass conversion efc(r):
-
-Parameter efc(r)   / ethanol1g          0.000000,
-                     ethanol2g          0.760498,
-                     biojet             0.000000,
-                     dieselbiofuel      0.000000,
-                     biodiesel          0.013104,
-                     bioelectricity     0.000000 /;
+# need calibrate
+Parameter efc(r)   / biojet          0.600000,
+                     biomethanol     0.760498,
+                     bioelectricity   0.000000,
+                     biochar      0.000000 /;
 ;
 
 
@@ -88,10 +79,12 @@ Parameter efc(r)   / ethanol1g          0.000000,
 
 * Setting gdx input filepath
 
-$setglobal gdxinfilepath 'X:\user\tagomorii\BLOEM\GDXinput\Main\'
+$setglobal gdxinfilepath 'C:\Users\vicke\Desktop\model\BLOEM\BLOEM-GitHub\input\gdx\'
 
 
 * Import emission factors for fertilizer use:
+# columns: crop(agriRes, foresRes, egrass, ewood), gridcell, value(6.48~599.32)
+# ? why there is no oil crops
 
 $gdxin '%gdxinfilepath%efertilizers.gdx'
 
@@ -139,19 +132,22 @@ Equations
 
 ;
 
-impactemissions(t) ..                           ITG(t) =e= dfa(t)*k(t)*GG(t) ;
+impactemissions(t) ..       ITG(t) =e= dfa(t)*k(t)*GG(t) ;
 
 
-totalemissions(t) ..                            GG(t) =e= Gbp(t)+Gfr(t)+Gbt(t)+Gbc(t)+Get(t)-sum((c),Vseq(c,t)$(cs(c))) ;
+totalemissions(t) ..        GG(t) =e= Gbp(t)+Gfr(t)+Gbt(t)+Gbc(t)+Get(t)-sum((c),Vseq(c,t)$(cccs(c))) ;
 
 # note on total emissions: without emissions from luc, which are added post optmization
 
-emissionsbioprod(t) ..                          Gbp(t) =e= sum((r,l,c),fp(r)$(rc(r))*B(r,l,c,t)$(rc(r))*fd) ;
+emissionsbioprod(t) ..      Gbp(t) =e= sum((r,l,c),fp(r)$(rren(r))*B(r,l,c,t)$(rren(r))*fd) + sum((r,l,c),fp(r)$(rres(r))*B(r,l,c,t)$(rres(r))*fd) ;
 
-emissionsfertilz(t) ..                          Gfr(t) =e= sum((r,l,c),eff(r,c)$(rc(r))*A(r,l,c,t)$(rc(r))*ga(c)*nf/1000) ;
+# Q: only energy crops need fertilizer
+emissionsfertilz(t) ..      Gfr(t) =e= sum((r,l,c),eff(r,c)$(rren(r))*A(r,l,c,t)$(rren(r))*ga(c)*nf/1000) ;
 
-emissionsbiotransp(t) ..                        Gbt(t) =e= sum((r,c,cn),eft(r)$(rc(r))*mx(c,cn)*tal(c)*Bn(r,c,cn,t)$(rc(r))/1000) ;
+# Q: whether limit the bioass transportation distance? replace mx with antother distance matrix
+# here include both residues and energy crops
+emissionsbiotransp(t) ..    Gbt(t) =e= sum((r,c,cn),eft(r)$(rren(r))*mx(c,cn)*tal(c)*Bn(r,c,cn,t)$(rren(r))/1000) + sum((r,c,cn),eft(r)$(rres(r))*mx(c,cn)*tal(c)*Bn(r,c,cn,t)$(rres(r))/1000) ;
 
-emissionsbioconv(t) ..                          Gbc(t) =e= sum((r,j,c),efc(r)$(rp(r))*CP(j,c,t)*beta(r,j)$(rp(r))/1000) ;
+emissionsbioconv(t) ..      Gbc(t) =e= sum((r,j,c),efc(r)$(rpli(r))*CP(j,c,t)*beta(r,j)$(rpli(r))/1000) ;
 
-emissionsbioentransp(t) ..                      Get(t) =e= sum((r,c,cn),efw(r)$(rp(r))*mxe(c,cn)*tal(c)*En(r,c,cn,t)$(rp(r))/1000) ;
+emissionsbioentransp(t) ..  Get(t) =e= sum((r,c,cn),efw(r)$(rpli(r))*mx(c,cn)*tal(c)*En(r,c,cn,t)$(rpli(r))/1000) ;
