@@ -31,16 +31,28 @@ Parameter trco(r) / agriRes         0.0020,
 * --------------------------------
 
 * Setting gdx input filepath
-$setglobal gdxinfilepaht 'C:\Users\vicke\Desktop\model\BLOEM\BLOEM-GitHub\input\gdx\'
+$setglobal gdxinfilepaht 'C:\Users\vicke\Desktop\BLOEM-China\input\gdx\'
 
 * Import distance between grid cells mx(c, cn)
 # columns: c, cn, value
-$gdxin '%gdxinfilepath%mxdistmax.gdx'
+$gdxin '%gdxinfilepath%mxdis.gdx'
 
-$load mx=mxdistmax
+$load mx=mxdis
 
 $gdxin
 ;
+
+* Import tortalsity factor(c, value)
+# columns: c, val
+$gdxin '%gdxinfilepath%tortuosity.gdx'
+
+$load tal=tortuosity
+
+$gdxin
+;
+
+
+
 
 * -------------------------------------------------
 * Declare variables
@@ -62,13 +74,13 @@ Variables
     Ein(r,c,t)      'biofuel r into grid cell c'
     Eout(r,c,t)     'biofuel r out of grid cell c'
 
-    B(r,l,c,t)      'biomass production for crop r in land type l in grid cell c in time t' # [GJ]
+    B(r,c,t)        'biomass production for crop r in grid cell c in time t' # [GJ]
     E(r,c,t)        'bioenergy production for product r in grid cell c in time t' # [GJ] [kw]
 
     CP(j,c,t)       'rate of operation of technology j in grid cell c in time t'
 ;
 
-Positive variables IBT, IET, HE, Bn, En, Bin, Bout, Ein, Eout, B, E, CP;
+Positive variables IBT, IET, HE, Bn, En, Bin, Bout, Ein, Eout, E, CP;
 
 * Variable bounds:
 HB.up(r,c,t)=0;
@@ -95,30 +107,30 @@ Equations
     maxbioenergytransp(r,c,t)       'max bioenergy out of grid cell'
 ;
 
-impactbiotransport(t) ..                            IBT(t) =e=  dfa(t)*sum((r,c,cn), trco(r)$(rres(c))*Bn(r,c,cn,t)$(rres(r))*mx(c,cn)*tal(c)) + dfa(t)*sum((r,c,cn), trco(r)$(rren(c))*Bn(r,c,cn,t)$(rren(r))*mx(c,cn)*tal(c));
+impactbiotransport(t) ..                            IBT(t) =e=  dfa(t)*sum((r,c,cn), trco(r)$(rsou(r)) * Bn(r,c,cn,t)$(rsou(r)) * mx(c,cn) * tal(c)) ;
 
-resourcebalance(r,c,t)$(rres(r) or rren(r)) ..      sum((l), B(r,l,c,t)$(rres(r) or rren(r))) + Bin(r,c,t)$(rres(r) or rren(r)) - Bout(r,c,t)$(rres(r) or rren(r)) + HB(r,c,t)$(rres(r) or rren(r)) =e= 0
+resourcebalance(r,c,t)$(rsou(r)) ..      B(r,c,t)$(rsou(r)) + Bin(r,c,t)$(rsou(r)) - Bout(r,c,t)$(rsou(r)) + HB(r,c,t)$(rsou(r)) =e= 0;
 
 # currently, 300km range distance matrix is applied
-biomassintocell(r,c,t)$(rres(r) or rren(r)) ..      Bin(r,c,t)$(rres(r) or rren(r)) =e= sum((cn), Bn(r,cn,c,t)$(rres(r) or rren(r))*mx(cn,c)); 
+biomassintocell(r,c,t)$(rsou(r)) ..      Bin(r,c,t)$(rsou(r)) =e= sum((cn), Bn(r,cn,c,t)$(rsou(r)) * mx(cn,c)); 
 
-biomassoutocell(r,c,t)$(rres(r) or rren(r)) ..      Bout(r,c,t)$(rres(r) or rren(r)) =e= sum((cn), Bn(r,c,cn,t)$(rres(r)*mx(c,cn) or rren(r)*mx(c,cn)));
+biomassoutocell(r,c,t)$(rsou(r)) ..      Bout(r,c,t)$(rsou(r)) =e= sum((cn), Bn(r,c,cn,t)$(rsou(r)*mx(c,cn)));
 
-maxbiomassoutocell(r,c,t)$(rres(r) or rren(r)) ..   Bout(r,c,t)$(rres(r) or rren(r)) =l= sum((l), B(r,l,c,t)$(rres(r) or rren(r)));
+maxbiomassoutocell(r,c,t)$(rsou(r)) ..   Bout(r,c,t)$(rsou(r)) =l= B(r,c,t)$(rsou(r));
 
 # HB means local biomass consumption of crop c in grid cell c
-localdemandforcrops(r,c,t)$(rres(r) or rren(r)) ..  HB(r,c,t)$(rres(r) or rren(r)) =e= sum((j), CP(j,c,t)*beta(r,j)$(rres(r) or rren(r))*uf);
+localdemandforcrops(r,c,t)$(rsou(r)) ..  HB(r,c,t)$(rsou(r)) =e= sum((j), CP(j,c,t) * beta(r,j)$(rsou(r)) * uf);
 
-impactbioendtransport(t) ..                         IET(t) =e= dfa(t) * sum((r,c,cn), trco(r)$(rpli(r))*En(r,c,cn,t)$(rpli(r))*mx(c,cn)*tal(c));
+impactbioendtransport(t) ..                         IET(t) =e= dfa(t) * sum((r,c,cn), trco(r)$(rliq(r))*En(r,c,cn,t)$(rliq(r))*mx(c,cn)*tal(c));
 
 # Q: What about other rproduct? they don't have constraints or equations?
 # HE means local bioenergy consumption in grid cell c;
-bioenergybalance(r,c,t)$(rpli(r)) ..                E(r,c,t)$(rpli(r)) + Ein(r,c,t)$(rpli(r)) - Eout(r,c,t)$(rpli(r)) =e= HE(r,c,t)$(rpli(r));
+bioenergybalance(r,c,t)$(rliq(r)) ..                HE(r,c,t)$(rliq(r)) =e= E(r,c,t)$(rliq(r)) + Ein(r,c,t)$(rliq(r)) - Eout(r,c,t)$(rliq(r));
 
-bioenergyintogridcell(r,c,t)$(rpli(r)) ..           Ein(r,c,t)$(rpli(r)) =e= sum((cn), En(r,cn,c,t)$(rpli(r)));
+bioenergyintogridcell(r,c,t)$(rliq(r)) ..           Ein(r,c,t)$(rliq(r)) =e= sum((cn), En(r,cn,c,t)$(rliq(r)));
 
-bioenergyoutogridcell(r,c,t)$(rpli(r)) ..           Eout(r,c,t)$(rpli(r)) =e= sum((cn), En(r,c,cn,t)$(rpli(r)));
+bioenergyoutogridcell(r,c,t)$(rliq(r)) ..           Eout(r,c,t)$(rliq(r)) =e= sum((cn), En(r,c,cn,t)$(rliq(r)));
 
-maxbioenergytransp(r,c,t)$(rpli(r)) ..              Eout(r,c,t)$(rpli(r)) =l= E(r,c,t)$(rpli(r));
+maxbioenergytransp(r,c,t)$(rliq(r)) ..              Eout(r,c,t)$(rliq(r)) =l= E(r,c,t)$(rliq(r));
 
 

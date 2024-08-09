@@ -23,11 +23,11 @@ Table gama(j, t) 'rate of carbon capture by technology j' # [tCO2/GJ]
     GCG+        0.39
     WCG+        0.39
     AFT+        0.064
-    GCG+        0.064
-    WCG+        0.064
-    AGA+        0.031
-    GGA+        0.031
-    WGA+        0.031
+    GFT+        0.064
+    WFT+        0.064
+    AME+        0.031
+    GME+        0.031
+    WME+        0.031
 ;
 
 * Set transportation costs between c and cn
@@ -41,7 +41,7 @@ Scalar
 * -----------------------------------------
 
 * Setting gdx input filepath
-$setglobal gdxinfilepath 'C:\Users\vicke\Desktop\model\BLOEM\BLOEM-GitHub\input\gdx\'
+$setglobal gdxinfilepath 'C:\Users\vicke\Desktop\BLOEM-China\input\gdx\'
 
 * Import maximum storage capacity for storage sites maxst(c)
 $gdxin '%gdxinfilepath%ccscap.gdx'
@@ -49,6 +49,8 @@ $gdxin '%gdxinfilepath%ccscap.gdx'
 $load ccscap = ccscap
 
 $gdxin
+
+
 
 * --------------------------------------------
 * Declare variables
@@ -76,8 +78,8 @@ Equations
     
     carboncaptured(c,t)             'carbon captured in grid cell c in decade d'
     carbonbalance(c,t)              'carbon balance in grid cell c in decade d'
-    carbonintogridcell(c,t)         'carbon into grid cell c'
-    carbonoutogridcell(c,t)         'carbon out of grid cell c'
+*    carbonintogridcell(c,t)         'carbon into grid cell c'
+*    carbonoutogridcell(c,t)         'carbon out of grid cell c'
     maxcapstorage(c)                'maximum storage capacity of storage site in grid cell c'
 ;
 
@@ -86,6 +88,6 @@ impactcarbontransport(t)..          ICC(t) =e= dfa(t)* sum((c,cn), co2transc*Vn(
 
 carboncaptured(c,t)..               Vcap(c,t) =e= sum((j), CP(j,c,t)*gama(j,t)*uf);  # CP represent capacity factor in logistics.gms
 
-carbonbalance(c,t)..                Vcap(c,t)+Vin(c,t)-Vout(c,t) =e= Vseq(c,t)$(cs(c)); # Q: I have 40 cs(c), how to import?
+carbonbalance(c,t)..                Vcap(c,t)+Vin(c,t)-Vout(c,t) =e= Vseq(c,t)$(cccs(c)); # Q: I have 40 cs(c), how to import?
 
-maxcapstorage(c)..                  sum((t), Vseq(c,t)$(cs(c)))*10 =l= ccscap(c)$(cs(c));
+maxcapstorage(c)..                  sum((t), Vseq(c,t)$(cccs(c)))*10 =l= ccscap(c);  # 10 years

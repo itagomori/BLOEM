@@ -14,7 +14,7 @@ Parameters
 
     fd                  'fuel emission factor' # [tCO2/l]
 
-    eff(r,c)            'emission factor for fertilizer use' # [tN2O/km2]
+    eff(r)              'emission factor for fertilizer use' # [tN2O/km2]
 
     nf                  'conversion factor for emissions from fertilizer use' # [tCO2:tN2O]
 
@@ -72,6 +72,12 @@ Parameter efc(r)   / biojet          0.600000,
                      biochar      0.000000 /;
 ;
 
+Parameter eff(r)    / agriRes       0,
+                      foresRes      0,
+                      egrass        550,
+                      ewood         10 /;
+;
+
 
 * ----------------------------------------------------------------------------------------------------------
 * Import data
@@ -79,20 +85,20 @@ Parameter efc(r)   / biojet          0.600000,
 
 * Setting gdx input filepath
 
-$setglobal gdxinfilepath 'C:\Users\vicke\Desktop\model\BLOEM\BLOEM-GitHub\input\gdx\'
+*$setglobal gdxinfilepath 'C:\Users\vicke\Desktop\BLOEM-China\input\gdx\'
 
 
 * Import emission factors for fertilizer use:
 # columns: crop(agriRes, foresRes, egrass, ewood), gridcell, value(6.48~599.32)
 # ? why there is no oil crops
 
-$gdxin '%gdxinfilepath%efertilizers.gdx'
+*$gdxin '%gdxinfilepath%efertilizers.gdx'
 
-$load eff=efertilizers
+*$load eff=efertilizers
 
-$gdxin
+*$gdxin
 
-;
+*;
 
 
 * ---------------------------------------------------------------------------------------------------------
@@ -139,15 +145,15 @@ totalemissions(t) ..        GG(t) =e= Gbp(t)+Gfr(t)+Gbt(t)+Gbc(t)+Get(t)-sum((c)
 
 # note on total emissions: without emissions from luc, which are added post optmization
 
-emissionsbioprod(t) ..      Gbp(t) =e= sum((r,l,c),fp(r)$(rren(r))*B(r,l,c,t)$(rren(r))*fd) + sum((r,l,c),fp(r)$(rres(r))*B(r,l,c,t)$(rres(r))*fd) ;
+emissionsbioprod(t) ..      Gbp(t) =e= sum((r,c), fp(r)$(rsou(r)) * B(r,c,t)$(rsou(r)) * fd) ;
 
 # Q: only energy crops need fertilizer
-emissionsfertilz(t) ..      Gfr(t) =e= sum((r,l,c),eff(r,c)$(rren(r))*A(r,l,c,t)$(rren(r))*ga(c)*nf/1000) ;
+emissionsfertilz(t) ..      Gfr(t) =e= sum((r,l,c), eff(r) * A(r,l,c,t) * ga(c,t) * nf/1000) ;
 
 # Q: whether limit the bioass transportation distance? replace mx with antother distance matrix
 # here include both residues and energy crops
-emissionsbiotransp(t) ..    Gbt(t) =e= sum((r,c,cn),eft(r)$(rren(r))*mx(c,cn)*tal(c)*Bn(r,c,cn,t)$(rren(r))/1000) + sum((r,c,cn),eft(r)$(rres(r))*mx(c,cn)*tal(c)*Bn(r,c,cn,t)$(rres(r))/1000) ;
+emissionsbiotransp(t) ..    Gbt(t) =e= sum((r,c,cn), eft(r)$(rsou(r)) * mx(c,cn) * tal(c) * Bn(r,c,cn,t)$(rsou(r))/1000);
 
-emissionsbioconv(t) ..      Gbc(t) =e= sum((r,j,c),efc(r)$(rpli(r))*CP(j,c,t)*beta(r,j)$(rpli(r))/1000) ;
+emissionsbioconv(t) ..      Gbc(t) =e= sum((r,j,c), efc(r)$(rliq(r)) * CP(j,c,t) * beta(r,j)$(rliq(r))/1000) ;
 
-emissionsbioentransp(t) ..  Get(t) =e= sum((r,c,cn),efw(r)$(rpli(r))*mx(c,cn)*tal(c)*En(r,c,cn,t)$(rpli(r))/1000) ;
+emissionsbioentransp(t) ..  Get(t) =e= sum((r,c,cn), efw(r)$(rliq(r)) * mx(c,cn) * tal(c) * En(r,c,cn,t)$(rliq(r))/1000) ;

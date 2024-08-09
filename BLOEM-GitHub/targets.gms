@@ -24,7 +24,7 @@ Parameters
 
 * Setting gdx input filepath
 
-$setglobal gdxinfilepath 'C:\Users\vicke\Desktop\model\BLOEM\BLOEM-GitHub\input\gdx\'
+$setglobal gdxinfilepath 'C:\Users\vicke\Desktop\BLOEM-China\input\gdx\'
 
 
 * Set bioenergy production targets
@@ -72,12 +72,12 @@ Positive variables HE;
 Equations
 
     bioenergytarget(r,c,t)           'meet demand for bioenergy in each decade'
-    bioelectarget(r,c,t)             'meet demand for bioelectricity in each decade'
-    biochartarget(r,c,t)             'meet demand for biochar in each dacade'
+*    bioelectarget(r,c,t)             'meet demand for bioelectricity in each decade'
+*    biochartarget(r,c,t)             'meet demand for biochar in each dacade'
 
 ;
 
-bioenergytarget(r,c,t)$(rp(r)) ..   pb(r,c,t)$(rpli(r))+ex(r,c,t)$(rpli(r)) =e= HE(r,c,t)$(rp(r)) + im(r,c,t)$(rpli(r)) ;
+bioenergytarget(r,c,t)$(rliq(r)) ..   pb(r,c,t)$(rliq(r))+ex(r,c,t)$(rliq(r)) =e= HE(r,c,t)$(rliq(r)) + im(r,c,t)$(rliq(r)) ;
 
 # Q: confuse about this electricity target. Can we use the total amount of electricity demand as constraints?
 #bioelectarget(r,c,t)$(re(r)) ..                 pb(r,c,t)$(re(r)) =l= E(r,c,t)$(re(r)) ;

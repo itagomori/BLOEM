@@ -22,6 +22,7 @@ Parameters
 
 * Set technologies total capital investment
 
+
 Table tci(j,t) 'total capital investment for technology j in grid cell c in decade d' # [US$/kw]
                 2020
     ACG         2058
@@ -30,9 +31,9 @@ Table tci(j,t) 'total capital investment for technology j in grid cell c in deca
     AFT         3026
     GFT         3036
     WFT         3026
-    AGA         3490.8
-    GGA         3490.8
-    WGA         3490.8
+    AME         3490.8
+    GME         3490.8
+    WME         3490.8
     APY         5.78
     GPY         5.78
     WPY         5.78
@@ -42,9 +43,9 @@ Table tci(j,t) 'total capital investment for technology j in grid cell c in deca
     AFT+        4585.5
     GFT+        4585.5
     WFT+        4585.5
-    AGA+        5050.55
-    GGA+        5050.55
-    WGA+        5050.55
+    AME+        5050.55
+    GME+        5050.55
+    WME+        5050.55
 ;
 
 * Set technologies fix om costs
@@ -57,9 +58,9 @@ Table fom(j, t) 'fixed om costs for technology j in grid cell c in decade d' # [
     AFT         298.9
     GFT         298.9
     WFT         298.9
-    AGA         57.8
-    GGA         57.8
-    WGA         57.8
+    AME         57.8
+    GME         57.8
+    WME         57.8
     APY         27.1
     GPY         27.1
     WPY         27.1
@@ -69,13 +70,12 @@ Table fom(j, t) 'fixed om costs for technology j in grid cell c in decade d' # [
     AFT+        298.9
     GFT+        298.9
     WFT+        298.9
-    AGA+        57.8
-    GGA+        57.8
-    WGA+        57.8
+    AME+        57.8
+    GME+        57.8
+    WME+        57.8
 ;
 
 * Set technologies variable o&m costs
-
 Table vom(j, t) 'variable om costs for technology j in grid cell c in decade d' # [US$/y]
 
                 2020
@@ -85,9 +85,9 @@ Table vom(j, t) 'variable om costs for technology j in grid cell c in decade d' 
     AFT         64
     GFT         64
     WFT         64
-    AGA         195.87
-    GGA         195.87
-    WGA         195.87
+    AME         195.87
+    GME         195.87
+    WME         195.87
     APY         0
     GPY         0
     WPY         0
@@ -97,23 +97,23 @@ Table vom(j, t) 'variable om costs for technology j in grid cell c in decade d' 
     AFT+        64.12
     GFT+        64.12
     WFT+        64.12
-    AGA+        196.43
-    GGA+        196.43
-    WGA+        196.43
+    AME+        196.43
+    GME+        196.43
+    WME+        196.43
 ;
 
 * Set technology discount factor w(j)
 
-Parameter w(j)  / 
+Parameter w(j)  /
     ACG         0.9807549,
     GCG         0.9807549,
     WCG         0.9807549,
     AFT         0.9141061,
     GFT         0.9141061,
     WFT         0.9141061,
-    AGA         0.8153025,
-    GGA         0.8153025,
-    WGA         0.8153025,
+    AME         0.8153025,
+    GME         0.8153025,
+    WME         0.8153025,
     APY         0.9807549,
     GPY         0.9807549,
     WPY         0.9807549,
@@ -123,37 +123,36 @@ Parameter w(j)  /
     AFT+        0.9141061,
     GFT+        0.9141061,
     WFT+        0.9141061,
-    AGA+        0.8153025,
-    GGA+        0.8153025,
-    WGA+        0.8153025
+    AME+        0.8153025,
+    GME+        0.8153025,
+    WME+        0.8153025
                                 /;
 ;
 
 * Set technologies retirement factors for added capacities
 Table rf(j,tn, t) 'retirement factor of capacity added in time tn'
-                
-                2020
-    ACG         0
-    GCG         0
-    WCG         0
-    AFT         0
-    GFT         0
-    WFT         0
-    AGA         0
-    GGA         0
-    WGA         0
-    APY         0
-    GPY         0
-    WPY         0
-    ACG+        0
-    GCG+        0
-    WCG+        0
-    AFT+        0
-    GFT+        0
-    WFT+        0
-    AGA+        0
-    GGA+        0
-    WGA+        0
+                    2020
+    ACG. 2020         0
+    GCG. 2020         0
+    WCG. 2020         0
+    AFT. 2020         0
+    GFT. 2020         0
+    WFT. 2020         0
+    AME. 2020         0
+    GME. 2020         0
+    WME. 2020         0
+    APY. 2020         0
+    GPY. 2020         0
+    WPY. 2020         0
+    ACG+. 2020        0
+    GCG+. 2020        0
+    WCG+. 2020        0
+    AFT+. 2020        0
+    GFT+. 2020        0
+    WFT+. 2020        0
+    AME+. 2020        0
+    GME+. 2020        0
+    WME+. 2020        0
 ;
 
 * Set technologies capacity factors
@@ -165,9 +164,9 @@ Table cf(j,t) 'capacity factor' # [factor 0-1]
     AFT         1
     GFT         1
     WFT         1
-    AGA         1
-    GGA         1
-    WGA         1
+    AME         1
+    GME         1
+    WME         1
     APY         1
     GPY         1
     WPY         1
@@ -177,26 +176,26 @@ Table cf(j,t) 'capacity factor' # [factor 0-1]
     AFT+        1
     GFT+        1
     WFT+        1
-    AGA+        1
-    GGA+        1
-    WGA+        1
+    AME+        1
+    GME+        1
+    WME+        1
 ;
 
 * Set technologies rate of consumption or production of resrouce 'r'
 
 Table beta(r, j) 'ratio of consumption or production of resource r by technology j' #[GJ/GJ]
-                ACG	    GCG	    WCG	    AFT	    GFT	    WFT	    AGA	    GGA	    WGA	    APY	    GPY	    WPY	    ACG+	GCG+	WCG+	AFT+	GFT+	WFT+	AGA+	GGA+	WGA+
-    agriRes	    -5.02	0	    0	    -2	    0	    0	    -3.62	0	    0	    -2.23	0	    0	    -5.02	0	    0	    -2	    0	    0	    -3.62	0	    0
-    foresRes    0	    0	    -4.518	0	    0	    -1.8	0	    0	    -3.258	0	    0	    -2.007	0	    0	    -4.518	0	    0	    -1.8	0	    0	    -3.258
-    egrass	    0	    -4.769	0	    0	    -1.9	0	    0	    -3.439	0	    0	    -2.1185	0	    0	    -4.769	0	    0	    -1.9	0	    0	    -3.439	0
-    ewood	    0	    0	    -4.518	0	    0	    -1.8	0	    0	    -3.258	0	    0	    -2.007	0	    0	    -4.518	0	    0	    -1.8	0	    0	    -3.258
-    bioelec	    1	    1	    1	    0	    0	    0	    0	    0	    0	    0	    0	    0	    1	    1	    1	    0	    0	    0	    0	    0	    0
-    biojet	    0	    0	    0	    1	    1	    1	    0	    0	    0	    0	    0	    0	    0	    0	    0	    1	    1	    1	    0	    0	    0
-    biomethanol	0	    0	    0	    0	    0	    0	    1	    1	    1	    0	    0	    0	    0	    0	    0	    0	    0	    0	    1	    1	    1
-    biochar	    0	    0	    0	    0	    0	    0	    0	    0	    0	    1	    1	    1	    0	    0	    0	    0	    0	    0	    0	    0	    0
-    heat	    0.63	0.63	0.63	0	    0	    0	    0	    0	    0	    0	    0	    0	    0.63	0.63	0.63	0	    0	    0	    0	    0	    0
-    gasoline	0	    0	    0	    0.32	0.32	0.32	0	    0	    0	    0	    0	    0	    0	    0	    0	    0.32	0.32	0.32	0	    0	    0
-    syngas	    0	    0	    0	    0  	    0	    0	    0	    0	    0	    0.64	0.64	0.64	0	    0	    0	    0	    0	    0	    0	    0	    0
+                    ACG         GCG         WCG         AFT         GFT         WFT         AME         GME         WME         APY         GPY         WPY         ACG+        GCG+        WCG+        AFT+        GFT+        WFT+        AME+        GME+        WME+
+    agriRes         -5.02       0           0           -2          0           0           -3.62       0           0           -2.23       0           0           -5.02       0           0           -2          0           0           -3.62       0           0
+    foresRes        0           0           -4.518      0           0           -1.8        0           0           -3.258      0           0           -2.007      0           0           -4.518      0           0           -1.8        0           0           -3.258
+    egrass          0           -4.769      0           0           -1.9        0           0           -3.439      0           0           -2.1185     0           0           -4.769      0           0           -1.9        0           0           -3.439      0
+    ewood           0           0           -4.518      0           0           -1.8        0           0           -3.258      0           0           -2.007      0           0           -4.518      0           0           -1.8        0           0           -3.258
+    bioelectricity  1           1           1           0           0           0           0           0           0           0           0           0           1           1           1           0           0           0           0           0           0
+    biojet          0           0           0           1           1           1           0           0           0           0           0           0           0           0           0           1           1           1           0           0           0
+    biomethanol     0           0           0           0           0           0           1           1           1           0           0           0           0           0           0           0           0           0           1           1           1
+    biochar         0           0           0           0           0           0           0           0           0           1           1           1           0           0           0           0           0           0           0           0           0
+    heat            0.63        0.63        0.63        0           0           0           0           0           0           0           0           0           0.63        0.63        0.63        0           0           0           0           0           0
+    gasoline        0           0           0           0.32        0.32        0.32        0           0           0           0           0           0           0           0           0           0.32        0.32        0.32        0           0           0
+    syngas          0           0           0           0           0           0           0           0           0           0.64        0.64        0.64        0           0           0           0           0           0           0           0           0
 ;
 
 * Set production of biofuels with CCS
@@ -209,15 +208,16 @@ Table mincp(j,t) 'biofuel production with ccs'
     AFT+        1e4
     GFT+        1e4
     WFT+        1e4
-    AGA+        1e4
-    GGA+        1e4
-    WGA+        1e4
+    AME+        1e4
+    GME+        1e4
+    WME+        1e4
+;
 
 * ---------------------------------------
 * Import data
 * ---------------------------------------
 * Setting gdx input filepath
-$setglobal gdxinfilepath 'C:\Users\vicke\Desktop\model\BLOEM\BLOEM-GitHub\input\gdx\'
+$setglobal gdxinfilepath 'C:\Users\vicke\Desktop\BLOEM-China\input\gdx\'
 
 * Import existing capacity (cjo):
 $gdxin '%gdxinfilepath%cjoexist.gdx'
@@ -259,9 +259,9 @@ CJ.up('WCG', c, t) = 10e6;
 CJ.up('AFT', c, t) = 100e6;
 CJ.up('GFT', c, t) = 100e6;
 CJ.up('WFT', c, t) = 100e6;
-CJ.up('AFA', c, t) = 100e6;
-CJ.up('GCA', c, t) = 100e6;
-CJ.up('WGA', c, t) = 100e6;
+CJ.up('AME', c, t) = 100e6;
+CJ.up('GME', c, t) = 100e6;
+CJ.up('WME', c, t) = 100e6;
 CJ.up('APY', c, t) = 100e6;
 CJ.up('GPY', c, t) = 100e6;
 CJ.up('WPY', c, t) = 100e6;
@@ -269,11 +269,11 @@ CJ.up('ACG+', c, t) = 100e6;
 CJ.up('GCG+', c, t) = 100e6;
 CJ.up('WCG+', c, t) = 100e6;
 CJ.up('AFT+', c, t) = 100e6;
-CJ.up('CFT+', c, t) = 100e6;
-CJ.up('WGT+', c, t) = 100e6;
-CJ.up('AGA+', c, t) = 100e6;
-CJ.up('CGA+', c, t) = 100e6;
-CJ.up('WGA+', c, t) = 100e6;
+CJ.up('GFT+', c, t) = 100e6;
+CJ.up('WFT+', c, t) = 100e6;
+CJ.up('AME+', c, t) = 100e6;
+CJ.up('GME+', c, t) = 100e6;
+CJ.up('WME+', c, t) = 100e6;
 
 * ----------------------------------
 * Equations
@@ -287,7 +287,7 @@ Equations
     rateofoperation(j,c,t)          'rate of operation of technology j'
 
     capacitybalance(j,c,t)          'capacity balance of technology j'
-    retiredcapacity(j,c,t)          'retired capacity of technology j'
+*    retiredcapacity(j,c,t)          'retired capacity of technology j'
 
     bioenergyconversion(r,c,t)      'production of bioenergy products'
     bioelectricityconversion(r,c,t) 'production of bioelectricity'
@@ -301,20 +301,20 @@ Equations
     biofuelswithccs(j,t)            'biofuels production with ccs per decade'
 ;
 
-impactbioconversion(t) ..                   IBC(t) =e= ITCI(t) + ITOM(t)
-impactcapitalinvest(t) ..                   ITCI(t) =e= dfb(t)*sum((j,c), w(j)*tci(j,t)*CA(j,c,t));
-impactoem(t) ..                             ITOM(t) =e= dfa(t)*sum((j,c), (fom(j,t)*CJ(j,c,t)+vom(j,t)*CP(j,c,t)));
-rateofoperation(j,c,t) ..                   CP(j,c,t) =l= CJ(j,c,t)*cf(j,t); # rate of operation = installed capacity * capacity factor
+impactbioconversion(t) ..                   IBC(t) =e= ITCI(t) + ITOM(t);
+impactcapitalinvest(t) ..                   ITCI(t) =e= dfb(t) * sum((j,c), w(j)*tci(j,t)*CA(j,c,t));
+impactoem(t) ..                             ITOM(t) =e= dfa(t) * sum((j,c), (fom(j,t)*CJ(j,c,t) + vom(j,t)*CP(j,c,t)));
+rateofoperation(j,c,t) ..                   CP(j,c,t) =l= CJ(j,c,t) * cf(j,t); # rate of operation = installed capacity * capacity factor
 capacitybalance(j,c,t) ..                   CJ(j,c,t) =e= cjo(j,c,t) + CJ(j,c,t-1) + CA(j,c,t) - CR(j,c,t); # cjo=existing capacity in time t;
-bioenergyconversion(r,c,t)$(rpli(r)) ..       E(r,c,t)$(rpli(r)) =e= sum((j), CP(j,c,t)$(rpli(r))*beta(r,j)*uf); 
-bioelectricityconverion(r,c,t)$(rpel(r)) ..   E(r,c,t)$(rpel(r)) =e= sum((j), CP(j,c,t)$(rpel(r))*beta(r,j));
-biocharconversion(r,c,t)$(rpch(r)) ..       E(r,c,t)$(rpch(r)) =e= sum((j), CP(j,c,t)$(rpch(r))*beta(r,j)) 
-coproductsconversion(r,c,t)$(rcop(r)) ..    S(r,c,t)$(rcop(r)) =e= sum((j), CP(j,c,t)$(rcop(r))*beta(r,j)*uf);
-totalbioenergy(r,t) ..                      EE(r,t)$(rpli(r))  =e= sum((c), E(r,c,t)$(rpli(r)));
-totalbioelectricity(r,t) ..                 EE(r,t)$(rpel(r))  =e= sum((c), E(r,c,t)$(rpel(r)));
-totalbiochar(r,t) ..                        EE(r,t)$(rpch(r))  =e= sum((c), E(r,c,t)$(rpch(r)));
+bioenergyconversion(r,c,t)$(rliq(r)) ..       E(r,c,t)$(rliq(r)) =e= sum((j), CP(j,c,t)$(rliq(r)) * beta(r,j) * uf);
+bioelectricityconversion(r,c,t)$(rele(r)) ..   E(r,c,t)$(rele(r)) =e= sum((j), CP(j,c,t)$(rele(r)) * beta(r,j));
+biocharconversion(r,c,t)$(rchar(r)) ..       E(r,c,t)$(rchar(r)) =e= sum((j), CP(j,c,t)$(rchar(r)) * beta(r,j)) ;
+coproductconversion(r,c,t)$(rcoprod(r)) ..    S(r,c,t)$(rcoprod(r)) =e= sum((j), CP(j,c,t)$(rcoprod(r)) * beta(r,j) * uf);
+totalbioenergy(r,t) ..                      EE(r,t)$(rliq(r))  =e= sum((c), E(r,c,t)$(rliq(r)));
+totalbioelectricity(r,t) ..                 EE(r,t)$(rele(r))  =e= sum((c), E(r,c,t)$(rele(r)));
+totalbiochar(r,t) ..                        EE(r,t)$(rchar(r))  =e= sum((c), E(r,c,t)$(rchar(r)));
 totalcapadd(j,t) ..                         TCA(j,t) =e= sum((c), CA(j,c,t));
-biofuelswithccs(j,t)$(jc(j)) ..             sum((r,c), CP(j,c,t)$(jc(j))*beta(r,j)$(rpli(r))*uf) =e= mincp(j,t)$(jc(j));
+biofuelswithccs(j,t)$(jccs(j)) ..             sum((r,c), CP(j,c,t)$(jccs(j)) * beta(r,j)$(rliq(r)) * uf) =e= mincp(j,t)$(jccs(j)); # constraints
 
 
 

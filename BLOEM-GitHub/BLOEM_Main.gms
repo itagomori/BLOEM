@@ -10,31 +10,73 @@ $eolcom #
 * --------------------
 * Set Indexes
 * --------------------
+$setglobal gdxinfilepath 'C:\Users\vicke\Desktop\BLOEM-China\input\gdx\'
 
 Sets
 
-    r 'resources' / agriRes, foresRes, egrass, ewood, bioelectricity, biojet, biomethanol, biochar, heat, gasoline, syngas/
-    c 'gridcell' / 1 * 3668 / # China grid cells
+    r 'resources' /agriRes, foresRes, egrass, ewood, bioelectricity, biojet, biomethanol, biochar, heat, gasoline, syngas/
+    c 'gridcell' / 1*3669 /
     t 'decade'    / 2020 /
-    j 'technology' / ACG, GCG, WCG, AFT, GFT, WFT, AGA, GCA, WGA, APY, GPY, WPY, ACG+, GCG+, WCG+, AFT+, GFT+, WGT+, AGA+, CGA+, WGA+ /
-    l 'landcover' / cropland, pasture, forest, othernatualland, builtup, bioland /
+    j 'technology' / ACG, GCG, WCG, AFT, GFT, WFT, AME, GME, WME, APY, GPY, WPY, ACG+, GCG+, WCG+, AFT+, GFT+, WFT+, AME+, GME+, WME+ /
+    l 'landcover' / cropland, pasture, forest, othernatualland /
 
-    rres(r) 'residues' /agriRes, foresRes/
-    rren(r) 'ecrops' / egrass, ewood/
-    rpli(r) 'liquid biofuel' /biojet, biomethanol/
-    rpel(r) 'bioelectricity' /bioelectricity/
-    rpch(r) 'biochar' /biochar/
-    rcop(r) 'co-products' /heat, gasoline, syngas/
+    rsou(r) 'biomass resource' / agriRes, foresRes, egrass, ewood /
+    rres(r) 'agricultural and forestry residues' /agriRes, foresRes/
+    recr(r) 'ecrops' / egrass, ewood /
 
-    cccs(c) 'ccs site' /ccsstorage/
-    cair(c) 'airport station' /airport/
-    char(c) 'harbor' /harbor/
+    rliq(r) 'liquid biofuel' / biojet, biomethanol /
+    rele(r) 'bioelectricity' / bioelectricity /
+    rchar(r) 'biochar' / biochar /
+    rcoprod(r) 'co-products' / heat, gasoline, syngas /
 
-    jc(j) 'ccs technologies' /ACG+, GCG+, WCG+, AFT+, GFT+, WFT+, AGA+, GGA+, WGA+/;
+    lcrop(l) 'cropland' /cropland/
+    lfores(l) 'forest land' /forest/
+    lother(l) 'pasture and other natural land' /pasture, othernatualland/
 
+    jccs(j) 'ccs technologies' / ACG+, GCG+, WCG+, AFT+, GFT+, WFT+, AME+, GME+, WME+ / ;
+
+Sets
+cccs(c) 'ccs site'
+$gdxIn '%gdxinfilepath%ccscap.gdx'
+$load cccs=c
+
+cair(c) 'airport sites'
+$gdxIn '%gdxinfilepath%airport_proxy.gdx'
+$load cair=c
+
+char(c) 'harbor sites'
+$gdxIn '%gdxinfilepath%harbor_proxy.gdx'
+$load char=c
+
+*display char, cair, cccs
+
+    # one to many mapping
+    #rj(r,j) /
+    #        agriRes.ACG,
+    #        agriRes.ACG+,
+    #        agriRes.AFT,
+    #        agriRes.AFT+,
+    #        agriRes.AME,
+    #        agriRes.AME+,
+    #        agriRes.APY,
+    #        (foresRes, ewood).WCG,
+    #        (foresRes, ewood).WCG+,
+    #        (foresRes, ewood).WFT,
+    #        (foresRes, ewood).WFT+,
+    #        (foresRes, ewood).FME,
+    #        (foresRes, ewood).FME+,
+    #        (foresRes, ewood).FPY,
+    #        egrass.GCG,
+    #        egrass.GCG+,
+    #        egrass.GFT,
+    #        egrass.GFT+,
+    #        egrass.GME,
+    #        egrass.GME+,
+    #        egrass.GPY  /
 ;
 
 Alias(r, crop, resources);
+
 Alias(c, cn, gridcell);
 Alias(t, tn, decade);
 Alias(j, technology);
@@ -110,7 +152,7 @@ Free variables Z;
 * Modules
 * -----------------------------------
 
-$setglobal modulespath 'C:\Users\vicke\Desktop\model\BLOEM\BLOEM-GitHub\'
+$setglobal modulespath 'C:\Users\vicke\Desktop\BLOEM-China\'
 
 $include %modulespath%biomassproduction.gms
 $include %modulespath%logistics.gms
@@ -169,7 +211,7 @@ Display Vseq.l ;
 
 * Set gdx output filepath;
 
-$setglobal gdxoutfilepaht 'C:\Users\vicke\Desktop\model\BLOEM\BLOEM-GitHub\output\'
+$setglobal gdxoutfilepaht 'C:\Users\vicke\Desktop\BLOEM-China\output\'
 
 # Unload:
 
