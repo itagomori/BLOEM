@@ -1,12 +1,12 @@
 $ontext
 * ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 * Bioenergy Allocation Spatially Explicit Model - BLOEM
-* Author: Isabela Schmidt Tagomori
-* Last update: 12.05.2021
+* Author: Isabela Schmidt Tagomori & Aline Carvalho
+* Last update: 10.08.2024
 * Version: 1.0
-* Coupled IAM: BLUES
-* Region: Brazil 
-* Time frame: 2020-2050
+* Coupled IAM: COFFEE
+* Region: Europe 
+* Time frame: 2025
 * Module: Bioenergy Targets
 * ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 $offtext
@@ -27,32 +27,15 @@ Parameters
 * Set exportation targets
 
 # Ports:
-# Suape = 1315
-# Santos = 2698
-# Paranaguá = 2744
+# Rotterdam = 1744
+# Antwerp = 1799
+
 
 Table ex(r,c,t) 'exportation of biofuels'  # [GJ]
 
-                                2020    2030    2040    2050             
-    ethanol1g.        1315      0       0       0       0              
-    ethanol1g.        2698      0       0       0       0              
-    ethanol1g.        2744      0       0       0       0              
-
-    ethanol2g.        1315      0       0       0       0              
-    ethanol2g.        2698      0       0       0       0              
-    ethanol2g.        2744      0       0       0       0              
-
-    biojet.           1315      0       0       0       0              
-    biojet.           2698      0       0       0       0              
-    biojet.           2744      0       0       0       0              
-
-    dieselbiofuel.    1315      0       0       0       0              
-    dieselbiofuel.    2698      0       0       0       0              
-    dieselbiofuel.    2744      0       0       0       0              
-
-    biodiesel.        1315      0       0       0       0              
-    biodiesel.        2698      0       0       0       0              
-    biodiesel.        2744      0       0       0       0              
+                                2025    #2030    2040    2050             
+    biogasoil.        1744      0       #0       0       0              
+    biogasoil.        1799      0       #0       0       0              
 
 ;
 
@@ -63,7 +46,7 @@ Table ex(r,c,t) 'exportation of biofuels'  # [GJ]
 
 * Setting gdx input filepath
 
-$setglobal gdxinfilepath 'X:\user\tagomorii\BLOEM\GDXinput\Main\'
+$setglobal gdxinfilepath 'C:\BLOEM\BLOEMEurope_GAMS\gdx_files\'
 
 
 * Set bioenergy production targets
