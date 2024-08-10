@@ -20,7 +20,7 @@ Sets
     r 'resources'     / forestresidues /
     c 'grid cell'     / 1*3391 /  # European grid cells
     t 'decade'        / 2025 /
-    j 'technology'    / FCC /
+    j 'technology'    / POFCC /
     l 'landcover'     / forest, agriculture, pasture, other /
     q 'period g-luc'  / 1*3 / 
 
