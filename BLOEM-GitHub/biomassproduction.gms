@@ -1,12 +1,12 @@
 $ontext
 * ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 * Bioenergy Allocation Spatially Explicit Model - BLOEM
-* Author: Isabela Schmidt Tagomori
-* Last update: 12.05.2021
+* Author: Isabela Schmidt Tagomori & Aline Carvalho
+* Last update: 10.08.2024
 * Version: 1.0
-* Coupled IAM: BLUES
-* Region: Brazil 
-* Time frame: 2020-2050
+* Coupled IAM: COFFEE
+* Region: Europe 
+* Time frame: 2025
 * Module: Land Allocation and Biomass Production
 * ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 $offtext
@@ -39,8 +39,6 @@ Parameters
 Table ef(r,l) 'emission factors for direct land use change' # [tCO2/GJ] primary energy,
 
                     forest        other        pasture
-sugarcane           0.044         0.030        0.000
-oilcrops            0.235         0.257        0.000   
 wood                0.052         0.051        0.000
 ;
 
@@ -51,7 +49,7 @@ wood                0.052         0.051        0.000
 
 * Setting gdx input filepath
 
-$setglobal gdxinfilepath 'X:\user\tagomorii\BLOEM\GDXinput\Main\'
+$setglobal gdxinfilepath 'C:\BLOEM\BLOEMEurope_GAMS\gdx_files\'
 
 
 * Import land availability:
