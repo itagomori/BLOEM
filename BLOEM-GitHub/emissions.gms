@@ -1,12 +1,12 @@
 $ontext
 * ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 * Bioenergy Allocation Spatially Explicit Model - BLOEM
-* Author: Isabela Schmidt Tagomori
-* Last update: 12.05.2021
+* Author: Isabela Schmidt Tagomori & Aline Carvalho
+* Last update: 10.08.2024
 * Version: 1.0
-* Coupled IAM: BLUES
-* Region: Brazil 
-* Time frame: 2020-2050
+* Coupled IAM: COFFEE
+* Region: Europe 
+* Time frame: 2025
 * Module: Emissions
 * ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 $offtext
@@ -36,9 +36,7 @@ Parameters
 
 * Set fuel consumption for biomass production fp(r):
 
-Parameter fp(r)    / sugarcane   0.293534,
-                     oilcrops    7.283893,
-                     wood        0.056621 /;
+Parameter fp(r)    / wood        0.056621 /;
 ;
 
 
@@ -54,31 +52,19 @@ Scalar nf     /298/ ;
 
 * Set emission factor for biomass transportation eft(r):
 
-Parameter eft(r)   / sugarcane   0.003226,
-                     oilcrops    0.002985,
-                     wood        0.002956 /;
+Parameter eft(r)   / wood        0.002956 /;
 ;
 
 
 * Set emission factor for biofuel transportation efw(r):
 
-Parameter efw(r)   / ethanol1g          0.003534,
-                     ethanol2g          0.003893,
-                     biojet             0.006622,
-                     dieselbiofuel      0.006621,
-                     biodiesel          0.006621,
-                     bioelectricity     0.006621 /;
+Parameter efw(r)   / biogasoil          0.006622 /;
 ;
 
 
 * Set emission factor for biomass conversion efc(r):
 
-Parameter efc(r)   / ethanol1g          0.000000,
-                     ethanol2g          0.760498,
-                     biojet             0.000000,
-                     dieselbiofuel      0.000000,
-                     biodiesel          0.013104,
-                     bioelectricity     0.000000 /;
+Parameter efc(r)   / biogasoil          0.000000 /;
 ;
 
 
@@ -88,7 +74,7 @@ Parameter efc(r)   / ethanol1g          0.000000,
 
 * Setting gdx input filepath
 
-$setglobal gdxinfilepath 'X:\user\tagomorii\BLOEM\GDXinput\Main\'
+$setglobal gdxinfilepath 'C:\BLOEM\BLOEMEurope_GAMS\gdx_files\'
 
 
 * Import emission factors for fertilizer use:
