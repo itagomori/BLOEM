@@ -1,12 +1,12 @@
 $ontext
 * ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 * Bioenergy Allocation Spatially Explicit Model - BLOEM
-* Author: Isabela Schmidt Tagomori
-* Last update: 12.05.2021
+* Author: Isabela Schmidt Tagomori & Aline Carvalho
+* Last update: 10.08.2024
 * Version: 1.0
-* Coupled IAM: BLUES
-* Region: Brazil 
-* Time frame: 2020-2050
+* Coupled IAM: COFFEE
+* Region: Europe 
+* Time frame: 2025
 * Module: Logistics
 * ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 $offtext
@@ -40,14 +40,7 @@ Parameters
 
 * Set biomass and biofuels transportation costs trco(r)
 
-Parameter trco(r) / sugarcane          0.0020,
-                    oilcrops           0.0011,
-                    wood               0.0032,
-                    ethanol1g          0.0040,
-                    ethanol2g          0.0040,
-                    biojet             0.0050,
-                    dieselbiofuel      0.0050,
-                    biodiesel          0.0040 /;
+Parameter trco(r) / wood               0.0032 /;
 ;
 
 
@@ -57,7 +50,7 @@ Parameter trco(r) / sugarcane          0.0020,
 
 * Setting gdx input filepath
 
-$setglobal gdxinfilepath 'X:\user\tagomorii\BLOEM\GDXinput\Main\'
+$setglobal gdxinfilepath 'C:\BLOEM\BLOEMEurope_GAMS\gdx_files\'
 
 
 * Import distance between grid cells mx(c,cn):
