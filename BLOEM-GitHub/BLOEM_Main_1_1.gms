@@ -2,7 +2,7 @@ $ontext
 * ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 * Bioenergy Allocation Spatially Explicit Model - BLOEM
 * Authors: Isabela Schmidt Tagomori & Aline Carvalho
-* Last update: 30.07.2024
+* Last update: 10.08.2024
 * Version: 1.0
 * Coupled IAM: COFFEE
 * Region: Europe 
@@ -17,31 +17,27 @@ $eolcom #
 * ---------------------------------------------------------------------------------------------------------
 
 Sets
-    r 'resources'     / sugarcane, oilcrops, wood, bagasse, sgcnjuice, ethanol1g, ethanol2g, biojet, dieselbiofuel, biodiesel, bioelectricity, bionaphta, biolpg, sugarjuice /
-    c 'grid cell'     / 1*2912 /  # Brazilian grid cells
-    t 'decade'        / 2020, 2030, 2040, 2050 /
-    j 'technology'    / SGC, E1G, E2G, BJT, DFT, BDS, COG, E1GC, BJTC, DFTC, SUG /
-    l 'landcover'     / forest, agriculture, pasture, other, bioland /
+    r 'resources'     / forestresidues /
+    c 'grid cell'     / 1*3391 /  # European grid cells
+    t 'decade'        / 2025 /
+    j 'technology'    / FCC /
+    l 'landcover'     / forest, agriculture, pasture, other /
     q 'period g-luc'  / 1*3 / 
 
-    rc(r) 'crops'               / sugarcane, oilcrops, wood /
-    ri(r) 'intermediates'       / bagasse, sgcnjuice /
-    rp(r) 'liquid biofuels'     / ethanol1g, ethanol2g, biojet, dieselbiofuel, biodiesel / # ethanol1gccs, biojetccs, dieselbiofuelccs moved towards techs
+    rc(r) 'crops'               / wood /
+    ri(r) 'intermediates'       / pyrolysisoil /
+    rp(r) 'liquid biofuels'     / biogasoil / 
     re(r) 'bioelectricity'      / bioelectricity /
-    rs(r) 'co-products'         / bionaphta, biolpg, sugarjuice /
+    rs(r) 'co-products'         / greendiesel, bionaphta /
 
-    jc(j) 'ccs technologies'    / E1GC, BJTC, DFTC /
+    #jc(j) 'ccs technologies'    / E1GC, BJTC, DFTC /
 
-    cs(c) 'storage sites'       / 1835, 2597, 2650, 2652, 2698, 2716, 2744 /
+    #cs(c) 'storage sites'       / 1835, 2597, 2650, 2652, 2698, 2716, 2744 /
 
     lp(l) 'protected areas'     / forest, other / # other = other land, including savannahs, scrubblands, etc.
-    lb(l) 'bioland base'        / bioland /
+    #lb(l) 'bioland base'        / bioland /
 
-    lr(l,r)  'land vs crops'    / forest  .sugarcane
-                                  forest  .oilcrops
-                                  forest  .wood      
-                                  other   .sugarcane
-                                  other   .oilcrops
+    lr(l,r)  'land vs crops'    / forest  .wood      
                                   other   .wood       /;
 ;
 
@@ -77,18 +73,12 @@ Parameters
 
 * Set dfa(t)
 
-Parameter dfa(t)  / 2020   6.759024,
-                    2030   2.605896,
-                    2040   1.004686,
-                    2050   0.387350 /;
+Parameter dfa(t)  / 2025   6.759024 /;
 ;
 
 * Set dfb(t)
 
-Parameter dfb(t)  / 2020   1.0000000000,
-                    2030   0.3855432894,
-                    2040   0.1486436280,
-                    2050   0.0573085533 /;
+Parameter dfb(t)  / 2025   1.0000000000 /;
 ;
 
 $offlisting
@@ -98,10 +88,7 @@ $offlisting
 * Set carbon tax scenario
 * ----------------------------------------------------------------------------------------------------------
 
-Parameter k(t)   / 2020   0,
-                   2030   0,
-                   2040   0,
-                   2050   0 /;
+Parameter k(t)   / 2025   0 /;
 ;
 
 
@@ -131,7 +118,7 @@ Free variables  Z ;
 * Modules
 * ---------------------------------------------------------------------------------------------------------
 
-$setglobal modulespath 'X:\user\tagomorii\BLOEM\ModelVersions\Modules\Main_11\'
+$setglobal modulespath 'C:\BLOEM\BLOEMEurope_GAMS\'
 
 $include %modulespath%biomassproduction.gms
 $include %modulespath%logistics.gms
@@ -193,7 +180,7 @@ Display Vseq.l ;
 
 * Set gdx output filepath
 
-$setglobal gdxoutfilepath 'X:\user\tagomorii\BLOEM\GDXoutput\B-NDC\'
+$setglobal gdxoutfilepath 'C:\BLOEM\BLOEMEurope_GAMS\gdx_files'
 
 # Unload:
 
