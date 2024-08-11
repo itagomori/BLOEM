@@ -161,16 +161,16 @@ impactbioproduction(t)  ..          IBP(t) =e= dfa(t) * (sum((r,c), B(r,c,t)$(rs
 
 
 # the land that are used to produce energy crops in each grid cell should not larger than the total share of pasture and othernatural land
-limitecropland(c,t) ..              sum((r, l)$(lother(l)), A(r, l, c, t)$(recr(r))) =l= sum((l), ldav(c, l, t)$(lother(l)));
+# no need to consider agriRes and foresRes, because the above has already set A('agriRes', 'lotherland', c, t) =e= 0
+limitecropland(c,t) ..              sum((r, l)$(lother(l)), A(r, l, c, t)$(lother(l))) =l= sum((l), ldav(c, l, t)$(lother(l)));
 
 # the land allocated to produce agricultural/forest residues should be lower than total cropland/forestland
 limitagriresamount(c,t) ..          A('agriRes', 'cropland', c, t) =l= ldav(c, 'cropland', t);
 limitforesresamount(c,t)  ..        A('foresRes', 'forest', c, t) =l= ldav(c, 'forest', t);
 
-
 # used as output variable
 # for energy crop r, how many landuse l are allocatd for resource productoin (only include energy crops)
-totallandallocation(l,r,t)  .. LdAlc(l, r, t) =e= sum((c), A(r, l, c, t)$recr(r));   
+totallandallocation(l,r,t)  ..      LdAlc(l, r, t)$(rsou(r)) =e= sum((c)$(rsou(r)), A(r, l, c, t)$(rsou(r)));   
 
 # the production of biomass resource r in grid cell c in decade t
-biomassproductionincell(r,c,t) .. B(r, c, t)$rsou(r) =e= sum((l), A(r, l, c, t)$rsou(r)) * y(r, c, t)$rsou(r)  * ga(c, t);
+biomassproductionincell(r,c,t) ..   B(r, c, t)$rsou(r) =e= sum((l), A(r, l, c, t)$rsou(r)) * y(r, c, t)$rsou(r)  * ga(c, t);

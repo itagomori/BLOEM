@@ -1,0 +1,112 @@
+
+--- Job BLOEM_Main.gms Start 08/11/24 16:19:59 24.6.1 r55820 WEX-WEI x86 64bit/MS Windows
+GAMS 24.6.1   Copyright (C) 1987-2016 GAMS Development. All rights reserved
+Licensee: Energy Planning Program                        W150420:1241AO-WIN
+          COPPE-UFRJ                                                DC11728
+          License for teaching and research at degree granting institutions
+--- Starting compilation
+--- BLOEM_Main.gms(44) 3 Mb
+--- GDXin=C:\Users\vicke\Desktop\BLOEM-China\input\gdx\ccscap.gdx
+--- BLOEM_Main.gms(48) 3 Mb
+--- GDXin=C:\Users\vicke\Desktop\BLOEM-China\input\gdx\airport_proxy.gdx
+--- BLOEM_Main.gms(52) 3 Mb
+--- GDXin=C:\Users\vicke\Desktop\BLOEM-China\input\gdx\harbor_proxy.gdx
+--- BLOEM_Main.gms(161) 3 Mb
+--- .biomassproduction.gms(54) 3 Mb
+--- GDXin=C:\Users\vicke\Desktop\BLOEM-China\input\gdx\landavailablebioen_bopf.gdx
+--- .biomassproduction.gms(62) 4 Mb
+--- GDXin=C:\Users\vicke\Desktop\BLOEM-China\input\gdx\bprcosts.gdx
+--- .biomassproduction.gms(69) 5 Mb
+--- GDXin=C:\Users\vicke\Desktop\BLOEM-China\input\gdx\gcarea.gdx
+--- .biomassproduction.gms(76) 5 Mb
+--- GDXin=C:\Users\vicke\Desktop\BLOEM-China\input\gdx\bpryields.gdx
+--- .biomassproduction.gms(176) 5 Mb
+--- BLOEM_Main.gms(162) 5 Mb
+--- .logistics.gms(38) 5 Mb
+--- GDXin=C:\Users\vicke\Desktop\BLOEM-China\input\gdx\mxdis.gdx
+--- .logistics.gms(47) 22 Mb
+--- GDXin=C:\Users\vicke\Desktop\BLOEM-China\input\gdx\tortuosity.gdx
+--- .logistics.gms(141) 22 Mb
+--- BLOEM_Main.gms(163) 22 Mb
+--- .technologiesportfolio.gms(222) 23 Mb
+--- GDXin=C:\Users\vicke\Desktop\BLOEM-China\input\gdx\cjoexist.gdx
+--- .technologiesportfolio.gms(320) 23 Mb
+--- BLOEM_Main.gms(164) 23 Mb
+--- .carboncaptureandstorage.gms(47) 23 Mb
+--- GDXin=C:\Users\vicke\Desktop\BLOEM-China\input\gdx\ccscap.gdx
+--- .carboncaptureandstorage.gms(97) 23 Mb
+--- BLOEM_Main.gms(165) 23 Mb
+--- .emissions.gms(159) 23 Mb
+--- BLOEM_Main.gms(166) 23 Mb
+--- .targets.gms(54) 23 Mb
+--- GDXin=C:\Users\vicke\Desktop\BLOEM-China\input\gdx\tarbp.gdx
+--- .targets.gms(62) 23 Mb
+--- GDXin=C:\Users\vicke\Desktop\BLOEM-China\input\gdx\tarex.gdx
+--- .targets.gms(69) 23 Mb
+--- GDXin=C:\Users\vicke\Desktop\BLOEM-China\input\gdx\tarim.gdx
+--- .targets.gms(108) 23 Mb
+--- BLOEM_Main.gms(299) 23 Mb
+--- Starting execution: elapsed 0:00:00.342
+--- BLOEM_Main.gms(1195) 1232 Mb
+--- Generating LP model BLOEM_China
+--- BLOEM_Main.gms(453) 1505 Mb  40 secs
+--- BLOEM_Main.gms(467) 1920 Mb  25 secs
+--- BLOEM_Main.gms(473) 5909 Mb  2345 secs
+--- BLOEM_Main.gms(475) 7583 Mb  140 secs
+--- BLOEM_Main.gms(888) 8690 Mb  70 secs
+--- BLOEM_Main.gms(894) 8740 Mb  6 secs
+--- BLOEM_Main.gms(1054) 8846 Mb  60 secs
+--- BLOEM_Main.gms(1058) 8890 Mb  30 secs
+--- BLOEM_Main.gms(1197) 8894 Mb  19 secs
+---   400,028 rows  43,013,835 columns  80,437,988 non-zeroes
+--- Executing CPLEX: elapsed 0:46:09.742
+--- BLOEM_Main.gms(1197) 8894 Mb  28 secs
+
+IBM ILOG CPLEX   24.6.1 r55820 Released Jan 18, 2016 WEI x86 64bit/MS Windows 
+--- GAMS/Cplex licensed for continuous and discrete problems.
+Cplex 12.6.3.0
+
+Reading parameter(s) from "C:\Users\vicke\Documents\gamsdir\projdir\cplex.opt"
+>>  name no
+*** Error line 1: Unknown option "name"
+>>  memoryemphasis 1
+>>  threads 1
+Finished reading from "C:\Users\vicke\Documents\gamsdir\projdir\cplex.opt"
+Reading data...
+Starting Cplex...
+Space for names approximately 1359.37 Mb
+Use option 'names no' to turn use of names off
+Presolve time = 3.45 sec. (2274.12 ticks)
+Insufficient memory for presolve.
+CPLEX Error  1001: Out of memory.
+LP status(0): 
+Cplex Time: 4.78sec (det. 4149.58 ticks)
+*** CPLEX Error  1001: Out of memory.
+
+--- Restarting execution
+--- BLOEM_Main.gms(1197) 3318 Mb
+--- Reading solution for model BLOEM_China
+--- Executing after solve: elapsed 0:47:43.866
+--- BLOEM_Main.gms(1223) 3319 Mb
+--- GDX File C:\Users\vicke\Desktop\BLOEM-China\output\gdx\wdgv_a.gdx
+--- BLOEM_Main.gms(1233) 3319 Mb
+--- GDX File C:\Users\vicke\Desktop\BLOEM-China\output\gdx\wgv_b.gdx
+--- BLOEM_Main.gms(1247) 3319 Mb
+--- GDX File C:\Users\vicke\Desktop\BLOEM-China\output\gdx\wgv_c.gdx
+--- BLOEM_Main.gms(1261) 3319 Mb
+--- GDX File C:\Users\vicke\Desktop\BLOEM-China\output\gdx\wgv_d.gdx
+--- BLOEM_Main.gms(1277) 3319 Mb
+--- GDX File C:\Users\vicke\Desktop\BLOEM-China\output\gdx\wgv_e.gdx
+--- Profile Summary (71 records processed)
+  2345.234   5.909GB       473 Equation   bioenergyintogridcell (7338)
+   142.578   7.583GB       475 Equation   bioenergyoutogridcell (7338)
+    72.719   8.716GB       888 Equation   impactcarbontransport (1)
+    64.485   8.846GB      1054 Equation   emissionsbiotransp (1)
+    42.782   1.524GB       453 Equation   impactbiotransport (1)
+    31.891   8.890GB      1058 Equation   emissionsbioentransp (1)
+    25.672   1.962GB       467 Equation   impactbioendtransport (1)
+    19.375   8.894GB      1197 Solve Fini BLOEM_China (80437988)
+     9.625   8.894GB      1197 GAMS Fini   
+     6.265   8.740GB       894 Equation   carbonintogridcell (3669)
+*** Status: Normal completion
+--- Job BLOEM_Main.gms Stop 08/11/24 17:07:43 elapsed 0:47:44.028

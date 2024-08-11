@@ -33,7 +33,11 @@ Sets
     lfores(l) 'forest land' /forest/
     lother(l) 'pasture and other natural land' /pasture, othernatualland/
 
-    jccs(j) 'ccs technologies' / ACG+, GCG+, WCG+, AFT+, GFT+, WFT+, AME+, GME+, WME+ / ;
+    jccs(j) 'ccs technologies' / ACG+, GCG+, WCG+, AFT+, GFT+, WFT+, AME+, GME+, WME+ / 
+    jliq(j) 'bioliquid technologies' / AFT, GFT, WFT, AME, GME, WME, AFT+, GFT+, WFT+, AME+, GME+, WME+ /
+    jele(j) 'bioelectricity technolgies' / ACG, GCG, WCG, ACG+, GCG+, WCG+ /
+    jchar(j) 'biochar technologies' / APY, GPY, WPY /
+;
 
 Sets
 cccs(c) 'ccs site'
@@ -211,7 +215,7 @@ Display Vseq.l ;
 
 * Set gdx output filepath;
 
-$setglobal gdxoutfilepaht 'C:\Users\vicke\Desktop\BLOEM-China\output\'
+$setglobal gdxoutfilepath 'C:\Users\vicke\Desktop\BLOEM-China\output\gdx\'
 
 # Unload:
 
@@ -245,7 +249,7 @@ E     # bioenergy production
 
 EE    # total bioenergy production
 
-S     # co-products production
+*S     # co-products production
 
 Vcap  # carbon captured
 

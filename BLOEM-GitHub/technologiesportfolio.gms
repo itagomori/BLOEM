@@ -182,7 +182,6 @@ Table cf(j,t) 'capacity factor' # [factor 0-1]
 ;
 
 * Set technologies rate of consumption or production of resrouce 'r'
-
 Table beta(r, j) 'ratio of consumption or production of resource r by technology j' #[GJ/GJ]
                     ACG         GCG         WCG         AFT         GFT         WFT         AME         GME         WME         APY         GPY         WPY         ACG+        GCG+        WCG+        AFT+        GFT+        WFT+        AME+        GME+        WME+
     agriRes         -5.02       0           0           -2          0           0           -3.62       0           0           -2.23       0           0           -5.02       0           0           -2          0           0           -3.62       0           0
@@ -202,15 +201,15 @@ Table beta(r, j) 'ratio of consumption or production of resource r by technology
 Table mincp(j,t) 'biofuel production with ccs'
 
                 2020
-    ACG+        1e4
-    GCG+        1e4
-    WCG+        1e4
-    AFT+        1e4
-    GFT+        1e4
-    WFT+        1e4
-    AME+        1e4
-    GME+        1e4
-    WME+        1e4
+    ACG+        100
+    GCG+        100
+    WCG+        0
+    AFT+        0 # 1e4
+    GFT+        0 #1e4
+    WFT+        0 #1e4
+    AME+        0 #1e4
+    GME+        0 #1e4
+    WME+        100 #1e4
 ;
 
 * ---------------------------------------
@@ -236,14 +235,14 @@ Variables
     ITCI(t)         'impact of capital investment in technologies in time t' #[US$]
     ITOM(t)         'impact of OM of technologies in time t' #[US$]
 
-    CJ(j,c,t)       'installed capacity of technology j in grid cell c in time t' # [kw]
+    CJ(j,c,t)       'installed capacity of technology j in grid cell c in time t' # [kw] [GJ]
     CA(j,c,t)       'added capacity of technolog j in grid cell c in time t' # [kw]
     CR(j,c,t)       'retired capacity of technology j in grid cell c in time t' # [kw]
 
     CP(j,c,t)       'rate of operation of technology j in grid cell c in time t'
 
     E(r,c,t)        'bioenergy production for product r in grid cell c in time t' # [kw]
-    S(r,c,t)        'co-products production for co-product r in grid cell c in time t' #[kw]
+*    S(r,c,t)        'co-products production for co-product r in grid cell c in time t' #[kw]
 
     EE(r,t)         'total bioenergy production per product per decade' # [GJ]
 
@@ -253,27 +252,27 @@ Variables
 Positive variables IBC, ITCI, ITOM, CJ, CA, CR, CP, E, S, TCA;
 
 * Variable bounds
-CJ.up('ACG', c, t) = 10e6;
-CJ.up('GCG', c, t) = 10e6;
-CJ.up('WCG', c, t) = 10e6;
-CJ.up('AFT', c, t) = 100e6;
-CJ.up('GFT', c, t) = 100e6;
-CJ.up('WFT', c, t) = 100e6;
-CJ.up('AME', c, t) = 100e6;
-CJ.up('GME', c, t) = 100e6;
-CJ.up('WME', c, t) = 100e6;
-CJ.up('APY', c, t) = 100e6;
-CJ.up('GPY', c, t) = 100e6;
-CJ.up('WPY', c, t) = 100e6;
-CJ.up('ACG+', c, t) = 100e6;
-CJ.up('GCG+', c, t) = 100e6;
-CJ.up('WCG+', c, t) = 100e6;
-CJ.up('AFT+', c, t) = 100e6;
-CJ.up('GFT+', c, t) = 100e6;
-CJ.up('WFT+', c, t) = 100e6;
-CJ.up('AME+', c, t) = 100e6;
-CJ.up('GME+', c, t) = 100e6;
-CJ.up('WME+', c, t) = 100e6;
+CJ.up('ACG', c, t) = 10e12;
+CJ.up('GCG', c, t) = 10e12;
+CJ.up('WCG', c, t) = 10e12;
+CJ.up('AFT', c, t) = 10e12;
+CJ.up('GFT', c, t) = 10e12;
+CJ.up('WFT', c, t) = 10e12;
+CJ.up('AME', c, t) = 10e12;
+CJ.up('GME', c, t) = 10e12;
+CJ.up('WME', c, t) = 10e12;
+CJ.up('APY', c, t) = 10e12;
+CJ.up('GPY', c, t) = 10e12;
+CJ.up('WPY', c, t) = 10e12;
+CJ.up('ACG+', c, t) = 10e12;
+CJ.up('GCG+', c, t) = 10e12;
+CJ.up('WCG+', c, t) = 10e12;
+CJ.up('AFT+', c, t) = 10e12;
+CJ.up('GFT+', c, t) = 10e12;
+CJ.up('WFT+', c, t) = 10e12;
+CJ.up('AME+', c, t) = 10e12;
+CJ.up('GME+', c, t) = 10e12;
+CJ.up('WME+', c, t) = 10e12;
 
 * ----------------------------------
 * Equations
@@ -287,12 +286,12 @@ Equations
     rateofoperation(j,c,t)          'rate of operation of technology j'
 
     capacitybalance(j,c,t)          'capacity balance of technology j'
-*    retiredcapacity(j,c,t)          'retired capacity of technology j'
+    retiredcapacity(j,c,t)          'retired capacity of technology j'
 
     bioenergyconversion(r,c,t)      'production of bioenergy products'
     bioelectricityconversion(r,c,t) 'production of bioelectricity'
     biocharconversion(r,c,t)        'production of biochar'   # added
-    coproductconversion(r,c,t)      'production of co-products'
+*    coproductconversion(r,c,t)      'production of co-products'
 
     totalbioenergy(r,t)             'total production per product per decade'
     totalbioelectricity(r,t)        'total production of bioelectricity per decade'
@@ -306,15 +305,16 @@ impactcapitalinvest(t) ..                   ITCI(t) =e= dfb(t) * sum((j,c), w(j)
 impactoem(t) ..                             ITOM(t) =e= dfa(t) * sum((j,c), (fom(j,t)*CJ(j,c,t) + vom(j,t)*CP(j,c,t)));
 rateofoperation(j,c,t) ..                   CP(j,c,t) =l= CJ(j,c,t) * cf(j,t); # rate of operation = installed capacity * capacity factor
 capacitybalance(j,c,t) ..                   CJ(j,c,t) =e= cjo(j,c,t) + CJ(j,c,t-1) + CA(j,c,t) - CR(j,c,t); # cjo=existing capacity in time t;
-bioenergyconversion(r,c,t)$(rliq(r)) ..       E(r,c,t)$(rliq(r)) =e= sum((j), CP(j,c,t)$(rliq(r)) * beta(r,j) * uf);
-bioelectricityconversion(r,c,t)$(rele(r)) ..   E(r,c,t)$(rele(r)) =e= sum((j), CP(j,c,t)$(rele(r)) * beta(r,j));
-biocharconversion(r,c,t)$(rchar(r)) ..       E(r,c,t)$(rchar(r)) =e= sum((j), CP(j,c,t)$(rchar(r)) * beta(r,j)) ;
-coproductconversion(r,c,t)$(rcoprod(r)) ..    S(r,c,t)$(rcoprod(r)) =e= sum((j), CP(j,c,t)$(rcoprod(r)) * beta(r,j) * uf);
+retiredcapacity(j,c,t) ..                       CR(j,c,t) =e= sum((tn),CA(j,c,tn)*rf(j,tn,t)) ;
+bioenergyconversion(r,c,t)$(rliq(r)) ..       E(r,c,t)$(rliq(r)) =e= sum((j)$(jliq(j)), CP(j,c,t)$(jliq(j)) * beta(r,j)$(jliq(j)) * uf);
+bioelectricityconversion(r,c,t)$(rele(r)) ..   E(r,c,t)$(rele(r)) =e= sum((j)$(jele(j)), CP(j,c,t)$(jele(j)) * beta(r,j)$(jele(j)));
+biocharconversion(r,c,t)$(rchar(r)) ..       E(r,c,t)$(rchar(r)) =e= sum((j)$(jchar(j)), CP(j,c,t)$(jchar(j)) * beta(r,j)$(jchar(j))) ;
+*coproductconversion(r,c,t)$(rcoprod(r)) ..    S(r,c,t)$(rcoprod(r)) =e= sum((j), CP(j,c,t)$(rcoprod(r)) * beta(r,j) * uf);
 totalbioenergy(r,t) ..                      EE(r,t)$(rliq(r))  =e= sum((c), E(r,c,t)$(rliq(r)));
 totalbioelectricity(r,t) ..                 EE(r,t)$(rele(r))  =e= sum((c), E(r,c,t)$(rele(r)));
 totalbiochar(r,t) ..                        EE(r,t)$(rchar(r))  =e= sum((c), E(r,c,t)$(rchar(r)));
-totalcapadd(j,t) ..                         TCA(j,t) =e= sum((c), CA(j,c,t));
-biofuelswithccs(j,t)$(jccs(j)) ..             sum((r,c), CP(j,c,t)$(jccs(j)) * beta(r,j)$(rliq(r)) * uf) =e= mincp(j,t)$(jccs(j)); # constraints
+totalcapadd(j,t) ..                         TCA(j,t) =e= sum((c), CA(j,c,t)$(jliq(j))*uf) + sum((c), CA(j,c,t)$(jele(j))) + sum((c), CA(j,c,t)$(jchar(j)));
+biofuelswithccs(j,t)$(jccs(j)) ..           sum((r,c), CP(j,c,t)$(jccs(j)) * beta(r,j)$(jccs(j))) =g= mincp(j,t)$(jccs(j)); # constraints
 
 
 

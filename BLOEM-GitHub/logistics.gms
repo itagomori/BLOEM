@@ -85,41 +85,46 @@ Positive variables IBT, IET, HE, Bn, En, Bin, Bout, Ein, Eout, E, CP;
 * Variable bounds:
 HB.up(r,c,t)=0;
 
+# biochar can only be consumed in the land
+En.fx("biochar", c, cn, t) =0;
+
 * ----------------------------------
 * Equations
 * ----------------------------------
 Equations
 
-    impactbiotransport(t)           'impact of transporting biomass among grid cells'
+    impactbiotransport(t)                   'impact of transporting biomass among grid cells'
 
-    resourcebalance(r,c,t)          'resource balance in each grid cell'
-    biomassintocell(r,c,t)          'biomass into grid cell'
-    biomassoutocell(r,c,t)          'biomass out of grid cell'
-    maxbiomassoutocell(r,c,t)       'max biomassout of grid cell'
+    resourcebalance(r,c,t)                  'resource balance in each grid cell'
+    biomassintocell(r,c,t)                  'biomass into grid cell'
+    biomassoutocell(r,c,t)                  'biomass out of grid cell'
+    maxbiomassoutocell(r,c,t)               'max biomassout of grid cell'
 
-    localdemandforcrops(r,c,t)      'local demand for crops due to technology operation' # is this based on biojet and biomethanol?
+    localdemandforcrops(r,c,t)              'local demand for crops due to technology operation' # is this based on biojet and biomethanol?
 
-    impactbioendtransport(t)        'impact of transporting bioenergy from production to demand grid cells'
+    impactbioendtransport(t)                'impact of transporting bioenergy from production to demand grid cells'
 
-    bioenergybalance(r,c,t)         'bioenergy balance in grid cell cin decade d'
-    bioenergyintogridcell(r,c,t)    'bioenergy into grid cell'
-    bioenergyoutogridcell(r,c,t)    'bioenergy out of grid cell'
-    maxbioenergytransp(r,c,t)       'max bioenergy out of grid cell'
+    bioenergybalance(r,c,t)                 'bioenergy balance in grid cell cin decade d'
+    bioenergyintogridcell(r,c,t)            'bioenergy into grid cell'
+    bioenergyoutogridcell(r,c,t)            'bioenergy out of grid cell'
+    maxbioenergytransp(r,c,t)               'max bioenergy out of grid cell'
+
+    biocharingridcell(r,c,t)      'the production of biochar in the grid cell can only be consumed locally'
 ;
 
 impactbiotransport(t) ..                            IBT(t) =e=  dfa(t)*sum((r,c,cn), trco(r)$(rsou(r)) * Bn(r,c,cn,t)$(rsou(r)) * mx(c,cn) * tal(c)) ;
 
-resourcebalance(r,c,t)$(rsou(r)) ..      B(r,c,t)$(rsou(r)) + Bin(r,c,t)$(rsou(r)) - Bout(r,c,t)$(rsou(r)) + HB(r,c,t)$(rsou(r)) =e= 0;
+resourcebalance(r,c,t)$(rsou(r)) ..                 B(r,c,t)$(rsou(r)) + Bin(r,c,t)$(rsou(r)) - Bout(r,c,t)$(rsou(r)) + HB(r,c,t)$(rsou(r)) =e= 0;
 
 # currently, 300km range distance matrix is applied
-biomassintocell(r,c,t)$(rsou(r)) ..      Bin(r,c,t)$(rsou(r)) =e= sum((cn), Bn(r,cn,c,t)$(rsou(r)) * mx(cn,c)); 
+biomassintocell(r,c,t)$(rsou(r)) ..                 Bin(r,c,t)$(rsou(r)) =e= sum((cn), Bn(r,cn,c,t)$(rsou(r)) * mx(cn,c)); 
 
-biomassoutocell(r,c,t)$(rsou(r)) ..      Bout(r,c,t)$(rsou(r)) =e= sum((cn), Bn(r,c,cn,t)$(rsou(r)*mx(c,cn)));
+biomassoutocell(r,c,t)$(rsou(r)) ..                 Bout(r,c,t)$(rsou(r)) =e= sum((cn), Bn(r,c,cn,t)$(rsou(r)*mx(c,cn)));
 
-maxbiomassoutocell(r,c,t)$(rsou(r)) ..   Bout(r,c,t)$(rsou(r)) =l= B(r,c,t)$(rsou(r));
+maxbiomassoutocell(r,c,t)$(rsou(r)) ..              Bout(r,c,t)$(rsou(r)) =l= B(r,c,t)$(rsou(r));
 
 # HB means local biomass consumption of crop c in grid cell c
-localdemandforcrops(r,c,t)$(rsou(r)) ..  HB(r,c,t)$(rsou(r)) =e= sum((j), CP(j,c,t) * beta(r,j)$(rsou(r)) * uf);
+localdemandforcrops(r,c,t)$(rsou(r)) ..             HB(r,c,t)$(rsou(r)) =e= sum((j), CP(j,c,t) * beta(r,j)$(rsou(r)) * uf);
 
 impactbioendtransport(t) ..                         IET(t) =e= dfa(t) * sum((r,c,cn), trco(r)$(rliq(r))*En(r,c,cn,t)$(rliq(r))*mx(c,cn)*tal(c));
 
@@ -133,4 +138,4 @@ bioenergyoutogridcell(r,c,t)$(rliq(r)) ..           Eout(r,c,t)$(rliq(r)) =e= su
 
 maxbioenergytransp(r,c,t)$(rliq(r)) ..              Eout(r,c,t)$(rliq(r)) =l= E(r,c,t)$(rliq(r));
 
-
+biocharingridcell(r,c,t)$(rchar(r)) ..              E(r,c,t)$(rchar(r)) =e= HE(r,c,t)$(rchar(r));

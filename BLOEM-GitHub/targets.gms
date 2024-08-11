@@ -16,7 +16,30 @@ Parameters
 
     im(r,c,t)           'bioenergy import target' # [GJ/y] [kW/y]
 
+    bioelec(t)              'bioelectricity production target' # [GJ/y] [kW/y]
+
+    biochar(t)          'biochar production target' # [GJ/y]
+
 ;
+
+* Set bioelectricity target
+Parameter bioelec(t) /  2020        100000000 # 0.1 EJ
+                        #2030        100000000,
+                        #2040        100000000,
+                        #2050        100000000,
+                        #2060        100000000
+                        /;
+;
+
+* Set biochar target
+Parameter biochar(t) /  2020        100000000 # 0.1 EJ
+                        #2030        100000000,
+                        #2040        100000000,
+                        #2050        100000000,
+                        #2060        100000000
+                        /;
+;
+
 
 * ----------------------------------------------------------------------------------------------------------
 * Import data
@@ -71,13 +94,16 @@ Positive variables HE;
 
 Equations
 
-    bioenergytarget(r,c,t)           'meet demand for bioenergy in each decade'
-*    bioelectarget(r,c,t)             'meet demand for bioelectricity in each decade'
-*    biochartarget(r,c,t)             'meet demand for biochar in each dacade'
+    bioenergytarget(r,c,t)       'meet demand for bioenergy in each decade'
+    bioelectarget(t)             'meet demand for bioelectricity in each decade'
+    biochartarget(t)             'meet demand for biochar in each dacade'
 
 ;
 
-bioenergytarget(r,c,t)$(rliq(r)) ..   pb(r,c,t)$(rliq(r))+ex(r,c,t)$(rliq(r)) =e= HE(r,c,t)$(rliq(r)) + im(r,c,t)$(rliq(r)) ;
+bioenergytarget(r,c,t)$(rliq(r)) ..   pb(r,c,t)$(rliq(r))+ex(r,c,t)$(rliq(r)) =g= HE(r,c,t)$(rliq(r)) + im(r,c,t)$(rliq(r)) ;
 
 # Q: confuse about this electricity target. Can we use the total amount of electricity demand as constraints?
 #bioelectarget(r,c,t)$(re(r)) ..                 pb(r,c,t)$(re(r)) =l= E(r,c,t)$(re(r)) ;
+bioelectarget(t) ..                   sum((r,c), E(r,c,t)$(rele(r))) =g= bioelec(t);
+
+biochartarget(t) ..                   sum((r,c), E(r,c,t)$(rchar(r))) =g= biochar(t);

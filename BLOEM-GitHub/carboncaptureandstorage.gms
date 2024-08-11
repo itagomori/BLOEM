@@ -78,8 +78,8 @@ Equations
     
     carboncaptured(c,t)             'carbon captured in grid cell c in decade d'
     carbonbalance(c,t)              'carbon balance in grid cell c in decade d'
-*    carbonintogridcell(c,t)         'carbon into grid cell c'
-*    carbonoutogridcell(c,t)         'carbon out of grid cell c'
+    carbonintogridcell(c,t)         'carbon into grid cell c'
+    carbonoutogridcell(c,t)         'carbon out of grid cell c'
     maxcapstorage(c)                'maximum storage capacity of storage site in grid cell c'
 ;
 
@@ -88,6 +88,10 @@ impactcarbontransport(t)..          ICC(t) =e= dfa(t)* sum((c,cn), co2transc*Vn(
 
 carboncaptured(c,t)..               Vcap(c,t) =e= sum((j), CP(j,c,t)*gama(j,t)*uf);  # CP represent capacity factor in logistics.gms
 
-carbonbalance(c,t)..                Vcap(c,t)+Vin(c,t)-Vout(c,t) =e= Vseq(c,t)$(cccs(c)); # Q: I have 40 cs(c), how to import?
+carbonbalance(c,t)..                Vseq(c,t)$(cccs(c)) =e= Vcap(c,t)+Vin(c,t)-Vout(c,t) ; # Q: I have 40 cs(c), how to import?
+
+carbonintogridcell(c,t) ..          Vin(c,t) =e= sum((cn),Vn(cn,c,t)*mx(cn,c)) ;
+
+carbonoutogridcell(c,t) ..          Vout(c,t) =e= sum((cn),Vn(c,cn,t)*mx(c,cn)) ; 
 
 maxcapstorage(c)..                  sum((t), Vseq(c,t)$(cccs(c)))*10 =l= ccscap(c);  # 10 years
