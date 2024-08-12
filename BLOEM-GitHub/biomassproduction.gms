@@ -33,14 +33,11 @@ Parameters
 
 * Set aggregate emission factors for land use change
 
-# these parameters needs some supports
-Table ef(r,l) 'emission factors for direct land use change' # [tCO2/GJ] primary energy
+Table ef(r,l) 'emission factors for direct land use change' # [tCO2/GJ] primary energy, from Daioglou et al. (2017)
 
                     cropland        forest        pasture       other
-agrires             0.000           0.000         0.000         0.000
-foresres            0.000           0.000         0.000         0.000  
-grass               0.235           0.235         0.235         0.235
-wood                0.052           0.052         0.052         0.052
+grass               0.235           0.235         0.000         0.235   # calculate for grass
+wood                0.052           0.052         0.000         0.051   # calculate for cropland/wood
 ;
 
 
@@ -111,9 +108,6 @@ A.up(r,l,c,t)=0.75;
 A.lo(r,l,c,t)=0;
 
 * Land availability, types of land
-*A.fix(r,"cropland",c,t)=0;
-*A.fix(r,"forest",c,t)=0;
-*A.fix(r,"pasture",c,t)=0;
 
 # except for cropland, other types of land cannot produce agricultural residues
 A.fx("agrires","other",c,t)=0;
@@ -125,15 +119,11 @@ A.fx('foresres','other',c,t)=0;
 A.fx('foresres','cropland',c,t)=0;
 A.fx('foresres','pasture',c,t)=0;
 
-# cropland and forests cannot be used to produce energy crops
+# cropland and forests cannot be used to produce energy crops (degraded pasture can be added later)
 A.fx(r,'cropland',c,t)$(rcrp(r))=0;
 A.fx(r,'forest',c,t)$(rcrp(r))=0;
-#A.fx('wood','cropland',c,t)=0;
-#A.fx('grass','cropland',c,t)=0;
-#A.fx('wood','forest',c,t)=0;
-#A.fx('grass','forest',c,t)=0;
+A.fx(r,'pasture',c,t)$(rcrp(r))=0;
 
-$stop
 
 * ---------------------------------------------------------------------------------------------------------
 * Define Equations
@@ -174,20 +164,24 @@ Equations
 
 
 # impactbiomassproduction = yield * supply cost curve + land use emision price
-impactbioproduction(t)  ..          IBP(t) =e= dfa(t) * (sum((r,c), B(r,c,t)$(rsou(r)) * (cobp(r,c,t)$(rsou(r))))  + sum((r,l), k(t) * sum((c), A(r,l, c, t)$(recr(r))) * ef(r,l)));
+impactbioproduction(t)  ..          IBP(t) =e= dfa(t)*(sum((r,l,c),B(r,l,c,t)$(rsou(r))*(cobp(r,c,t)$(rsou(r)))+k(t)*ef(r,l)$(rsou(r)))) ;
 
+
+# the production of biomass resource r in grid cell c in decade t
+biomassproduction(r,c,t) ..         B(r,l,c,t)$(rsou(r)) =e= A(r,l,c,t)$(rsou(r))*ga(c)*y(r,c,t)$(rsou(r)) ;
+
+landavailability(l,c,t) ..          ldav(l,c,t) =g= sum((r),A(r,l,c,t)$rsou(r)) ;
 
 # the land that are used to produce energy crops in each grid cell should not larger than the total share of pasture and othernatural land
 # no need to consider agriRes and foresRes, because the above has already set A('agriRes', 'lotherland', c, t) =e= 0
-limitecropland(c,t) ..              sum((r, l)$(lother(l)), A(r, l, c, t)$(lother(l))) =l= sum((l), ldav(c, l, t)$(lother(l)));
+#limitecropland(c,t) ..              sum((r, l)$(lother(l)), A(r, l, c, t)$(lother(l))) =l= sum((l), ldav(c, l, t)$(lother(l)));
 
 # the land allocated to produce agricultural/forest residues should be lower than total cropland/forestland
-limitagriresamount(c,t) ..          A('agriRes', 'cropland', c, t) =l= ldav(c, 'cropland', t);
-limitforesresamount(c,t)  ..        A('foresRes', 'forest', c, t) =l= ldav(c, 'forest', t);
+#limitagriresamount(c,t) ..          A('agriRes', 'cropland', c, t) =l= ldav(c, 'cropland', t);
+#limitforesresamount(c,t)  ..        A('foresRes', 'forest', c, t) =l= ldav(c, 'forest', t);
 
 # used as output variable
 # for energy crop r, how many landuse l are allocatd for resource productoin (only include energy crops)
-totallandallocation(l,r,t)  ..      LdAlc(l, r, t)$(rsou(r)) =e= sum((c)$(rsou(r)), A(r, l, c, t)$(rsou(r)));   
+totallandallocation(l,r,t) ..       LdAlc(l,r,t)$(rsou(r)) =e= sum((c),A(r,l,c,t)$(rsou(r))*ga(c)) ;   
 
-# the production of biomass resource r in grid cell c in decade t
-biomassproductionincell(r,c,t) ..   B(r, c, t)$rsou(r) =e= sum((l), A(r, l, c, t)$rsou(r)) * y(r, c, t)$rsou(r)  * ga(c, t);
+$stop

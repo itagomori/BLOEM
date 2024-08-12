@@ -55,42 +55,16 @@ $setglobal gdxinfilepath 'C:\Users\vicke\Desktop\model\BLOEM\BLOEM-GitHub\input\
 Sets
 cccs(c) 'ccs site'
 $gdxIn '%gdxinfilepath%ccscap.gdx'
-$load cccs=c
+$load cccs = c
 
 carp(c) 'airport sites'
 $gdxIn '%gdxinfilepath%airport_proxy.gdx'
-$load carp=c
+$load carp = c
 
 chbr(c) 'harbor sites'
 $gdxIn '%gdxinfilepath%harbor_proxy.gdx'
-$load chbr=c
+$load chbr = c
 
-*display char, cair, cccs
-
-    # one to many mapping
-    #rj(r,j) /
-    #        agriRes.ACG,
-    #        agriRes.ACG+,
-    #        agriRes.AFT,
-    #        agriRes.AFT+,
-    #        agriRes.AME,
-    #        agriRes.AME+,
-    #        agriRes.APY,
-    #        (foresRes, ewood).WCG,
-    #        (foresRes, ewood).WCG+,
-    #        (foresRes, ewood).WFT,
-    #        (foresRes, ewood).WFT+,
-    #        (foresRes, ewood).FME,
-    #        (foresRes, ewood).FME+,
-    #        (foresRes, ewood).FPY,
-    #        egrass.GCG,
-    #        egrass.GCG+,
-    #        egrass.GFT,
-    #        egrass.GFT+,
-    #        egrass.GME,
-    #        egrass.GME+,
-    #        egrass.GPY  /
-;
 
 Alias(r, crop, resources);
 Alias(c, cn, gridcell);
