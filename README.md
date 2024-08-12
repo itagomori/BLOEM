@@ -4,7 +4,7 @@
 [![DOI](https://zenodo.org/badge/504185615.svg)](https://zenodo.org/badge/latestdoi/504185615)
 
 _Authors: Isabela Schmidt Tagomori and Rui Wang_\
-_Contact: Isabela Schmidt Tagomori - isabela.tagomori@pbl.nl | [@IsabelaTagomori](https://twitter.com/isabelatagomori)_
+_Contact: Isabela Schmidt Tagomori - isabela.tagomori@pbl.nl | [@IsabelaTagomori](https://twitter.com/isabelatagomori)_\
 _Contact: Rui Wang - rui-wang20@mails.tsinghua.edu.cn_
 
 ## Description
