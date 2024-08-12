@@ -3,8 +3,9 @@
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)\
 [![DOI](https://zenodo.org/badge/504185615.svg)](https://zenodo.org/badge/latestdoi/504185615)
 
-_Author: Isabela Schmidt Tagomori_\
+_Authors: Isabela Schmidt Tagomori and Rui Wang_\
 _Contact: Isabela Schmidt Tagomori - isabela.tagomori@pbl.nl | [@IsabelaTagomori](https://twitter.com/isabelatagomori)_
+_Contact: Rui Wang - rui-wang20@mails.tsinghua.edu.cn_
 
 ## Description
 The Bioenergy and Land Optimization Spatially Explicit Model (BLOEM) is a perfect foresight, spatially explicit, least-cost optimization model. The model is formulated as a linear programming model, accounting for both total system’s costs and GHG emissions, aiming at complying with a given bioenergy production target at minimum cost.
@@ -20,7 +21,7 @@ BLOEM is a model developed to evaluate pathways for bioenergy deployment. Theref
 - Providing contributions to long-term climate policy design, given the opportunity of competitive advantages in low carbon scenarios.
 
 ## Spatial Resolution
-The model formulation here presented is applied to the Brazilian spatial configuration, but it can be applied to different regions, spatial resolutions and time frames, according to the availability of required data and computational effort. The model can be used for standalone runs, but it can also be coupled with different levels (global, regional, national) of integrated assessment models (IAMs), through soft-link.
+The model formulation here presented is applied to China's spatial configuration, but it can be applied to different regions, spatial resolutions and time frames, according to the availability of required data and computational effort. The model can be used for standalone runs, but it can also be coupled with different levels (global, regional, national) of integrated assessment models (IAMs), through soft-link.
 
 ## Folder Structure and Scripts
 This repository is organized as follows:
