@@ -117,7 +117,7 @@ impactbiotransport(t) ..                            IBT(t) =e=  dfa(t)*sum((r,c,
 resourcebalance(r,c,t)$(rsou(r)) ..                 B(r,c,t)$(rsou(r)) + Bin(r,c,t)$(rsou(r)) - Bout(r,c,t)$(rsou(r)) + HB(r,c,t)$(rsou(r)) =e= 0;
 
 # currently, 300km range distance matrix is applied
-biomassintocell(r,c,t)$(rsou(r)) ..                 Bin(r,c,t)$(rsou(r)) =e= sum((cn), Bn(r,cn,c,t)$(rsou(r)) * mx(cn,c)); 
+biomassintocell(r,c,t)$(rsou(r)) ..                 Bin(r,c,t)$(rsou(r)) =e= sum((cn), Bn(r,cn,c,t)$(rsou(r)) * mx(cn,c));
 
 biomassoutocell(r,c,t)$(rsou(r)) ..                 Bout(r,c,t)$(rsou(r)) =e= sum((cn), Bn(r,c,cn,t)$(rsou(r)*mx(c,cn)));
 

@@ -41,7 +41,7 @@ Sets
     lfores(l) 'forest land' / forest /
     lother(l) 'pasture and other natural land' / pasture, other /
 
-    jccs(j) 'ccs technologies'              / ACG+, GCG+, WCG+, AFT+, GFT+, WFT+, AME+, GME+, WME+ /
+    jccs(j) 'ccs technologies'              / ACG+, GCG+, WCG+, AFT+, GFT+, WFT+, AME+, GME+, WME+ / 
     jliq(j) 'bioliquid technologies'        / AFT, GFT, WFT, AME, GME, WME, AFT+, GFT+, WFT+, AME+, GME+, WME+ /
     jele(j) 'bioelectricity technolgies'    / ACG, GCG, WCG, ACG+, GCG+, WCG+ /
     jchr(j) 'biochar technologies'          / APY, GPY, WPY /
@@ -84,7 +84,7 @@ Scalar
 ;
 
 Parameters
-
+    
     dfa(t)      'discount factor back to base year, including annual discounting'
 
     dfb(t)      'discount factor back to base year'
@@ -97,6 +97,8 @@ Parameters
 * Set dfa(t)
 
 Parameter dfa(t)  / 2020   6.759024 /;
+2022
+2024
                     #2030   2.605896,
                     #2040   1.004686,
                     #2050   0.387350
