@@ -36,8 +36,6 @@ The source-code of BLOEM is located here. It comprehends the following scripts:
 - **[targets.gms](BLOEM-GitHub/targets.gms)**: Module of local bioenergy targets and export targets.
 - **[technologiesportfolio.gms](BLOEM-GitHub/technologiesportfolio)**: Module of technologies portfolio, including costs and efficiencies.
 
-_Note: The model code and inputs are applied for the case study about the Brazilian bioenergy pathways in a low carbon scenario, under different land availability constraints. The code can be adapted to other regions and/or other case study inputs (e.g., changes in the technologies portfolio, feedstocks available, update of costs and factors)._
-
 ## Language
 The model was developed in the General Algebraic Modeling System (GAMS) modeling platform and is solved using the CPLEX Optimizer.
 
