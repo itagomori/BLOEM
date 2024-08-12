@@ -41,7 +41,7 @@ Scalar
 * -----------------------------------------
 
 * Setting gdx input filepath
-$setglobal gdxinfilepath 'C:\Users\vicke\Desktop\BLOEM-China\input\gdx\'
+$setglobal gdxinfilepath 'C:\Users\vicke\Desktop\model\BLOEM\BLOEM-GitHub\input\gdx\'
 
 * Import maximum storage capacity for storage sites maxst(c)
 $gdxin '%gdxinfilepath%ccscap.gdx'

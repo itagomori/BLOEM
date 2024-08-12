@@ -50,7 +50,7 @@ Sets
 
 * Sets subsets (gdx-based)
 
-$setglobal gdxinfilepath 'C:\Users\vicke\Desktop\BLOEM-China\input\gdx\'
+$setglobal gdxinfilepath 'C:\Users\vicke\Desktop\model\BLOEM\BLOEM-GitHub\input\gdx\'
 
 Sets
 cccs(c) 'ccs site'
@@ -177,7 +177,7 @@ Free variables Z ;
 * Modules
 * ---------------------------------------------------------------------------------------------------------
 
-$setglobal modulespath 'C:\Users\vicke\Desktop\BLOEM-China\'
+$setglobal modulespath 'C:\Users\vicke\Desktop\model\BLOEM\BLOEM-GitHub\'
 
 $include %modulespath%biomassproduction.gms
 $include %modulespath%logistics.gms

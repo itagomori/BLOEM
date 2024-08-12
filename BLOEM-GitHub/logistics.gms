@@ -31,7 +31,7 @@ Parameter trco(r) / agriRes         0.0020,
 * --------------------------------
 
 * Setting gdx input filepath
-$setglobal gdxinfilepaht 'C:\Users\vicke\Desktop\BLOEM-China\input\gdx\'
+$setglobal gdxinfilepaht 'C:\Users\vicke\Desktop\model\BLOEM\BLOEM-GitHub\input\gdx\'
 
 * Import distance between grid cells mx(c, cn)
 # columns: c, cn, value

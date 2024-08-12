@@ -47,7 +47,7 @@ Parameter biochar(t) /  2020        100000000 # 0.1 EJ
 
 * Setting gdx input filepath
 
-$setglobal gdxinfilepath 'C:\Users\vicke\Desktop\BLOEM-China\input\gdx\'
+$setglobal gdxinfilepath 'C:\Users\vicke\Desktop\model\BLOEM\BLOEM-GitHub\input\gdx\'
 
 
 * Set bioenergy production targets
