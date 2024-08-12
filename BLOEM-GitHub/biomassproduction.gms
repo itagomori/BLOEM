@@ -155,11 +155,13 @@ Equations
 
     impactbioproduction(t)          'impact of producing biomass'
 
-    limitecropland(c,t)             'energy crop can only be grown on pasture and othernaturalland'
-    limitagriresamount(c,t)         'agricultural residues can only sourced from cropland'
-    limitforesresamount(c,t)        'forestry residues can only be collected from forestland'
+    biomassproduction(r,l,c,t)      'biomass production in each grid cell per decade'
+    landavailability(l,c,t)         'area allocation constrained by total land availability in each grid cell'
+    #limitecropland(c,t)             'energy crop can only be grown on pasture and othernaturalland'
+    #limitagriresamount(c,t)         'agricultural residues can only sourced from cropland'
+    #limitforesresamount(c,t)        'forestry residues can only be collected from forestland'
     totallandallocation(l,r,t)      'total land allocated for eahc land type in each decade'
-    biomassproductionincell(r,c,t)  'biomass production in each grid cell per decade'
+
 ;
 
 
@@ -168,7 +170,7 @@ impactbioproduction(t)  ..          IBP(t) =e= dfa(t)*(sum((r,l,c),B(r,l,c,t)$(r
 
 
 # the production of biomass resource r in grid cell c in decade t
-biomassproduction(r,c,t) ..         B(r,l,c,t)$(rsou(r)) =e= A(r,l,c,t)$(rsou(r))*ga(c)*y(r,c,t)$(rsou(r)) ;
+biomassproduction(r,l,c,t) ..       B(r,l,c,t)$(rsou(r)) =e= A(r,l,c,t)$(rsou(r))*ga(c)*y(r,c,t)$(rsou(r)) ;
 
 landavailability(l,c,t) ..          ldav(l,c,t) =g= sum((r),A(r,l,c,t)$rsou(r)) ;
 
