@@ -1,56 +1,69 @@
 $ontext
-* ------------------
-BLOEM-China
-* ------------------
+* ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+* Bioenergy Allocation Spatially Explicit Model - BLOEM
+* Branch: BLOEM-China
+* Authors: Rui Wang & Isabela Schmidt Tagomori
+* Last update: 12.08.2024
+* Version: 1.0
+* Coupled IAM: IMAGE
+* Region: China
+* Time frame: 2020-2060
+* ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 $offtext
 
 $eolcom #
 
-* --------------------
+* ---------------------------------------------------------------------------------------------------------
 * Set Indexes
-* --------------------
-$setglobal gdxinfilepath 'C:\Users\vicke\Desktop\BLOEM-China\input\gdx\'
+* ---------------------------------------------------------------------------------------------------------
 
 Sets
 
-    r 'resources' /agriRes, foresRes, egrass, ewood, bioelectricity, biojet, biomethanol, biochar, heat, gasoline, syngas/
-    c 'gridcell' / 1*3669 /
-    t 'decade'    / 2020 /
-    j 'technology' / ACG, GCG, WCG, AFT, GFT, WFT, AME, GME, WME, APY, GPY, WPY, ACG+, GCG+, WCG+, AFT+, GFT+, WFT+, AME+, GME+, WME+ /
-    l 'landcover' / cropland, pasture, forest, othernatualland /
+    r 'resources'     / agrires, foresres, grass, wood, bioelectricity, biojet, biomethanol, biochar, bioheat, biogasoline, biosyngas /
+    c 'gridcell'      / 1*3669 /
+    t 'decade'        / 2020 / # 2030, 2040, 2050, 2060 /
+    j 'technology'    / ACG, GCG, WCG, AFT, GFT, WFT, AME, GME, WME, APY, GPY, WPY, ACG+, GCG+, WCG+, AFT+, GFT+, WFT+, AME+, GME+, WME+ /
+    l 'landcover'     / forest, cropland, pasture, other /
 
-    rsou(r) 'biomass resource' / agriRes, foresRes, egrass, ewood /
-    rres(r) 'agricultural and forestry residues' /agriRes, foresRes/
-    recr(r) 'ecrops' / egrass, ewood /
+    rcrp(r) 'energy crops'         / grass, wood /
+    rres(r) 'residues'             / agrires, foresres/
+    rsou(r) 'biomass resource'     / agrires, foresres, grass, wood /
 
-    rliq(r) 'liquid biofuel' / biojet, biomethanol /
-    rele(r) 'bioelectricity' / bioelectricity /
-    rchar(r) 'biochar' / biochar /
-    rcoprod(r) 'co-products' / heat, gasoline, syngas /
+    rliq(r) 'liquid biofuels'      / biojet, biomethanol /
+    rele(r) 'bioelectricity'       / bioelectricity /
+    rchr(r) 'biochar'              / biochar /
+    rcop(r) 'co-products'          / bioheat, biogasoline, biosyngas /
 
-    lcrop(l) 'cropland' /cropland/
-    lfores(l) 'forest land' /forest/
-    lother(l) 'pasture and other natural land' /pasture, othernatualland/
+    lp(l) 'protected areas'     / forest, other / # other = other land, including savannahs, scrubblands, etc.
 
-    jccs(j) 'ccs technologies' / ACG+, GCG+, WCG+, AFT+, GFT+, WFT+, AME+, GME+, WME+ / 
-    jliq(j) 'bioliquid technologies' / AFT, GFT, WFT, AME, GME, WME, AFT+, GFT+, WFT+, AME+, GME+, WME+ /
-    jele(j) 'bioelectricity technolgies' / ACG, GCG, WCG, ACG+, GCG+, WCG+ /
-    jchar(j) 'biochar technologies' / APY, GPY, WPY /
+    lcrop(l) 'cropland' / cropland /
+    lfores(l) 'forest land' / forest /
+    lother(l) 'pasture and other natural land' / pasture, other /
+
+    jccs(j) 'ccs technologies'              / ACG+, GCG+, WCG+, AFT+, GFT+, WFT+, AME+, GME+, WME+ / 
+    jliq(j) 'bioliquid technologies'        / AFT, GFT, WFT, AME, GME, WME, AFT+, GFT+, WFT+, AME+, GME+, WME+ /
+    jele(j) 'bioelectricity technolgies'    / ACG, GCG, WCG, ACG+, GCG+, WCG+ /
+    jchr(j) 'biochar technologies'          / APY, GPY, WPY /
 ;
+
+
+* Sets subsets (gdx-based)
+
+$setglobal gdxinfilepath 'C:\Users\vicke\Desktop\BLOEM-China\input\gdx\'
 
 Sets
 cccs(c) 'ccs site'
 $gdxIn '%gdxinfilepath%ccscap.gdx'
 $load cccs=c
 
-cair(c) 'airport sites'
+carp(c) 'airport sites'
 $gdxIn '%gdxinfilepath%airport_proxy.gdx'
-$load cair=c
+$load carp=c
 
-char(c) 'harbor sites'
+chbr(c) 'harbor sites'
 $gdxIn '%gdxinfilepath%harbor_proxy.gdx'
-$load char=c
+$load chbr=c
 
 *display char, cair, cccs
 
@@ -80,22 +93,24 @@ $load char=c
 ;
 
 Alias(r, crop, resources);
-
 Alias(c, cn, gridcell);
 Alias(t, tn, decade);
 Alias(j, technology);
 Alias(l, landuse, landcover);
 
-* ------------------------------------
+
+* ----------------------------------------------------------------------------------------------------------
 * Define parameters
-* -------------------------------------
+* ----------------------------------------------------------------------------------------------------------
 
 Scalar
 
     uf          'unit conversion factor kW to GJ'    /31.536/ # [factor]
+
 ;
 
 Parameters
+    
     dfa(t)      'discount factor back to base year, including annual discounting'
 
     dfb(t)      'discount factor back to base year'
@@ -110,7 +125,8 @@ Parameters
 Parameter dfa(t)  / 2020   6.759024 /;
                     #2030   2.605896,
                     #2040   1.004686,
-                    #2050   0.387350 /;
+                    #2050   0.387350
+                    #2060    /;
 ;
 
 * Set dfb(t)
@@ -118,23 +134,26 @@ Parameter dfa(t)  / 2020   6.759024 /;
 Parameter dfb(t)  / 2020   1.0000000000 /;
                     #2030   0.3855432894,
                     #2040   0.1486436280,
-                    #2050   0.0573085533 /;
+                    #2050   0.0573085533
+                    #2060    /;
 ;
 
 $offlisting
 
-* -----------------------------------
+* ----------------------------------------------------------------------------------------------------------
 * Set carbon tax scenario
-* -----------------------------------
+* ----------------------------------------------------------------------------------------------------------
+
 Parameter k(t)   / 2020   0 /;
                    #2030   0,
                    #2040   0,
-                   #2050   0 /;
+                   #2050   0,
+                   #2060   0 /;
 ;
 
-* -----------------------------------
+* ---------------------------------------------------------------------------------------------------------
 * Declare variables
-* -----------------------------------
+* ---------------------------------------------------------------------------------------------------------
 
 Variables
 
@@ -146,15 +165,17 @@ Variables
     IET(t)          'impact of bioenergy transportation in time t' # [US$]
     ICC(t)          'impact of carbon transportation and storage in time' # [US$]
     ITG(t)          'impact of carbon emissions in time t' # [US#]
+
 ;
 
-Positive variables IBP, IBT, IBC, IET, ICC;
+Positive variables IBP, IBT, IBC, IET, ICC ;
 
-Free variables Z;
+Free variables Z ;
 
-* -----------------------------------
+
+* ---------------------------------------------------------------------------------------------------------
 * Modules
-* -----------------------------------
+* ---------------------------------------------------------------------------------------------------------
 
 $setglobal modulespath 'C:\Users\vicke\Desktop\BLOEM-China\'
 
@@ -165,9 +186,10 @@ $include %modulespath%carboncaptureandstorage.gms
 $include %modulespath%emissions.gms
 $include %modulespath%targets.gms
 
-* -----------------------------------
+
+* ---------------------------------------------------------------------------------------------------------
 * Equations
-* -----------------------------------
+* ---------------------------------------------------------------------------------------------------------
 
 Equations
 
@@ -175,7 +197,8 @@ Equations
 
 ;
 
-cost ..     Z =e= sum((t),IBP(t)+IBT(t)+IBC(t)+IET(t)+ICC(t)+ITG(t));
+cost ..         Z =e= sum((t),IBP(t)+IBT(t)+IBC(t)+IET(t)+ICC(t)+ITG(t));
+
 
 Model BLOEM_China /all/;
 
@@ -193,13 +216,14 @@ threads 1
 $offecho
 BLOEM_China.OptFile = 1;
 
-Solve BLOEM_China using lp minimizing Z;
 
-Display Z.l;
+Solve BLOEM_China using lp minimizing Z ;
 
-Display EE.l;
+Display Z.l ;
 
-Display LdAlc.l;
+Display EE.l ;
+
+Display LdAlc.l ;
 
 Display GG.l, Gbp.l, Gfr.l, Gbt.l, Gbc.l, Get.l ;
 
@@ -209,9 +233,9 @@ Display TCA.l ;
 
 Display Vseq.l ;
 
-* -------------------------------
+* ---------------------------------------------------------------------------------------------------------
 * Export results
-* -------------------------------
+* ---------------------------------------------------------------------------------------------------------
 
 * Set gdx output filepath;
 
@@ -219,7 +243,7 @@ $setglobal gdxoutfilepath 'C:\Users\vicke\Desktop\BLOEM-China\output\gdx\'
 
 # Unload:
 
-execute_unload '%gdxoutfilepath%wdgv_a.gdx'
+execute_unload '%gdxoutfilepath%scen_a.gdx'
 
 #B     # biomass production
 
@@ -229,7 +253,7 @@ A     # land allocation
 
 ;
 
-execute_unload '%gdxoutfilepath%wgv_b.gdx'
+execute_unload '%gdxoutfilepath%scen_b.gdx'
 
 CA    # added capacity
 
@@ -243,7 +267,7 @@ CP    # rate of operation
 
 ;
 
-execute_unload '%gdxoutfilepath%wgv_c.gdx'
+execute_unload '%gdxoutfilepath%scen_c.gdx'
 
 E     # bioenergy production
 
@@ -257,7 +281,7 @@ Vseq  # carbon stored
 
 ;
 
-execute_unload '%gdxoutfilepath%wgv_d.gdx'
+execute_unload '%gdxoutfilepath%scen_d.gdx'
 
 GG    # emissions without emissions from land use change
 
@@ -273,7 +297,7 @@ Get   # emissions from biofuel transportation
 
 ;
 
-execute_unload '%gdxoutfilepath%wgv_e.gdx'
+execute_unload '%gdxoutfilepath%scen_e.gdx'
 
 Z     # total system cost
 
@@ -294,6 +318,3 @@ ICC   # impact of carbon transportation and storage
 ITG   # impact of emissions [carbon tax scenarios]
 
 ;
-
-
-

@@ -1,97 +1,107 @@
 $ontext
-* -----------------------
-* BLOEM-China
-* -----------------------
+* ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+* Bioenergy Allocation Spatially Explicit Model - BLOEM
+* Branch: BLOEM-China
+* Authors: Rui Wang & Isabela Schmidt Tagomori
+* Last update: 12.08.2024
+* Version: 1.0
+* Coupled IAM: IMAGE
+* Region: China
+* Time frame: 2020-2060
+* Module: Land Allocation and Biomass Production
+* ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 $offtext
 
-* -----------------------
+* ----------------------------------------------------------------------------------------------------------
 * Define parameters
-* -----------------------
+* ----------------------------------------------------------------------------------------------------------
 
 Parameters
+
     ldav(c,l,t)         'fraction of land available for bioenergy' # [fraction, 0-1]
 
     cobp(r,c,t)         'biomass production costs' # [US$/GJ]
 
-    ga(c,t)              'grid cell area' # [km2]
+    ga(c,t)             'grid cell area' # [km2]
 
-    y(r,c,t)            'biomass yield' # [GJ/km2]
+    y(r,c,t)            'biomass yields' # [GJ/km2]
 
     ef(r,l)             'emission factors for direct land use change' # [tCO2/GJ] primary energy
 
 ;
 
+
 * Set aggregate emission factors for land use change
 
-*Table ef(r,l) 'emission factors for direct land use change' # [tCO2/GJ] primary energy,
-
-#                   forest        other        pasture
-#sugarcane           0.044         0.030        0.000
-#oilcrops            0.235         0.257        0.000   
-#wood                0.052         0.051        0.000
-#;
-
 # these parameters needs some supports
-Table ef(r,l) 'emission factors for direct land use change' # [tCO2/GJ] primary energy,
+Table ef(r,l) 'emission factors for direct land use change' # [tCO2/GJ] primary energy
 
-                    cropland        forest        pasture       othernatualland
-agriRes             0.000           0.000         0.000         0.000
-foresRes            0.000           0.000         0.000         0.000  
-egrass              0.235           0.235         0.235         0.235
-ewood               0.052           0.052         0.052         0.052
+                    cropland        forest        pasture       other
+agrires             0.000           0.000         0.000         0.000
+foresres            0.000           0.000         0.000         0.000  
+grass               0.235           0.235         0.235         0.235
+wood                0.052           0.052         0.052         0.052
 ;
 
 
-* ---------------------
-* import data
-* ---------------------
+* ----------------------------------------------------------------------------------------------------------
+* Import data
+* ----------------------------------------------------------------------------------------------------------
+
 * Setting gdx input filepath
 
 $setglobal gdxinfilepath 'C:\Users\vicke\Desktop\BLOEM-China\input\gdx\'
 
+
 * Import land availability:
-# c, l, t, value 
+
 $gdxin '%gdxinfilepath%landavailablebioen_bopf.gdx'
 
 $load ldav = landavailablebioen_bopf
 
 $gdxin
 
+
 # Import costs of biomass production:
 
 $gdxin '%gdxinfilepath%bprcosts.gdx'
-# r, c, t, value
+
 $load cobp = bprcosts
 
 $gdxin
 
+
 # Import grid cell area
+
 $gdxin '%gdxinfilepath%gcarea.gdx'
-# c, t, value
+
 $load ga = gcarea
 
 $gdxin
 
+
 # Import crop yields:
+
 $gdxin '%gdxinfilepath%bpryields.gdx'
-# r, c, t, value
+
 $load y = bpryields
 
 $gdxin
 
 ;
-* ---------------------------------------------
+
+* ---------------------------------------------------------------------------------------------------------
 * Declare variables
-* ---------------------------------------------
+* ---------------------------------------------------------------------------------------------------------
 
 Variables
 
-    IBP(t)              'impact of biomass production in time t'    # [US$]
+    IBP(t)          'impact of biomass production in time t'    # [US$]
 
-    A(r,l,c,t)       'area allocated to biomass production for crop r in land type l in grid cell c in time t' # [fraction]
-    B(r,c,t)          'biomass production for crop r in grid cell c in time t' #[GJ]
+    A(r,l,c,t)      'area allocated to biomass production for crop r in land type l in grid cell c in time t' # [fraction]
+    B(r,l,c,t)      'biomass production for crop r in grid cell c in time t' #[GJ]
 
-    LdAlc(l, r, t)      'total land allocated per land type per crop per decade' # [km2]
+    LdAlc(l,r,t)    'total land allocated per land type per crop per decade' # [km2]
 ;
 
 Positive variables IBP, A, B;
@@ -101,28 +111,33 @@ A.up(r,l,c,t)=0.75;
 A.lo(r,l,c,t)=0;
 
 * Land availability, types of land
-*A.fix(r, "cropland", c, t) = 0;
-*A.fix(r, "forest", c, t) = 0;
-*A.fix(r, "builtup", c, t) = 0;
+*A.fix(r,"cropland",c,t)=0;
+*A.fix(r,"forest",c,t)=0;
+*A.fix(r,"pasture",c,t)=0;
 
-# except cropland, other land cannot produce agricultural residues
-A.fx("agriRes", "othernatualland", c, t) =0;
-A.fx('agriRes', 'forest', c, t) =0;
-A.fx('agriRes', 'pasture', c, t) =0;
-# except forest, other land cannot produce forestry residues
-A.fx('foresRes', 'othernatualland', c, t) =0;
-A.fx('foresRes', 'cropland', c, t) =0;
-A.fx('foresRes', 'pasture', c, t) =0;
-# cropland and forest land cannot be used to produce energy crops
-A.fx('ewood', 'cropland', c, t) =0;
-A.fx('egrass', 'cropland', c, t) =0;
-A.fx('ewood', 'forest', c, t) =0;
-A.fx('egrass', 'forest', c, t) =0;
+# except for cropland, other types of land cannot produce agricultural residues
+A.fx("agrires","other",c,t)=0;
+A.fx('agrires','forest',c,t)=0;
+A.fx('agrires','pasture',c,t)=0;
 
+# except for forests, other types of land cannot produce forestry residues
+A.fx('foresres','other',c,t)=0;
+A.fx('foresres','cropland',c,t)=0;
+A.fx('foresres','pasture',c,t)=0;
 
-* -------------------------------
+# cropland and forests cannot be used to produce energy crops
+A.fx(r,'cropland',c,t)$(rcrp(r))=0;
+A.fx(r,'forest',c,t)$(rcrp(r))=0;
+#A.fx('wood','cropland',c,t)=0;
+#A.fx('grass','cropland',c,t)=0;
+#A.fx('wood','forest',c,t)=0;
+#A.fx('grass','forest',c,t)=0;
+
+$stop
+
+* ---------------------------------------------------------------------------------------------------------
 * Define Equations
-* -------------------------------
+* ---------------------------------------------------------------------------------------------------------
 
 
 *Equations
@@ -147,10 +162,12 @@ A.fx('egrass', 'forest', c, t) =0;
 
 * ============ new version ========================
 Equations
+
     impactbioproduction(t)          'impact of producing biomass'
-    limitecropland(c,t)         'energy crop can only be grown on pasture and othernaturalland'
-    limitagriresamount(c,t)        'agricultural residues can only sourced from cropland'
-    limitforesresamount(c,t)       'forestry residues can only be collected from forestland'
+
+    limitecropland(c,t)             'energy crop can only be grown on pasture and othernaturalland'
+    limitagriresamount(c,t)         'agricultural residues can only sourced from cropland'
+    limitforesresamount(c,t)        'forestry residues can only be collected from forestland'
     totallandallocation(l,r,t)      'total land allocated for eahc land type in each decade'
     biomassproductionincell(r,c,t)  'biomass production in each grid cell per decade'
 ;
