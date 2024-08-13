@@ -1,6 +1,14 @@
 $ontext
 * ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-* BLOEM-China
+* Bioenergy Allocation Spatially Explicit Model - BLOEM
+* Branch: BLOEM-China
+* Authors: Rui Wang & Isabela Schmidt Tagomori
+* Last update: 12.08.2024
+* Version: 1.0
+* Coupled IAM: IMAGE
+* Region: China
+* Time frame: 2020-2060
+* Module: GHG Emissions
 * ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 $offtext
 
@@ -26,80 +34,60 @@ Parameters
 
 ;
 
+* Set fuel emissions factor, diesel fuel (fd):
+
+Scalar 
+    
+    fd     'emission factor for fuel consumption in biomass production '     / 0.0027 / 
+    
+;
+
+
+* Set conversion factor for emissions from fertilizer use (nf):
+
+Scalar 
+    
+    nf     'conversion factor for emissions from fertilizer use'     / 298 / 
+
+; 
 
 * Set fuel consumption for biomass production fp(r):
 # need calibrate
-Parameter fp(r)    / agriRes   0.293534, 
-                     foresRes  0.3, 
-                     egrass    0.6,
-                     ewood     0.5 /;
-;
 
-
-* Set fuel emissions factor, diesel fuel fd:
-
-Scalar fd     /0.0027/ ;
-
-
-* Set conversion factor for emissions from fertilizer use nf:
-
-Scalar nf     /298/ ; 
-
+Parameter fp(r)    / agrires    0.293534, 
+                     foresres   0.300000, 
+                     grass      0.600000,
+                     wood       0.500000 /;
 
 * Set emission factor for biomass transportation eft(r):
 # need calibrate
-Parameter eft(r)   / agriRes   0.003226,
-                     foresRes    0.002985,
-                     egrass        0.002956,
-                     ewood         0.002956 /;
-;
 
+Parameter eft(r)   / agrires    0.003226,
+                     foresres   0.002985,
+                     grass      0.002956,
+                     wood       0.002956 /;
 
 * Set emission factor for biofuel transportation efw(r):
 # need calibrate
-Parameter efw(r)   / biojet             0.006622,
-                     biomethanol      0.006621,
-                     bioelectricity     0.006621,
-                     biochar          0.006621 /;
-;
+
+Parameter efw(r)   / biojet           0.006622,
+                     biomethanol      0.006621 /;
 
 
 * Set emission factor for biomass conversion efc(r):
 # need calibrate
-Parameter efc(r)   / biojet          0.600000,
-                     biomethanol     0.760498,
+
+Parameter efc(r)   / biojet           0.600000,
+                     biomethanol      0.760498,
                      bioelectricity   0.000000,
-                     biochar      0.000000 /;
-;
+                     biochar          0.000000 /;
 
-Parameter eff(r)    / agriRes       0,
-                      foresRes      0,
-                      egrass        550,
-                      ewood         10 /;
-;
+* Set emission factor for fertilizer use eff(r):
 
-
-* ----------------------------------------------------------------------------------------------------------
-* Import data
-* ----------------------------------------------------------------------------------------------------------
-
-* Setting gdx input filepath
-
-*$setglobal gdxinfilepath 'C:\Users\vicke\Desktop\BLOEM-China\input\gdx\'
-
-
-* Import emission factors for fertilizer use:
-# columns: crop(agriRes, foresRes, egrass, ewood), gridcell, value(6.48~599.32)
-# ? why there is no oil crops
-
-*$gdxin '%gdxinfilepath%efertilizers.gdx'
-
-*$load eff=efertilizers
-
-*$gdxin
-
-*;
-
+Parameter eff(r)    / agrires    0,
+                      foresres   0,
+                      grass      550,
+                      wood       10 /;
 
 * ---------------------------------------------------------------------------------------------------------
 * Declare variables
@@ -120,7 +108,6 @@ Variables
 
 Positive variables Gbp, Gfr, Gbt, Gbc, Get;
 
-
 * ---------------------------------------------------------------------------------------------------------
 * Equations
 * ---------------------------------------------------------------------------------------------------------
@@ -138,22 +125,22 @@ Equations
 
 ;
 
-impactemissions(t) ..       ITG(t) =e= dfa(t)*k(t)*GG(t) ;
+impactemissions(t) ..                           ITG(t) =e= dfa(t)*k(t)*GG(t) ;
 
 
-totalemissions(t) ..        GG(t) =e= Gbp(t)+Gfr(t)+Gbt(t)+Gbc(t)+Get(t)-sum((c),Vseq(c,t)$(cccs(c))) ;
+totalemissions(t) ..                            GG(t) =e= Gbp(t)+Gfr(t)+Gbt(t)+Gbc(t)+Get(t)-sum((c),Vseq(c,t)$(cccs(c))) ;
 
 # note on total emissions: without emissions from luc, which are added post optmization
 
-emissionsbioprod(t) ..      Gbp(t) =e= sum((r,c), fp(r)$(rsou(r)) * B(r,c,t)$(rsou(r)) * fd) ;
+emissionsbioprod(t) ..                          Gbp(t) =e= sum((r,l,c),fp(r)$(rsou(r))*B(r,l,c,t)$(rsou(r))*fd) ;
 
 # Q: only energy crops need fertilizer
-emissionsfertilz(t) ..      Gfr(t) =e= sum((r,l,c), eff(r) * A(r,l,c,t) * ga(c,t) * nf/1000) ;
+emissionsfertilz(t) ..                          Gfr(t) =e= sum((r,l,c),eff(r)*A(r,l,c,t)*ga(c,t)*nf/1000) ;
 
 # Q: whether limit the bioass transportation distance? replace mx with antother distance matrix
 # here include both residues and energy crops
-emissionsbiotransp(t) ..    Gbt(t) =e= sum((r,c,cn), eft(r)$(rsou(r)) * mx(c,cn) * tal(c) * Bn(r,c,cn,t)$(rsou(r))/1000);
+emissionsbiotransp(t) ..                        Gbt(t) =e= sum((r,c,cn),eft(r)$(rsou(r))*mx(c,cn)*tal(c)*Bn(r,c,cn,t)$(rsou(r))/1000) ;
 
-emissionsbioconv(t) ..      Gbc(t) =e= sum((r,j,c), efc(r)$(rliq(r)) * CP(j,c,t) * beta(r,j)$(rliq(r))/1000) ;
+emissionsbioconv(t) ..                          Gbc(t) =e= sum((r,j,c),efc(r)$(rmap(r))*CP(j,c,t)*beta(r,j)$(rmap(r))/1000) ;
 
-emissionsbioentransp(t) ..  Get(t) =e= sum((r,c,cn), efw(r)$(rliq(r)) * mx(c,cn) * tal(c) * En(r,c,cn,t)$(rliq(r))/1000) ;
+emissionsbioentransp(t) ..                      Get(t) =e= sum((r,c,cn),efw(r)$(rliq(r))*mxairhbr(c,cn)*tal(c)*En(r,c,cn,t)$(rliq(r))/1000) ;

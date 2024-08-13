@@ -33,6 +33,7 @@ Sets
     rliq(r) 'liquid biofuels'      / biojet, biomethanol /
     rele(r) 'bioelectricity'       / bioelectricity /
     rchr(r) 'biochar'              / biochar /
+    rmap(r) 'main products'        / biojet, biomethanol, bioelectricity, biochar /
     rpro(r) 'all products'         / biojet, biomethanol, biochar, bioheat, biogasoline, biosyngas /
     rcop(r) 'co-products'          / bioheat, biogasoline, biosyngas /
 
