@@ -23,7 +23,7 @@ Sets
     r 'resources'     / agrires, foresres, grass, wood, bioelectricity, biojet, biomethanol, biochar, bioheat, biogasoline, biosyngas /
     c 'gridcell'      / 1*3669 /
     t 'decade'        / 2020 / # 2030, 2040, 2050, 2060 /
-    j 'technology'    / ACG, GCG, WCG, AFT, GFT, WFT, AME, GME, WME, APY, GPY, WPY, ACG+, GCG+, WCG+, AFT+, GFT+, WFT+, AME+, GME+, WME+ /
+    j 'technology'    / ACG, GCG, FCG, WCG, AFT, GFT, FFT, WFT, AME, GME, FME, WME, APY, GPY, FPY, WPY, ACG+, GCG+, FCG+, WCG+, AFT+, GFT+, FFT+, WFT+, AME+, GME+, FME+, WME+ /
     l 'landcover'     / forest, cropland, pasture, other /
 
     rcrp(r) 'energy crops'         / grass, wood /
@@ -38,14 +38,10 @@ Sets
 
     lp(l) 'protected areas'        / forest, other / # other = other land, including savannahs, scrubblands, etc.
 
-    #lcrop(l) 'cropland'                           / cropland /
-    #lfores(l) 'forest land'                       / forest /
-    #lother(l) 'pasture and other natural land'    / pasture, other /
-
-    jccs(j) 'ccs technologies'              / ACG+, GCG+, WCG+, AFT+, GFT+, WFT+, AME+, GME+, WME+ /
-    jliq(j) 'bioliquid technologies'        / AFT, GFT, WFT, AME, GME, WME, AFT+, GFT+, WFT+, AME+, GME+, WME+ /
-    jele(j) 'bioelectricity technolgies'    / ACG, GCG, WCG, ACG+, GCG+, WCG+ /
-    jchr(j) 'biochar technologies'          / APY, GPY, WPY /
+    jccs(j) 'ccs technologies'              / ACG+, GCG+, FCG+, WCG+, AFT+, GFT+, FFT+, WFT+, AME+, GME+, FME+, WME+ /
+    jliq(j) 'bioliquid technologies'        / AFT, GFT, FFT, WFT, AME, GME, FME, WME, AFT+, GFT+, FFT+, WFT+, AME+, GME+, FME+, WME+ /
+    jele(j) 'bioelectricity technolgies'    / ACG, GCG, FCG, WCG, ACG+, GCG+, FCG+, WCG+ /
+    jchr(j) 'biochar technologies'          / APY, GPY, FPY, WPY /
 ;
 
 * Sets subsets (gdx-based)
@@ -64,12 +60,13 @@ $load carp = c
 chbr(c) 'harbor sites'
 $gdxIn '%gdxinfilepath%harbor_proxy.gdx'
 $load chbr = c
+;
 
-Alias(r, crop, resources);
-Alias(c, cn, gridcell);
-Alias(t, tn, decade);
-Alias(j, technology);
-Alias(l, landuse, landcover);
+Alias(r,crop,resources);
+Alias(c,cn,gridcell);
+Alias(t,tn,decade);
+Alias(j,technology);
+Alias(l,landuse,landcover);
 
 * ----------------------------------------------------------------------------------------------------------
 * Define parameters

@@ -126,45 +126,18 @@ A.fx(r,'pasture',c,t)$(rcrp(r))=0;
 * Define Equations
 * ---------------------------------------------------------------------------------------------------------
 
-
-*Equations
-
-*    impactbioproduction(t)          'impact of producing biomass'
-
-*    production(r, l, c, t)          'production of crop r constrained by area allocation and yield'
-*    landavailability(l, c, t)       'area allocation constrained by total land availability in each grid cell'
-*    totallandallocation(l, r, t)    'total land allocated per land type per crop per decade' # give target for each land use type?
-*;
-
-# Q: nee to think about how to add agricultural and forestry residues in these equations?
-*impactbioproduction(t) ..           IBP(t) =e= dfa(t)*sum((r,l,c), B(r,l,c,t)$rsou(r) * (cobp(r,c,t)$(rsou(r)) + k(t)*ef(r,l)$rsou(r)));
-
-*production(r,l,c,t)$(recr(r))..     B(r,l,c,t)$(recr(r)) =l= A(r,l,c,t)$(recr(r)) * ga(c,t) * y(r,c,t)$(recr(r));
-
-*landavailability(l,c,t) ..          ldav(l,c,t) =g= sum((r), A(r,l,c,t)$(recr(r)));
-
-*totallandallocation(l,r,t) ..       LdAlc(l,r,t)$(recr(r)) =e= sum((c), A(r,l,c,t)$(recr(r))*ga(c));
-
-
-
-* ============ new version ========================
 Equations
 
     impactbioproduction(t)          'impact of producing biomass'
 
     biomassproduction(r,l,c,t)      'biomass production in each grid cell per decade'
     landavailability(l,c,t)         'area allocation constrained by total land availability in each grid cell'
-    #limitecropland(c,t)             'energy crop can only be grown on pasture and othernaturalland'
-    #limitagriresamount(c,t)         'agricultural residues can only sourced from cropland'
-    #limitforesresamount(c,t)        'forestry residues can only be collected from forestland'
     totallandallocation(l,r,t)      'total land allocated for eahc land type in each decade'
 
 ;
 
-
 # impactbiomassproduction = yield * supply cost curve + land use emision price
 impactbioproduction(t)  ..          IBP(t) =e= dfa(t)*(sum((r,l,c),B(r,l,c,t)$(rsou(r))*(cobp(r,c,t)$(rsou(r)))+k(t)*ef(r,l)$(rsou(r)))) ;
-
 
 # the production of biomass resource r in grid cell c in decade t
 biomassproduction(r,l,c,t) ..       B(r,l,c,t)$(rsou(r)) =e= A(r,l,c,t)$(rsou(r))*ga(c)*y(r,c,t)$(rsou(r)) ;
