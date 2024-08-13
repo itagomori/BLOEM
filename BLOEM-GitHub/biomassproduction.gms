@@ -22,14 +22,13 @@ Parameters
 
     cobp(r,c,t)         'biomass production costs' # [US$/GJ]
 
-    ga(c,t)             'grid cell area' # [km2]
+    ga(c)               'grid cell area' # [km2]
 
     y(r,c,t)            'biomass yields' # [GJ/km2]
 
     ef(r,l)             'emission factors for direct land use change' # [tCO2/GJ] primary energy
 
 ;
-
 
 * Set aggregate emission factors for land use change
 
@@ -39,7 +38,6 @@ Table ef(r,l) 'emission factors for direct land use change' # [tCO2/GJ] primary 
 grass               0.235           0.235         0.000         0.235   # calculate for grass
 wood                0.052           0.052         0.000         0.051   # calculate for cropland/wood
 ;
-
 
 * ----------------------------------------------------------------------------------------------------------
 * Import data
@@ -59,7 +57,7 @@ $load ldav = landavailablebioen_bopf
 $gdxin
 
 
-# Import costs of biomass production:
+* Import costs of biomass production:
 
 $gdxin '%gdxinfilepath%bprcosts.gdx'
 
@@ -68,7 +66,7 @@ $load cobp = bprcosts
 $gdxin
 
 
-# Import grid cell area
+* Import grid cell area
 
 $gdxin '%gdxinfilepath%gcarea.gdx'
 
@@ -77,7 +75,7 @@ $load ga = gcarea
 $gdxin
 
 
-# Import crop yields:
+* Import crop yields:
 
 $gdxin '%gdxinfilepath%bpryields.gdx'
 
@@ -123,7 +121,6 @@ A.fx('foresres','pasture',c,t)=0;
 A.fx(r,'cropland',c,t)$(rcrp(r))=0;
 A.fx(r,'forest',c,t)$(rcrp(r))=0;
 A.fx(r,'pasture',c,t)$(rcrp(r))=0;
-
 
 * ---------------------------------------------------------------------------------------------------------
 * Define Equations
@@ -185,5 +182,3 @@ landavailability(l,c,t) ..          ldav(l,c,t) =g= sum((r),A(r,l,c,t)$rsou(r)) 
 # used as output variable
 # for energy crop r, how many landuse l are allocatd for resource productoin (only include energy crops)
 totallandallocation(l,r,t) ..       LdAlc(l,r,t)$(rsou(r)) =e= sum((c),A(r,l,c,t)$(rsou(r))*ga(c)) ;   
-
-$stop

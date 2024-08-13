@@ -33,20 +33,20 @@ Sets
     rliq(r) 'liquid biofuels'      / biojet, biomethanol /
     rele(r) 'bioelectricity'       / bioelectricity /
     rchr(r) 'biochar'              / biochar /
+    rpro(r) 'all products'         / biojet, biomethanol, biochar, bioheat, biogasoline, biosyngas /
     rcop(r) 'co-products'          / bioheat, biogasoline, biosyngas /
 
-    lp(l) 'protected areas'     / forest, other / # other = other land, including savannahs, scrubblands, etc.
+    lp(l) 'protected areas'        / forest, other / # other = other land, including savannahs, scrubblands, etc.
 
-    lcrop(l) 'cropland' / cropland /
-    lfores(l) 'forest land' / forest /
-    lother(l) 'pasture and other natural land' / pasture, other /
+    #lcrop(l) 'cropland'                           / cropland /
+    #lfores(l) 'forest land'                       / forest /
+    #lother(l) 'pasture and other natural land'    / pasture, other /
 
     jccs(j) 'ccs technologies'              / ACG+, GCG+, WCG+, AFT+, GFT+, WFT+, AME+, GME+, WME+ / 
     jliq(j) 'bioliquid technologies'        / AFT, GFT, WFT, AME, GME, WME, AFT+, GFT+, WFT+, AME+, GME+, WME+ /
     jele(j) 'bioelectricity technolgies'    / ACG, GCG, WCG, ACG+, GCG+, WCG+ /
     jchr(j) 'biochar technologies'          / APY, GPY, WPY /
 ;
-
 
 * Sets subsets (gdx-based)
 
@@ -65,13 +65,11 @@ chbr(c) 'harbor sites'
 $gdxIn '%gdxinfilepath%harbor_proxy.gdx'
 $load chbr = c
 
-
 Alias(r, crop, resources);
 Alias(c, cn, gridcell);
 Alias(t, tn, decade);
 Alias(j, technology);
 Alias(l, landuse, landcover);
-
 
 * ----------------------------------------------------------------------------------------------------------
 * Define parameters
@@ -109,7 +107,7 @@ Parameter dfb(t)  / 2020   1.0000000000 /;
                     #2030   0.3855432894,
                     #2040   0.1486436280,
                     #2050   0.0573085533
-                    #2060    /;
+                    #2060   0.0220949282/;
 ;
 
 $offlisting
@@ -146,7 +144,6 @@ Positive variables IBP, IBT, IBC, IET, ICC ;
 
 Free variables Z ;
 
-
 * ---------------------------------------------------------------------------------------------------------
 * Modules
 * ---------------------------------------------------------------------------------------------------------
@@ -159,7 +156,6 @@ $include %modulespath%technologiesportfolio.gms
 $include %modulespath%carboncaptureandstorage.gms
 $include %modulespath%emissions.gms
 $include %modulespath%targets.gms
-
 
 * ---------------------------------------------------------------------------------------------------------
 * Equations
