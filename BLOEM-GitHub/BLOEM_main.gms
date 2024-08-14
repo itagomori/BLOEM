@@ -42,6 +42,16 @@ Sets
 
 ;
 
+* Sets subsets (gdx-based)
+
+$setglobal gdxinfilepath 'C:\Path\'  # set your path for inputs
+
+Sets
+cccs(c) 'ccs storage sites'  # grid cell numbers for ccs storage sites
+$gdxIn '%gdxinfilepath%ccscap.gdx'
+$load cccs = c
+;
+
 Alias(r,crop,resource);
 Alias(c,cn,gridcell);
 Alias(t,tn,time);
