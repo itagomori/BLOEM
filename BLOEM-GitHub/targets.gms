@@ -1,13 +1,11 @@
 $ontext
 * ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 * Bioenergy Allocation Spatially Explicit Model - BLOEM
+* Branch: BLOEM-Master
 * Author: Isabela Schmidt Tagomori
-* Last update: 12.05.2021
-* Version: 1.0
-* Coupled IAM: BLUES
-* Region: Brazil 
-* Time frame: 2020-2050
-* Module: Bioenergy Targets
+* Last update: 14.08.2022
+* Version: 2.0
+* Module: Targets for Bioenergy Production
 * ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 $offtext
 
@@ -23,59 +21,24 @@ Parameters
 
 ;
 
-
-* Set exportation targets
-
-# Ports:
-# Suape = 1315
-# Santos = 2698
-# Paranaguá = 2744
-
-Table ex(r,c,t) 'exportation of biofuels'  # [GJ]
-
-                                2020    2030    2040    2050             
-    ethanol1g.        1315      0       0       0       0              
-    ethanol1g.        2698      0       0       0       0              
-    ethanol1g.        2744      0       0       0       0              
-
-    ethanol2g.        1315      0       0       0       0              
-    ethanol2g.        2698      0       0       0       0              
-    ethanol2g.        2744      0       0       0       0              
-
-    biojet.           1315      0       0       0       0              
-    biojet.           2698      0       0       0       0              
-    biojet.           2744      0       0       0       0              
-
-    dieselbiofuel.    1315      0       0       0       0              
-    dieselbiofuel.    2698      0       0       0       0              
-    dieselbiofuel.    2744      0       0       0       0              
-
-    biodiesel.        1315      0       0       0       0              
-    biodiesel.        2698      0       0       0       0              
-    biodiesel.        2744      0       0       0       0              
-
-;
-
-
 * ----------------------------------------------------------------------------------------------------------
 * Import data
 * ----------------------------------------------------------------------------------------------------------
 
 * Setting gdx input filepath
 
-$setglobal gdxinfilepath 'X:\user\tagomorii\BLOEM\GDXinput\Main\'
+$setglobal gdxinfilepath 'C:\Path\'  # set your path for inputs
 
 
 * Set bioenergy production targets
 
-$gdxin '%gdxinfilepath%bioenergytargetsbr_ndcnovabr.gdx'
+$gdxin '%gdxinfilepath%bioenergytargets_scenario.gdx'
 
-$load pb=bioenergytargetsbr
+$load pb=bioenergytargets
 
 $gdxin
 
 ;
-
 
 * ---------------------------------------------------------------------------------------------------------
 * Declare variables
@@ -89,7 +52,6 @@ Variables
 
 Positive variables HE;
 
-
 * ---------------------------------------------------------------------------------------------------------
 * Equations
 * ---------------------------------------------------------------------------------------------------------
@@ -101,6 +63,6 @@ Equations
 
 ;
 
-bioenergytarget(r,c,t)$(rp(r)) ..               pb(r,c,t)$(rp(r))+ex(r,c,t)$(rp(r)) =e= HE(r,c,t)$(rp(r)) ;
+bioenergytarget(r,c,t)$(rliq(r)) ..             pb(r,c,t)$(rliq(r))+ex(r,c,t)$(rliq(r)) =e= HE(r,c,t)$(rliq(r)) ;
 
 bioelectarget(r,c,t)$(re(r)) ..                 pb(r,c,t)$(re(r)) =l= E(r,c,t)$(re(r)) ;
