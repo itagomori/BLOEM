@@ -45,3 +45,6 @@ For GAMS documentation, please visit: [https://www.gams.com/latest/docs](https:/
 ## References
 ***BLOEM documentation***\
 Tagomori, I. (2022). [Bioenergy and Carbon Capture and Storage Spatially Explicit Modelling in Brazil](http://www.ppe.ufrj.br/images/Tese_Isabela_Tagomori.pdf). *Methods*. Graduate School of Engineering (COPPE), Universidade Federal do Rio de Janeiro (UFRJ).
+
+***Scenario Analysis***\
+Tagomori, I., Daioglou, V., Rochedo, P., Angelkorte, G., Schaeffer, R., van Vuuren, D. and Szklo, A., 2023. [BLOEM: A spatially explicit model of bioenergy and carbon capture and storage, applied to Brazil](https://onlinelibrary.wiley.com/doi/full/10.1111/gcbb.13008). *GCB Bioenergy*, 15(2), pp.116-127.
