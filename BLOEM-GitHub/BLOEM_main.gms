@@ -66,6 +66,8 @@ Scalar
     
     uf       'unit coversion factor kW to GJ'           /31.536/  # [factor]
 
+    q        'years in time step'                      / X /  # for example, 10 if time steps are decades
+
 ;
 
 Parameters

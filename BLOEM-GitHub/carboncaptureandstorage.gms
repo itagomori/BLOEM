@@ -116,4 +116,4 @@ carbonintogridcell(c,t) ..                      Vin(c,t) =e= sum((cn),Vn(cn,c,t)
 
 carbonoutogridcell(c,t) ..                      Vout(c,t) =e= sum((cn),Vn(c,cn,t)) ; 
 
-maxcapstorage(c) ..                             sum((t),Vseq(c,t)$(cs(c)))*10 =l= ccscap(c)$(cccs(c)) ;
+maxcapstorage(c) ..                             sum((t),Vseq(c,t)$(cs(c)))*q =l= ccscap(c)$(cccs(c)) ;
