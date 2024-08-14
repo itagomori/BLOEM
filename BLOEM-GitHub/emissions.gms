@@ -15,19 +15,19 @@ $offtext
 
 Parameters
 
-    fp(r)               'fuel consumption for biomass production' # [l/GJ]
+    fp(r)               'fuel consumption for biomass production'  # [l/GJ]
 
-    fd                  'fuel emission factor' # [tCO2/l]
+    fd                  'fuel emission factor'  # [tCO2/l]
 
-    eff(r,c)            'emission factor for fertilizer use' # [tN2O/km2]
+    eff(r,c)            'emission factor for fertilizer use'  # [tN2O/km2]
 
-    nf                  'conversion factor for emissions from fertilizer use' # [tCO2:tN2O]
+    nf                  'conversion factor for emissions from fertilizer use'  # [tCO2:tN2O]
 
-    eft(r)              'emission factor for biomass transportation' # [kgCO2/GJ/km]
+    eft(r)              'emission factor for biomass transportation'  # [kgCO2/GJ/km]
 
-    efw(r)              'emission factor for bioenergy (biofuel) transportation' # [kgCO2/GJ/km]
+    efw(r)              'emission factor for bioenergy (biofuel) transportation'  # [kgCO2/GJ/km]
 
-    efc(r)              'emission factor for biomass conversion' # [kgCO2/GJ]
+    efc(r)              'emission factor for biomass conversion'  # [kgCO2/GJ]
 
 ;
 
