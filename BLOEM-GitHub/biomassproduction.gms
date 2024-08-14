@@ -1,12 +1,10 @@
 $ontext
 * ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 * Bioenergy Allocation Spatially Explicit Model - BLOEM
+* Branch: BLOEM-Master
 * Author: Isabela Schmidt Tagomori
-* Last update: 12.05.2021
-* Version: 1.0
-* Coupled IAM: BLUES
-* Region: Brazil 
-* Time frame: 2020-2050
+* Last update: 14.08.2022
+* Version: 2.0
 * Module: Land Allocation and Biomass Production
 * ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 $offtext
@@ -27,21 +25,14 @@ Parameters
 
     ef(r,l)             'emission factors for direct land use change' # [tCO2/GJ] primary energy
 
-    efi(r,l)            'emission factors for instantaneous land use change' # [tCO2/km2] used only for post-processing
-
-    efg(r,l,q)          'emission factors for gradual land use change' # [tCO2/km2] used only for post-processing
-
 ;
-
 
 * Set aggregate emission factors for land use change
 
-Table ef(r,l) 'emission factors for direct land use change' # [tCO2/GJ] primary energy,
+Table ef(r,l) 'emission factors for direct land use change' # [tCO2/GJ] primary energy, from Daioglou et al. (2017)
 
-                    forest        other        pasture
-sugarcane           0.044         0.030        0.000
-oilcrops            0.235         0.257        0.000   
-wood                0.052         0.051        0.000
+                    landtype1     landtypeX     # substitute biomass, landtype and ef accordingly, for examples see regional branches
+biomass             ef1           efX        
 ;
 
 
@@ -51,12 +42,12 @@ wood                0.052         0.051        0.000
 
 * Setting gdx input filepath
 
-$setglobal gdxinfilepath 'X:\user\tagomorii\BLOEM\GDXinput\Main\'
+$setglobal gdxinfilepath 'C:\Path\'  # set your path for inputs
 
 
 * Import land availability:
 
-$gdxin '%gdxinfilepath%landavailablebioen_bopf.gdx'
+$gdxin '%gdxinfilepath%landavailable.gdx'
 
 $load ldav=ldavbase
 
@@ -113,10 +104,12 @@ A.up(r,l,c,t)=0.75;
 A.lo(r,l,c,t)=0;
 
 * Land availability, types of land
-A.fx(r,"agriculture",c,t)=0;
-#A.fx(r,"forest",c,t)=0;
-A.fx(r,"pasture",c,t)=0;
 
+# except for cropland, other types of land cannot produce agricultural residues
+A.fx('agrires','landtypeX',c,t)=0;  # example: 'agrires' = agricultural residues; 'landtypeX' = 'forest', 'pasture', etc.
+
+# except for forests, other types of land cannot produce forestry residues
+A.fx('foresres','landtypeX',c,t)=0;  # example: 'foresres' = forestry residues; 'landtypeX' = 'cropland', 'pasture', etc.
 
 * ---------------------------------------------------------------------------------------------------------
 * Define Equations
@@ -132,11 +125,11 @@ Equations
 
 ;
 
-impactbioproduction(t) ..                       IBP(t) =e= dfa(t)*sum((r,l,c),B(r,l,c,t)$(rc(r))*(cobp(r,c,t)$(rc(r))+k(t)*ef(r,l)$(rc(r)))) ;
+impactbioproduction(t) ..               IBP(t) =e= dfa(t)*sum((r,l,c),B(r,l,c,t)$(rsou(r))*(cobp(r,c,t)$(rsou(r))+k(t)*ef(r,l)$(rsou(r)))) ;
 
 
-production(r,l,c,t)$(rc(r)) ..                  B(r,l,c,t)$(rc(r)) =l= A(r,l,c,t)$(rc(r))*ga(c)*y(r,c,t)$(rc(r)) ;
+production(r,l,c,t)$(rsou(r)) ..        B(r,l,c,t)$(rsou(r)) =e= A(r,l,c,t)$(rsou(r))*ga(c)*y(r,c,t)$(rsou(r)) ;
 
-landavailability(l,c,t) ..                      ldav(l,c,t) =g= sum((r),A(r,l,c,t)$(rc(r))) ;
+landavailability(l,c,t) ..              ldav(l,c,t) =g= sum((r),A(r,l,c,t)$(rsou(r))) ;
 
-totallandallocation(l,r,t) ..                   LdAlc(l,r,t)$(rc(r)) =e= sum((c),A(r,l,c,t)$(rc(r))*ga(c)) ;
+totallandallocation(l,r,t) ..           LdAlc(l,r,t)$(rsou(r)) =e= sum((c),A(r,l,c,t)$(rsou(r))*ga(c)) ;
