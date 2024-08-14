@@ -30,21 +30,6 @@ Parameters
 
 ;
 
-* Set technologies carbon capture levels gama(j,t):
-
-Table gama(j,t) 'rate of carbon capture by technology j'  # [tCO2/GJ]
-
-                2020        #2030       #2040       #2050       #2060
-    ACG+        0.39
-    GCG+        0.39
-    WCG+        0.39
-    AFT+        0.064
-    GFT+        0.064
-    WFT+        0.064
-    AME+        0.031
-    GME+        0.031
-    WME+        0.031
-;
 
 * ----------------------------------------------------------------------------------------------------------
 * Import data
@@ -53,6 +38,15 @@ Table gama(j,t) 'rate of carbon capture by technology j'  # [tCO2/GJ]
 * Setting gdx input filepath
 
 $setglobal gdxinfilepath 'C:\Users\vicke\Desktop\model\BLOEM\BLOEM-GitHub\input\gdx\'
+
+
+* Import carbon capture rate of technology j in year t
+
+$gdxin '%gdxinfilepath%ccsrate.gdx'
+
+$load gama = ccsrate
+
+$gdxin
 
 
 * Import maximum storage capacity for storage sites
@@ -64,6 +58,7 @@ $load ccscap=ccscap
 $gdxin
 
 ;
+
 
 * ---------------------------------------------------------------------------------------------------------
 * Declare variables

@@ -17,32 +17,38 @@ $ontext
 Portfolio of technologies:
 ---------------------------------------------------------------
 ACG = agricultural residues cogeneration
-GCG = grass biomass cogeneration
 FCG = forestry residues cogeneration
+GCG = grass biomass cogeneration
 WCG = wood biomass cogeneration
+
 AFT = agricultural residues biojet fuel FT
-GFT = grass biomass biojet fuel FT
 FFT = forestry residues biojet fuel FT
+GFT = grass biomass biojet fuel FT
 WFT = wood biomass biojet fuel FT (forestry residues or woody energy crops)
+
 AME = agricultural residues methanol generation
-GWE = grass biomass methanol generation
 FWE = forestry residues methanol generation
+GWE = grass biomass methanol generation
 WME = wood biomass methanol generation (forestry residues or woody energy crops)
+
 APY = agricultural residues pyrolysis for biochar
-GPY = grass biomass pyrolysis for biochar
 FPY = forestry residues pyrolysis for biochar
+GPY = grass biomass pyrolysis for biochar
 WPY = wood biomass pyrolysis for biochar (forestry residues or woody energy crops)
+
 ACG+ = agricultural residues cogeneration with carbon capture
-GCG+ = grass biomass cogeneration with carbon capture
 FCG+ = forestry residues cogeneration with carbon capture
+GCG+ = grass biomass cogeneration with carbon capture
 WCG+ = wood biomass cogeneration (forestry residues or woody energy crops) with carbon capture
+
 AFT+ = agricultural residues biojet fuel FT with carbon capture
-GFT+ = grass biomass biojet fuel FT with carbon capture
 FFT+ = forestry residues biojet fuel FT with carbon capture
+GFT+ = grass biomass biojet fuel FT with carbon capture
 WFT+ = wood biomass biojet fuel FT (forestry residues or woody energy crops) with carbon capture
+
 AME+ = agricultural residues methanol generation with carbon capture
-GWE+ = grass biomass methanol generation with carbon capture
-FWE+ = forestry residues methanol generation with carbon capture
+FME+ = forestry residues methanol generation with carbon capture
+GME+ = grass biomass methanol generation with carbon capture
 WME+ = wood biomass methanol generation (forestry residues or woody energy crops) with carbon capture
 ---------------------------------------------------------------
 $offtext
@@ -75,49 +81,6 @@ Parameters
 
 ;
 
-* Set technology discount factor w(j)
-
-Parameter w(j)    / ACG    0.9807549,
-                    GCG    0.9807549,
-                    WCG    0.9807549,
-                    AFT    0.9141061,
-                    GFT    0.9141061,
-                    WFT    0.9141061,
-                    AME    0.8153025,
-                    GME    0.8153025,
-                    WME    0.8153025,
-                    APY    0.9807549,
-                    GPY    0.9807549,
-                    WPY    0.9807549,
-                    ACG+   0.9807549,
-                    GCG+   0.9807549,
-                    WCG+   0.9807549,
-                    AFT+   0.9141061,
-                    GFT+   0.9141061,
-                    WFT+   0.9141061,
-                    AME+   0.8153025,
-                    GME+   0.8153025,
-                    WME+   0.8153025 /;
-;
-
-* Set technologies rate of consumption or production of resource 'r'
-
-Table beta(r,j) 'ratio of consumption or production of resource r by technology j'  # [GJ/GJ]
-
-                        ACG         GCG         WCG         AFT         GFT         WFT         AME         GME         WME         APY         GPY         WPY         ACG+        GCG+        WCG+        AFT+        GFT+        WFT+        AME+        GME+        WME+
-    agrires             -5.02       0           0           -2          0           0           -3.62       0           0           -2.23       0           0           -5.02       0           0           -2          0           0           -3.62       0           0
-    foresres            0           0           -4.518      0           0           -1.8        0           0           -3.258      0           0           -2.007      0           0           -4.518      0           0           -1.8        0           0           -3.258
-    grass               0           -4.769      0           0           -1.9        0           0           -3.439      0           0           -2.1185     0           0           -4.769      0           0           -1.9        0           0           -3.439      0
-    wood                0           0           -4.518      0           0           -1.8        0           0           -3.258      0           0           -2.007      0           0           -4.518      0           0           -1.8        0           0           -3.258
-    bioelectricity      1           1           1           0           0           0           0           0           0           0           0           0           1           1           1           0           0           0           0           0           0
-    biojet              0           0           0           1           1           1           0           0           0           0           0           0           0           0           0           1           1           1           0           0           0
-    biomethanol         0           0           0           0           0           0           1           1           1           0           0           0           0           0           0           0           0           0           1           1           1
-    biochar             0           0           0           0           0           0           0           0           0           1           1           1           0           0           0           0           0           0           0           0           0
-    bioheat             0.63        0.63        0.63        0           0           0           0           0           0           0           0           0           0.63        0.63        0.63        0           0           0           0           0           0
-    biogasoline         0           0           0           0.32        0.32        0.32        0           0           0           0           0           0           0           0           0           0.32        0.32        0.32        0           0           0
-    biosyngas           0           0           0           0           0           0           0           0           0           0.64        0.64        0.64        0           0           0           0           0           0           0           0           0
-;
-
 * ----------------------------------------------------------------------------------------------------------
 * Import data
 * ----------------------------------------------------------------------------------------------------------
@@ -126,6 +89,21 @@ Table beta(r,j) 'ratio of consumption or production of resource r by technology 
 
 $setglobal gdxinfilepath 'C:\Users\vicke\Desktop\model\BLOEM\BLOEM-GitHub\input\gdx\'
 
+* Set technology discount factor w(j)
+$gdxin '%gdxinfilepath%discfactorwj.gdx'
+
+$load w = discfactorwj
+
+$gdxin
+
+
+* Set technology rate of consumptions or production of resource 'r'
+
+$gdxin '%gdxinfilepath%techeffibeta.gdx'
+
+$load beta = techeffibeta
+
+$gdxin
 
 * Set technologies total capital investment:
 
@@ -187,129 +165,13 @@ $load cf = capacityfactor
 
 $gdxin
 
+* Set technology demand for ccs mincp(j,t)
 
-Table tci(j,t) 'total capital investment for technology j in grid cell c in decade d' # [US$/kw]
-                2020
-    ACG         2058
-    GCG         2058
-    WCG         2058
-    AFT         3026
-    GFT         3036
-    WFT         3026
-    AME         3490.8
-    GME         3490.8
-    WME         3490.8
-    APY         5.78
-    GPY         5.78
-    WPY         5.78
-    ACG+        3617.75
-    GCG+        3617.75
-    WCG+        3617.75
-    AFT+        4585.5
-    GFT+        4585.5
-    WFT+        4585.5
-    AME+        5050.55
-    GME+        5050.55
-    WME+        5050.55
-;
+$gdxin '%gdxinfilepath%ccsliqmincp.gdx'
 
-* Set technologies fix om costs
-Table fom(j, t) 'fixed om costs for technology j in grid cell c in decade d' # [US$/y]
+$load mincp = ccsliqmincp
 
-                2020
-    ACG         205.8
-    GCG         205.8
-    WCG         205.8
-    AFT         298.9
-    GFT         298.9
-    WFT         298.9
-    AME         57.8
-    GME         57.8
-    WME         57.8
-    APY         27.1
-    GPY         27.1
-    WPY         27.1
-    ACG+        361.7
-    GCG+        361.7
-    WCG+        361.7
-    AFT+        298.9
-    GFT+        298.9
-    WFT+        298.9
-    AME+        57.8
-    GME+        57.8
-    WME+        57.8
-;
-
-* Set technologies variable o&m costs
-Table vom(j, t) 'variable om costs for technology j in grid cell c in decade d' # [US$/y]
-
-                2020
-    ACG         367
-    GCG         367
-    WCG         367
-    AFT         64
-    GFT         64
-    WFT         64
-    AME         195.87
-    GME         195.87
-    WME         195.87
-    APY         0
-    GPY         0
-    WPY         0
-    ACG+        367.8
-    GCG+        367.8
-    WCG+        367.8
-    AFT+        64.12
-    GFT+        64.12
-    WFT+        64.12
-    AME+        196.43
-    GME+        196.43
-    WME+        196.43
-;
-
-* Set technologies retirement factors for added capacities
-Table rf(j,tn,t) 'retirement factor of capacity added in time tn'
-                    2020
-    ACG. 2020         0
-    GCG. 2020         0
-    WCG. 2020         0
-    AFT. 2020         0
-    GFT. 2020         0
-    WFT. 2020         0
-    AME. 2020         0
-    GME. 2020         0
-    WME. 2020         0
-    APY. 2020         0
-    GPY. 2020         0
-    WPY. 2020         0
-    ACG+. 2020        0
-    GCG+. 2020        0
-    WCG+. 2020        0
-    AFT+. 2020        0
-    GFT+. 2020        0
-    WFT+. 2020        0
-    AME+. 2020        0
-    GME+. 2020        0
-    WME+. 2020        0
-;
-
-
-
-* Set production of biofuels with CCS
-Table mincp(j,t) 'biofuel production with ccs'
-
-                2020
-    ACG+        100
-    GCG+        100
-    WCG+        0
-    AFT+        0 # 1e4
-    GFT+        0 #1e4
-    WFT+        0 #1e4
-    AME+        0 #1e4
-    GME+        0 #1e4
-    WME+        100 #1e4
-;
-
+$gdxin
 
 
 * ---------------------------------------------------------------------------------------------------------

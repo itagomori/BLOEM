@@ -153,7 +153,7 @@ biomassintocell(r,c,t)$(rsou(r)) ..                 Bin(r,c,t)$(rsou(r)) =e= sum
 
 biomassoutocell(r,c,t)$(rsou(r)) ..                 Bout(r,c,t)$(rsou(r)) =e= sum((cn),Bn(r,c,cn,t)$(rsou(r))) ;
 
-maxbiomassoutocell(r,c,t)$(rsou(r)) ..              Bout(r,c,t)$(rsou(r)) =l= B(r,c,t)$(rsou(r)) ;
+maxbiomassoutocell(r,c,t)$(rsou(r)) ..              Bout(r,c,t)$(rsou(r)) =l= sum((l),B(r,l,c,t)$(rsou(r))) ;
 
 # HB means local biomass consumption of crop c in grid cell c
 localdemandforcrops(r,c,t)$(rsou(r)) ..             HB(r,c,t)$(rsou(r)) =e= sum((j),CP(j,c,t)*beta(r,j)$(rsou(r))*uf) ;

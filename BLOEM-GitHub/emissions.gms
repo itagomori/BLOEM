@@ -135,7 +135,7 @@ totalemissions(t) ..                            GG(t) =e= Gbp(t)+Gfr(t)+Gbt(t)+G
 emissionsbioprod(t) ..                          Gbp(t) =e= sum((r,l,c),fp(r)$(rsou(r))*B(r,l,c,t)$(rsou(r))*fd) ;
 
 # Q: only energy crops need fertilizer
-emissionsfertilz(t) ..                          Gfr(t) =e= sum((r,l,c),eff(r)*A(r,l,c,t)*ga(c,t)*nf/1000) ;
+emissionsfertilz(t) ..                          Gfr(t) =e= sum((r,l,c),eff(r)$(rsou(r))*A(r,l,c,t)$(rsou(r))*ga(c)*nf/1000) ;
 
 # Q: whether limit the bioass transportation distance? replace mx with antother distance matrix
 # here include both residues and energy crops
