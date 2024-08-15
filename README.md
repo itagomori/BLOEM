@@ -27,7 +27,7 @@ This repository is organized as follows:
 
 #### [BLOEM-GitHub](BLOEM-GitHub)
 The source-code of BLOEM is located here. It comprehends the following scripts:
-- **[BLOEM_Main_1_1.gms](BLOEM-GitHub/BLOEM_Main_1_1.gms)**: Main script of BLOEM, containing the objective function.
+- **[BLOEM_main.gms](BLOEM-GitHub/BLOEM_main.gms)**: Main script of BLOEM, containing the objective function.
 - **[biomassproduction.gms](BLOEM-GitHub/biomassproduction.gms)**: Module of feedstock production.
 - **[carboncaptureandstorage.gms](BLOEM-GitHub/carboncaptureandstorage.gms)**: Module of carbon capture, transportation and storage.
 - **[emissions.gms](BLOEM-GitHub/emissions.gms)**: Module of GHG emissions.
@@ -35,7 +35,13 @@ The source-code of BLOEM is located here. It comprehends the following scripts:
 - **[targets.gms](BLOEM-GitHub/targets.gms)**: Module of local bioenergy targets and export targets.
 - **[technologiesportfolio.gms](BLOEM-GitHub/technologiesportfolio)**: Module of technologies portfolio, including costs and efficiencies.
 
-_Note: The model code and inputs are applied for the case study about the Brazilian bioenergy pathways in a low carbon scenario, under different land availability constraints. The code can be adapted to other regions and/or other case study inputs (e.g., changes in the technologies portfolio, feedstocks available, update of costs and factors)._
+## Regional Branches
+
+BLOEM currently has 3 regional branches:
+
+BLOEM-Brazil
+BLOEM-China (under development)
+BLOEM-Europe (under development)
 
 ## Language
 The model was developed in the General Algebraic Modeling System (GAMS) modeling platform and is solved using the CPLEX Optimizer.
