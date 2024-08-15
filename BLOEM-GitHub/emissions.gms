@@ -60,13 +60,11 @@ Parameter eft(r)   / biomass1    eft,        # substitute biomass and eft, accor
                      biomassX    eft /;
 ;
 
-
 * Set emission factor for biofuel transportation efw(r):
 
 Parameter efw(r)   / product1    efw,        # substitute product and efw, accordingly (for examples, see regional branches)
                      productX    efw /;
 ;
-
 
 * Set emission factor for biomass conversion efc(r):
 
