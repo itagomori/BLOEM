@@ -28,6 +28,12 @@ Parameters
     #mxharbor(c,cn)     'distance between grid cells to harbor' # [km]
     
     tal(c)              'tortuosity factor'  # [factor]
+
+    flagbt(c,cn)        'flag to determine logistic interconnections for biomass' # [binary, 0:1]
+
+    flagmxe(c,cn)       'flag to determine logistic interconnections for biofuels to consumer centers' # [binary, 0:1]
+
+    flagmxein(cn,c)     'flag to determine logistic interconnections for biofuels to consumer centers' # [binary, 0:1]
     
     beta(r,j)           'ratio of consumption (inputs) or production (outputs)'
 
@@ -78,6 +84,33 @@ $gdxin
 $gdxin '%gdxinfilepath%tortuosity.gdx'
 
 $load tal=tortuosity
+
+$gdxin
+
+
+* Import flag to logistics interconnections flagbt(c,cn):
+
+$gdxin '%gdxinfilepath%flagmx.gdx'
+
+$load flagbt=flagmx
+
+$gdxin
+
+
+* Import grid cell connection to demand flagmxe(c,cn):
+
+$gdxin '%gdxinfilepath%flagmxe.gdx'
+
+$load flagmxe=flagmxe
+
+$gdxin
+
+
+* Import grid cell connection to demand flagmxe(c,cn):
+
+$gdxin '%gdxinfilepath%flagmxein.gdx'
+
+$load flagmxein=flagmxein
 
 $gdxin
 
@@ -149,9 +182,9 @@ impactbiotransport(t) ..                            IBT(t) =e= dfa(t)*sum((r,c,c
 
 resourcebalance(r,c,t)$(rsou(r)) ..                 sum((l),B(r,l,c,t)$(rsou(r)))+Bin(r,c,t)$(rsou(r))-Bout(r,c,t)$(rsou(r))+HB(r,c,t)$(rsou(r)) =e= 0 ;
 
-biomassintocell(r,c,t)$(rsou(r)) ..                 Bin(r,c,t)$(rsou(r)) =e= sum((cn),Bn(r,cn,c,t)$(rsou(r))) ;
+biomassintocell(r,c,t)$(rsou(r)) ..                 Bin(r,c,t)$(rsou(r)) =e= sum((cn),Bn(r,cn,c,t)$(rsou(r))*flagbt(cn,c)) ;
 
-biomassoutocell(r,c,t)$(rsou(r)) ..                 Bout(r,c,t)$(rsou(r)) =e= sum((cn),Bn(r,c,cn,t)$(rsou(r))) ;
+biomassoutocell(r,c,t)$(rsou(r)) ..                 Bout(r,c,t)$(rsou(r)) =e= sum((cn),Bn(r,c,cn,t)$(rsou(r))*flagbt(cn,c)) ;
 
 maxbiomassoutocell(r,c,t)$(rsou(r)) ..              Bout(r,c,t)$(rsou(r)) =l= sum((l),B(r,l,c,t)$(rsou(r))) ;
 
@@ -164,9 +197,9 @@ impactbioendtransport(t) ..                         IET(t) =e= dfa(t)*sum((r,c,c
 # HE means local bioenergy consumption in grid cell c;
 bioenergybalance(r,c,t)$(rliq(r)) ..                E(r,c,t)$(rliq(r))+Ein(r,c,t)$(rliq(r))-Eout(r,c,t)$(rliq(r)) =e= HE(r,c,t)$(rliq(r)) ;
 
-bioenergyintogridcell(r,c,t)$(rliq(r)) ..           Ein(r,c,t)$(rliq(r)) =e= sum((cn),En(r,cn,c,t)$(rliq(r))) ;
+bioenergyintogridcell(r,c,t)$(rliq(r)) ..           Ein(r,c,t)$(rliq(r)) =e= sum((cn),En(r,cn,c,t)$(rliq(r))*flagmxein(cn,c)) ;
 
-bioenergyoutogridcell(r,c,t)$(rliq(r)) ..           Eout(r,c,t)$(rliq(r)) =e= sum((cn),En(r,c,cn,t)$(rliq(r))) ;
+bioenergyoutogridcell(r,c,t)$(rliq(r)) ..           Eout(r,c,t)$(rliq(r)) =e= sum((cn),En(r,c,cn,t)$(rliq(r))*flagmxe(c,cn)) ;
 
 maxbioenergytransp(r,c,t)$(rliq(r)) ..              Eout(r,c,t)$(rliq(r)) =l= E(r,c,t)$(rliq(r)) ;
 
