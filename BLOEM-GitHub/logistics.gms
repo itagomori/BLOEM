@@ -26,15 +26,15 @@ Parameters
 
     #mxair(c,cn)        'distance between grid cells to airport' # [km]
     #mxharbor(c,cn)     'distance between grid cells to harbor' # [km]
-    
+
     tal(c)              'tortuosity factor'  # [factor]
 
     flagbt(c,cn)        'flag to determine logistic interconnections for biomass' # [binary, 0:1]
 
-    flagmxe(c,cn)       'flag to determine logistic interconnections for biofuels to consumer centers' # [binary, 0:1]
+    flagmxeout(c,cn)    'flag to determine logistic interconnections for biofuels to consumer centers' # [binary, 0:1]
 
     flagmxein(cn,c)     'flag to determine logistic interconnections for biofuels to consumer centers' # [binary, 0:1]
-    
+
     beta(r,j)           'ratio of consumption (inputs) or production (outputs)'
 
 ;
@@ -90,18 +90,18 @@ $gdxin
 
 * Import flag to logistics interconnections flagbt(c,cn):
 
-$gdxin '%gdxinfilepath%flagmx.gdx'
+$gdxin '%gdxinfilepath%flagbt.gdx'
 
-$load flagbt=flagmx
+$load flagbt=flagbt
 
 $gdxin
 
 
 * Import grid cell connection to demand flagmxe(c,cn):
 
-$gdxin '%gdxinfilepath%flagmxe.gdx'
+$gdxin '%gdxinfilepath%flagmxeout.gdx'
 
-$load flagmxe=flagmxe
+$load flagmxeout=flagmxeout
 
 $gdxin
 
@@ -199,7 +199,7 @@ bioenergybalance(r,c,t)$(rliq(r)) ..                E(r,c,t)$(rliq(r))+Ein(r,c,t
 
 bioenergyintogridcell(r,c,t)$(rliq(r)) ..           Ein(r,c,t)$(rliq(r)) =e= sum((cn),En(r,cn,c,t)$(rliq(r))*flagmxein(cn,c)) ;
 
-bioenergyoutogridcell(r,c,t)$(rliq(r)) ..           Eout(r,c,t)$(rliq(r)) =e= sum((cn),En(r,c,cn,t)$(rliq(r))*flagmxe(c,cn)) ;
+bioenergyoutogridcell(r,c,t)$(rliq(r)) ..           Eout(r,c,t)$(rliq(r)) =e= sum((cn),En(r,c,cn,t)$(rliq(r))*flagmxeout(c,cn)) ;
 
 maxbioenergytransp(r,c,t)$(rliq(r)) ..              Eout(r,c,t)$(rliq(r)) =l= E(r,c,t)$(rliq(r)) ;
 

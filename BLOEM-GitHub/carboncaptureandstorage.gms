@@ -28,7 +28,7 @@ Parameters
 
     ccscap(c)            'maximum storage capacity of a storage site'  # [tCO2]
 
-    flagvc(c,cn)         'flag to determine logistic interconnections from carbon source to carbon sink' # [binary, 0/1]
+    flagvcout(c,cn)         'flag to determine logistic interconnections from carbon source to carbon sink' # [binary, 0/1]
 
     flagvcin(cn,c)       'flag to determine logistic interconnections from carbon source to carbon sink' # [binary, 0/1]
 
@@ -64,9 +64,9 @@ $gdxin
 
 * Import grid cell connection to carbon sequestration sites (flagvc):
 
-$gdxin '%gdxinfilepath%flagvc.gdx'
+$gdxin '%gdxinfilepath%flagvcout.gdx'
 
-$load flagvc=flagvc
+$load flagvcout=flagvcout
 
 $gdxin
 
@@ -125,7 +125,7 @@ carbonbalance(c,t)..                Vcap(c,t)+Vin(c,t)-Vout(c,t) =e= Vseq(c,t)$(
 
 carbonintogridcell(c,t) ..          Vin(c,t) =e= sum((cn),Vn(cn,c,t)*flagvcin(cn,c)) ;
 
-carbonoutogridcell(c,t) ..          Vout(c,t) =e= sum((cn),Vn(c,cn,t)*flagvc(c,cn)) ; 
+carbonoutogridcell(c,t) ..          Vout(c,t) =e= sum((cn),Vn(c,cn,t)*flagvcout(c,cn)) ; 
 
 
 maxcapstorage(c)..                  sum((t),Vseq(c,t)$(cccs(c)))*10 =l= ccscap(c);  # 10 years
