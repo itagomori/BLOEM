@@ -132,7 +132,7 @@ impactcarbontransport(t)..          ICC(t) =e= dfa(t)*sum((c,cn),co2transc*Vn(c,
 
 carboncaptured(c,t)..               Vcap(c,t) =e= sum((j),CP(j,c,t)*gama(j,t)*uf) ;
 
-carbonbalance(c,t)..                Vcap(c,t)+Vin(c,t)-Vout(c,t) =e= Vseq(c,t)$(cccs(c)) ; 
+carbonbalance(c,t)..                Vseq(c,t)$(cccs(c)) =e= Vcap(c,t)+Vin(c,t)-Vout(c,t) ; 
 
 carbonintogridcell(c,t) ..          Vin(c,t) =e= sum((cn),Vn(cn,c,t)*flagccsin(cn,c)) ;
 

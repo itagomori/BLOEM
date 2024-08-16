@@ -32,7 +32,7 @@ Parameters
 
 * Set bioelectricity target
 
-Parameter bioelec(t) /  2020        100000000 # 0.1 EJ
+Parameter bioelec(t) /  2020        0 # 0.1 EJ
                         #2030        100000000,
                         #2040        100000000,
                         #2050        100000000,
@@ -42,7 +42,7 @@ Parameter bioelec(t) /  2020        100000000 # 0.1 EJ
 
 * Set biochar target
 
-Parameter biochar(t) /  2020        100000000 # 0.1 EJ
+Parameter biochar(t) /  2020         0 # 0.1 EJ
                         #2030        100000000,
                         #2040        100000000,
                         #2050        100000000,

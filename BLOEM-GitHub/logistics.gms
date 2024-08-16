@@ -195,7 +195,7 @@ localdemandforcrops(r,c,t)$(rsou(r)) ..             HB(r,c,t)$(rsou(r)) =e= sum(
 impactbioendtransport(t) ..                         IET(t) =e= dfa(t)*sum((r,c,cn),trco(r)$(rliq(r))*En(r,c,cn,t)$(rliq(r))*mxairhbr(c,cn)*tal(c)) ;
 
 # HE means local bioenergy consumption in grid cell c;
-bioenergybalance(r,c,t)$(rliq(r)) ..                E(r,c,t)$(rliq(r))+Ein(r,c,t)$(rliq(r))-Eout(r,c,t)$(rliq(r)) =e= HE(r,c,t)$(rliq(r)) ;
+bioenergybalance(r,c,t)$(rliq(r)) ..                HE(r,c,t)$(rliq(r)) =e= E(r,c,t)$(rliq(r))+Ein(r,c,t)$(rliq(r))-Eout(r,c,t)$(rliq(r))  ;
 
 bioenergyintogridcell(r,c,t)$(rliq(r)) ..           Ein(r,c,t)$(rliq(r)) =e= sum((cn),En(r,cn,c,t)$(rliq(r))*flagairhbrin(cn,c)) ;
 

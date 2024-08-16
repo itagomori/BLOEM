@@ -207,7 +207,7 @@ Display Vseq.l ;
 
 * Set gdx output filepath;
 
-$setglobal gdxoutfilepath 'C:\Users\vicke\Desktop\BLOEM-China\output\gdx\'
+$setglobal gdxoutfilepath 'C:\Users\vicke\Desktop\model\BLOEM\BLOEM-GitHub\output\gdx\'
 
 # Unload:
 
@@ -242,6 +242,11 @@ E     # bioenergy production
 EE    # total bioenergy production
 
 *S     # co-products production
+HE    # local bioenergy consumption for product r in grid cell c in time t
+
+Ein   # bioenergy into the grid
+
+Eout  # bioenergy out the grid
 
 Vcap  # carbon captured
 
