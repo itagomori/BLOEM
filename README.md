@@ -20,14 +20,14 @@ BLOEM is a model developed to evaluate pathways for bioenergy deployment. Theref
 - Providing contributions to long-term climate policy design, given the opportunity of competitive advantages in low carbon scenarios.
 
 ## Spatial Resolution
-The model formulation here presented is applied to the Brazilian spatial configuration, but it can be applied to different regions, spatial resolutions and time frames, according to the availability of required data and computational effort. The model can be used for standalone runs, but it can also be coupled with different levels (global, regional, national) of integrated assessment models (IAMs), through soft-link.
+The model formulation here presented is applied to the Brazilian spatial configuration, but it can be applied to different regions, spatial resolutions and time frames, according to the availability of required data and computational effort (see the Master branch for region-neutral code). The model can be used for standalone runs, but it can also be coupled with different levels (global, regional, national) of integrated assessment models (IAMs), through soft-link.
 
 ## Folder Structure and Scripts
 This repository is organized as follows:
 
 #### [BLOEM-GitHub](BLOEM-GitHub)
 The source-code of BLOEM is located here. It comprehends the following scripts:
-- **[BLOEM_Main_1_1.gms](BLOEM-GitHub/BLOEM_Main_1_1.gms)**: Main script of BLOEM, containing the objective function.
+- **[BLOEM_main.gms](BLOEM-GitHub/BLOEM_main.gms)**: Main script of BLOEM, containing the objective function.
 - **[biomassproduction.gms](BLOEM-GitHub/biomassproduction.gms)**: Module of feedstock production.
 - **[carboncaptureandstorage.gms](BLOEM-GitHub/carboncaptureandstorage.gms)**: Module of carbon capture, transportation and storage.
 - **[emissions.gms](BLOEM-GitHub/emissions.gms)**: Module of GHG emissions.
@@ -45,3 +45,6 @@ For GAMS documentation, please visit: [https://www.gams.com/latest/docs](https:/
 ## References
 ***BLOEM documentation***\
 Tagomori, I. (2022). [Bioenergy and Carbon Capture and Storage Spatially Explicit Modelling in Brazil](http://www.ppe.ufrj.br/images/Tese_Isabela_Tagomori.pdf). *Methods*. Graduate School of Engineering (COPPE), Universidade Federal do Rio de Janeiro (UFRJ).
+
+***Scenario Analysis***\
+Tagomori, I., Daioglou, V., Rochedo, P., Angelkorte, G., Schaeffer, R., van Vuuren, D. and Szklo, A., 2023. [BLOEM: A spatially explicit model of bioenergy and carbon capture and storage, applied to Brazil](https://onlinelibrary.wiley.com/doi/full/10.1111/gcbb.13008). *GCB Bioenergy*, 15(2), pp.116-127.
