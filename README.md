@@ -39,8 +39,8 @@ The source-code of BLOEM is located here. It comprehends the following scripts:
 
 BLOEM currently has 3 regional branches:
 
-BLOEM-Brazil
-BLOEM-China (under development)
+BLOEM-Brazil\
+BLOEM-China (under development)\
 BLOEM-Europe (under development)
 
 ## Language
