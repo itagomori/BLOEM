@@ -3,7 +3,7 @@ $ontext
 * Bioenergy Allocation Spatially Explicit Model - BLOEM
 * Author: Isabela Schmidt Tagomori
 * Last update: 12.05.2021
-* Version: 1.0
+* Version: 1.1
 * Coupled IAM: BLUES
 * Region: Brazil 
 * Time frame: 2020-2050
