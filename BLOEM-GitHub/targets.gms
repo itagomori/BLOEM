@@ -112,7 +112,7 @@ Equations
 
 ;
 
-#bioenergytarget(r,c,t)$(rliq(r)) ..               pb(r,c,t)$(rliq(r))+ex(r,c,t)$(rliq(r)) =g= HE(r,c,t)$(rliq(r))+im(r,c,t)$(rliq(r)) ;
+#bioenergytarget(r,c,t)$(rliq(r)) ..              pb(r,c,t)$(rliq(r))+ex(r,c,t)$(rliq(r)) =g= HE(r,c,t)$(rliq(r))+im(r,c,t)$(rliq(r)) ;
 bioenergytarget(r,c,t)$(rliq(r)) ..               HE(r,c,t)$(rliq(r)) =g= pb(r,c,t)$(rliq(r)) ;
 
 bioelectarget(t) ..                               sum((r,c), E(r,c,t)$(rele(r))) =g= bioelec(t) ;

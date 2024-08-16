@@ -20,7 +20,7 @@ Parameters
 
     trco(r)             'biomass transportation costs'  # [US$/GJ/km]
 
-    mx(c,cn)            'distance between grid cells'  # [km]
+    mxdisbe(c,cn)            'distance between grid cells'  # [km]
 
     mxairhbr(c,cn)      'distance between grid cells, connection to demand (airports/harbours)'  # [km]
 
@@ -31,7 +31,7 @@ Parameters
 
     flagbt(c,cn)        'flag to determine logistic interconnections for biomass' # [binary, 0:1]
 
-    flagmxe(c,cn)       'flag to determine logistic interconnections for biofuels to consumer centers' # [binary, 0:1]
+    flagmxeout(c,cn)    'flag to determine logistic interconnections for biofuels to consumer centers' # [binary, 0:1]
 
     flagmxein(cn,c)     'flag to determine logistic interconnections for biofuels to consumer centers' # [binary, 0:1]
 
@@ -62,9 +62,9 @@ $setglobal gdxinfilepaht 'C:\Users\vicke\Desktop\model\BLOEM\BLOEM-GitHub\input\
 # columns: c, cn, value
 # 300 km radius currently applied
 
-$gdxin '%gdxinfilepath%mxdis.gdx'
+$gdxin '%gdxinfilepath%mxdisbe.gdx'
 
-$load mx=mxdis
+$load mxdisbe=mxdisbe
 
 $gdxin
 
@@ -99,9 +99,9 @@ $gdxin
 
 * Import grid cell connection to demand flagmxe(c,cn):
 
-$gdxin '%gdxinfilepath%flagmxe.gdx'
+$gdxin '%gdxinfilepath%flagmxeout.gdx'
 
-$load flagmxe=flagmxe
+$load flagmxeout=flagmxeout
 
 $gdxin
 

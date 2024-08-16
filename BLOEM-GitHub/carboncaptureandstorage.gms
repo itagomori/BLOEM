@@ -28,9 +28,11 @@ Parameters
 
     ccscap(c)            'maximum storage capacity of a storage site'  # [tCO2]
 
-    flagvcout(c,cn)         'flag to determine logistic interconnections from carbon source to carbon sink' # [binary, 0/1]
+    mxccs(c,cn)          'distance between ccs cites c and grid cell cn' # [km]
 
-    flagvcin(cn,c)       'flag to determine logistic interconnections from carbon source to carbon sink' # [binary, 0/1]
+    flagccsout(c,cn)       'flag to determine logistic interconnections from carbon source to carbon sink' # [binary, 0/1]
+
+    flagccsin(cn,c)       'flag to determine logistic interconnections from carbon source to carbon sink' # [binary, 0/1]
 
 ;
 
@@ -62,20 +64,29 @@ $load ccscap=ccscap
 $gdxin
 
 
-* Import grid cell connection to carbon sequestration sites (flagvc):
+* Import ccs matrix
 
-$gdxin '%gdxinfilepath%flagvcout.gdx'
+$gdxin '%gdxinfilepath%mxccs.gdx'
 
-$load flagvcout=flagvcout
+$load mxccs=mxccs
 
 $gdxin
 
 
 * Import grid cell connection to carbon sequestration sites (flagvc):
 
-$gdxin '%gdxinfilepath%flagvcin.gdx'
+$gdxin '%gdxinfilepath%flagccsout.gdx'
 
-$load flagvcin=flagvcin
+$load flagccsout=flagccsout
+
+$gdxin
+
+
+* Import grid cell connection to carbon sequestration sites (flagvc):
+
+$gdxin '%gdxinfilepath%flagccsin.gdx'
+
+$load flagccsin=flagccsin
 
 $gdxin
 
@@ -116,16 +127,16 @@ Equations
     maxcapstorage(c)                'maximum storage capacity of storage site in grid cell c'
 ;
 
-impactcarbontransport(t)..          ICC(t) =e= dfa(t)*sum((c,cn),co2transc*Vn(c,cn,t)*mx(c,cn)) ; 
+impactcarbontransport(t)..          ICC(t) =e= dfa(t)*sum((c,cn),co2transc*Vn(c,cn,t)*mxccs(c,cn)) ; 
 
 
 carboncaptured(c,t)..               Vcap(c,t) =e= sum((j),CP(j,c,t)*gama(j,t)*uf) ;
 
 carbonbalance(c,t)..                Vcap(c,t)+Vin(c,t)-Vout(c,t) =e= Vseq(c,t)$(cccs(c)) ; 
 
-carbonintogridcell(c,t) ..          Vin(c,t) =e= sum((cn),Vn(cn,c,t)*flagvcin(cn,c)) ;
+carbonintogridcell(c,t) ..          Vin(c,t) =e= sum((cn),Vn(cn,c,t)*flagccsin(cn,c)) ;
 
-carbonoutogridcell(c,t) ..          Vout(c,t) =e= sum((cn),Vn(c,cn,t)*flagvcout(c,cn)) ; 
+carbonoutogridcell(c,t) ..          Vout(c,t) =e= sum((cn),Vn(c,cn,t)*flagccsout(c,cn)) ; 
 
 
 maxcapstorage(c)..                  sum((t),Vseq(c,t)$(cccs(c)))*10 =l= ccscap(c);  # 10 years

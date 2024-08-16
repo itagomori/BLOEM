@@ -20,7 +20,7 @@ Parameters
 
     trco(r)             'biomass transportation costs'  # [US$/GJ/km]
 
-    mx(c,cn)            'distance between grid cells'  # [km]
+    mxbiomass(c,cn)     'distance between grid cells'  # [km]
 
     mxairhbr(c,cn)      'distance between grid cells, connection to demand (airports/harbours)'  # [km]
 
@@ -29,11 +29,11 @@ Parameters
 
     tal(c)              'tortuosity factor'  # [factor]
 
-    flagbt(c,cn)        'flag to determine logistic interconnections for biomass' # [binary, 0:1]
+    flagbiomass(c,cn)        'flag to determine logistic interconnections for biomass' # [binary, 0:1]
 
-    flagmxeout(c,cn)    'flag to determine logistic interconnections for biofuels to consumer centers' # [binary, 0:1]
+    flagairhbrout(c,cn)    'flag to determine logistic interconnections for biofuels to consumer centers' # [binary, 0:1]
 
-    flagmxein(cn,c)     'flag to determine logistic interconnections for biofuels to consumer centers' # [binary, 0:1]
+    flagairhbrin(cn,c)     'flag to determine logistic interconnections for biofuels to consumer centers' # [binary, 0:1]
 
     beta(r,j)           'ratio of consumption (inputs) or production (outputs)'
 
@@ -62,9 +62,9 @@ $setglobal gdxinfilepaht 'C:\Users\vicke\Desktop\model\BLOEM\BLOEM-GitHub\input\
 # columns: c, cn, value
 # 300 km radius currently applied
 
-$gdxin '%gdxinfilepath%mxdis.gdx'
+$gdxin '%gdxinfilepath%mxbiomass.gdx'
 
-$load mx=mxdis
+$load mxbiomass=mxbiomass
 
 $gdxin
 
@@ -90,27 +90,27 @@ $gdxin
 
 * Import flag to logistics interconnections flagbt(c,cn):
 
-$gdxin '%gdxinfilepath%flagbt.gdx'
+$gdxin '%gdxinfilepath%flagbiomass.gdx'
 
-$load flagbt=flagbt
-
-$gdxin
-
-
-* Import grid cell connection to demand flagmxe(c,cn):
-
-$gdxin '%gdxinfilepath%flagmxeout.gdx'
-
-$load flagmxeout=flagmxeout
+$load flagbiomass=flagbiomass
 
 $gdxin
 
 
-* Import grid cell connection to demand flagmxe(c,cn):
+* Import grid cell connection to demand flagairhbrout(c,cn):
 
-$gdxin '%gdxinfilepath%flagmxein.gdx'
+$gdxin '%gdxinfilepath%flagairhbrout.gdx'
 
-$load flagmxein=flagmxein
+$load flagairhbrout=flagairhbrout
+
+$gdxin
+
+
+* Import grid cell connection to demand flagairhbrin(c,cn):
+
+$gdxin '%gdxinfilepath%flagairhbrin.gdx'
+
+$load flagairhbrin=flagairhbrin
 
 $gdxin
 
@@ -177,14 +177,14 @@ Equations
 
 ;
 
-impactbiotransport(t) ..                            IBT(t) =e= dfa(t)*sum((r,c,cn),trco(r)$(rsou(r))*Bn(r,c,cn,t)$(rsou(r))*mx(c,cn)*tal(c)) ;
+impactbiotransport(t) ..                            IBT(t) =e= dfa(t)*sum((r,c,cn),trco(r)$(rsou(r))*Bn(r,c,cn,t)$(rsou(r))*mxbiomass(c,cn)*tal(c)) ;
 
 
 resourcebalance(r,c,t)$(rsou(r)) ..                 sum((l),B(r,l,c,t)$(rsou(r)))+Bin(r,c,t)$(rsou(r))-Bout(r,c,t)$(rsou(r))+HB(r,c,t)$(rsou(r)) =e= 0 ;
 
-biomassintocell(r,c,t)$(rsou(r)) ..                 Bin(r,c,t)$(rsou(r)) =e= sum((cn),Bn(r,cn,c,t)$(rsou(r))*flagbt(cn,c)) ;
+biomassintocell(r,c,t)$(rsou(r)) ..                 Bin(r,c,t)$(rsou(r)) =e= sum((cn),Bn(r,cn,c,t)$(rsou(r))*flagbiomass(cn,c)) ;
 
-biomassoutocell(r,c,t)$(rsou(r)) ..                 Bout(r,c,t)$(rsou(r)) =e= sum((cn),Bn(r,c,cn,t)$(rsou(r))*flagbt(cn,c)) ;
+biomassoutocell(r,c,t)$(rsou(r)) ..                 Bout(r,c,t)$(rsou(r)) =e= sum((cn),Bn(r,c,cn,t)$(rsou(r))*flagbiomass(cn,c)) ;
 
 maxbiomassoutocell(r,c,t)$(rsou(r)) ..              Bout(r,c,t)$(rsou(r)) =l= sum((l),B(r,l,c,t)$(rsou(r))) ;
 
@@ -197,9 +197,9 @@ impactbioendtransport(t) ..                         IET(t) =e= dfa(t)*sum((r,c,c
 # HE means local bioenergy consumption in grid cell c;
 bioenergybalance(r,c,t)$(rliq(r)) ..                E(r,c,t)$(rliq(r))+Ein(r,c,t)$(rliq(r))-Eout(r,c,t)$(rliq(r)) =e= HE(r,c,t)$(rliq(r)) ;
 
-bioenergyintogridcell(r,c,t)$(rliq(r)) ..           Ein(r,c,t)$(rliq(r)) =e= sum((cn),En(r,cn,c,t)$(rliq(r))*flagmxein(cn,c)) ;
+bioenergyintogridcell(r,c,t)$(rliq(r)) ..           Ein(r,c,t)$(rliq(r)) =e= sum((cn),En(r,cn,c,t)$(rliq(r))*flagairhbrin(cn,c)) ;
 
-bioenergyoutogridcell(r,c,t)$(rliq(r)) ..           Eout(r,c,t)$(rliq(r)) =e= sum((cn),En(r,c,cn,t)$(rliq(r))*flagmxeout(c,cn)) ;
+bioenergyoutogridcell(r,c,t)$(rliq(r)) ..           Eout(r,c,t)$(rliq(r)) =e= sum((cn),En(r,c,cn,t)$(rliq(r))*flagairhbrout(c,cn)) ;
 
 maxbioenergytransp(r,c,t)$(rliq(r)) ..              Eout(r,c,t)$(rliq(r)) =l= E(r,c,t)$(rliq(r)) ;
 

@@ -139,7 +139,7 @@ emissionsfertilz(t) ..                          Gfr(t) =e= sum((r,l,c),eff(r)$(r
 
 # Q: whether limit the bioass transportation distance? replace mx with antother distance matrix
 # here include both residues and energy crops
-emissionsbiotransp(t) ..                        Gbt(t) =e= sum((r,c,cn),eft(r)$(rsou(r))*mx(c,cn)*tal(c)*Bn(r,c,cn,t)$(rsou(r))/1000) ;
+emissionsbiotransp(t) ..                        Gbt(t) =e= sum((r,c,cn),eft(r)$(rsou(r))*mxbiomass(c,cn)*tal(c)*Bn(r,c,cn,t)$(rsou(r))/1000) ;
 
 emissionsbioconv(t) ..                          Gbc(t) =e= sum((r,j,c),efc(r)$(rmap(r))*CP(j,c,t)*beta(r,j)$(rmap(r))/1000) ;
 

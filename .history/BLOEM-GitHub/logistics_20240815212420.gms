@@ -20,7 +20,7 @@ Parameters
 
     trco(r)             'biomass transportation costs'  # [US$/GJ/km]
 
-    mx(c,cn)            'distance between grid cells'  # [km]
+    mxbiomass(c,cn)     'distance between grid cells'  # [km]
 
     mxairhbr(c,cn)      'distance between grid cells, connection to demand (airports/harbours)'  # [km]
 
@@ -29,11 +29,11 @@ Parameters
 
     tal(c)              'tortuosity factor'  # [factor]
 
-    flagbt(c,cn)        'flag to determine logistic interconnections for biomass' # [binary, 0:1]
+    flagbiomass(c,cn)        'flag to determine logistic interconnections for biomass' # [binary, 0:1]
 
-    flagmxe(c,cn)       'flag to determine logistic interconnections for biofuels to consumer centers' # [binary, 0:1]
+    flagairhbrout(c,cn)    'flag to determine logistic interconnections for biofuels to consumer centers' # [binary, 0:1]
 
-    flagmxein(cn,c)     'flag to determine logistic interconnections for biofuels to consumer centers' # [binary, 0:1]
+    flagairhbrin(cn,c)     'flag to determine logistic interconnections for biofuels to consumer centers' # [binary, 0:1]
 
     beta(r,j)           'ratio of consumption (inputs) or production (outputs)'
 
@@ -62,9 +62,9 @@ $setglobal gdxinfilepaht 'C:\Users\vicke\Desktop\model\BLOEM\BLOEM-GitHub\input\
 # columns: c, cn, value
 # 300 km radius currently applied
 
-$gdxin '%gdxinfilepath%mxdis.gdx'
+$gdxin '%gdxinfilepath%mxdisbe.gdx'
 
-$load mx=mxdis
+$load mxdisbe=mxdisbe
 
 $gdxin
 
@@ -90,27 +90,27 @@ $gdxin
 
 * Import flag to logistics interconnections flagbt(c,cn):
 
-$gdxin '%gdxinfilepath%flagbt.gdx'
+$gdxin '%gdxinfilepath%flagbiomass.gdx'
 
-$load flagbt=flagbt
-
-$gdxin
-
-
-* Import grid cell connection to demand flagmxe(c,cn):
-
-$gdxin '%gdxinfilepath%flagmxe.gdx'
-
-$load flagmxe=flagmxe
+$load flagbiomass=flagbiomass
 
 $gdxin
 
 
-* Import grid cell connection to demand flagmxe(c,cn):
+* Import grid cell connection to demand flagairhbrout(c,cn):
 
-$gdxin '%gdxinfilepath%flagmxein.gdx'
+$gdxin '%gdxinfilepath%flagairhbrout.gdx'
 
-$load flagmxein=flagmxein
+$load flagairhbrin=flagairhbrout
+
+$gdxin
+
+
+* Import grid cell connection to demand flagairhbrin(c,cn):
+
+$gdxin '%gdxinfilepath%flagairhbrin.gdx'
+
+$load flagairhbrin=flagairhbrin
 
 $gdxin
 
@@ -177,7 +177,7 @@ Equations
 
 ;
 
-impactbiotransport(t) ..                            IBT(t) =e= dfa(t)*sum((r,c,cn),trco(r)$(rsou(r))*Bn(r,c,cn,t)$(rsou(r))*mx(c,cn)*tal(c)) ;
+impactbiotransport(t) ..                            IBT(t) =e= dfa(t)*sum((r,c,cn),trco(r)$(rsou(r))*Bn(r,c,cn,t)$(rsou(r))*mxbiomass(c,cn)*tal(c)) ;
 
 
 resourcebalance(r,c,t)$(rsou(r)) ..                 sum((l),B(r,l,c,t)$(rsou(r)))+Bin(r,c,t)$(rsou(r))-Bout(r,c,t)$(rsou(r))+HB(r,c,t)$(rsou(r)) =e= 0 ;
