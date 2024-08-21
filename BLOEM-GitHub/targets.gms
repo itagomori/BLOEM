@@ -32,7 +32,7 @@ Parameters
 
 * Set bioelectricity target
 
-Parameter bioelec(t) /  2020        100000000 # 0.1 EJ
+Parameter bioelec(t) /  2020         00000000 # 0.1 EJ
                         #2030        100000000,
                         #2040        100000000,
                         #2050        100000000,
@@ -42,7 +42,7 @@ Parameter bioelec(t) /  2020        100000000 # 0.1 EJ
 
 * Set biochar target
 
-Parameter biochar(t) /  2020        100000000 # 0.1 EJ
+Parameter biochar(t) /  2020         00000000 # 0.1 EJ
                         #2030        100000000,
                         #2040        100000000,
                         #2050        100000000,
@@ -56,7 +56,7 @@ Parameter biochar(t) /  2020        100000000 # 0.1 EJ
 
 * Setting gdx input filepath
 
-$setglobal gdxinfilepath 'C:\Users\vicke\Desktop\model\BLOEM\BLOEM-GitHub\input\gdx\'
+$setglobal gdxinfilepath 'C:\Users\vicke\Desktop\BLOEM\BLOEM-GitHub\input\gdx\'
 
 
 * Set bioenergy production targets
@@ -112,8 +112,9 @@ Equations
 
 ;
 
-bioenergytarget(r,c,t)$(rliq(r)) ..               pb(r,c,t)$(rliq(r))+ex(r,c,t)$(rliq(r)) =g= HE(r,c,t)$(rliq(r))+im(r,c,t)$(rliq(r)) ;
+#bioenergytarget(r,c,t)$(rliq(r)) ..              pb(r,c,t)$(rliq(r))+ex(r,c,t)$(rliq(r)) =g= HE(r,c,t)$(rliq(r))+im(r,c,t)$(rliq(r)) ;
+bioenergytarget(r,c,t)$(rliq(r)) ..               HE(r,c,t)$(rliq(r)) =e= pb(r,c,t)$(rliq(r)) ;
 
-bioelectarget(t) ..                               sum((r,c), E(r,c,t)$(rele(r))) =g= bioelec(t) ;
+bioelectarget(t) ..                               sum((r,c),E(r,c,t)$(rele(r))) =g= bioelec(t) ;
 
-biochartarget(t) ..                               sum((r,c), E(r,c,t)$(rchr(r))) =g= biochar(t) ;
+biochartarget(t) ..                               sum((r,c),E(r,c,t)$(rchr(r))) =g= biochar(t) ;

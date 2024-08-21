@@ -45,14 +45,14 @@ wood                0.052           0.052         0.000         0.051   # calcul
 
 * Setting gdx input filepath
 
-$setglobal gdxinfilepath 'C:\Users\vicke\Desktop\model\BLOEM\BLOEM-GitHub\input\gdx\'
+$setglobal gdxinfilepath 'C:\Users\vicke\Desktop\BLOEM\BLOEM-GitHub\input\gdx\'
 
 
 * Import land availability:
 
-$gdxin '%gdxinfilepath%landavailablebioen_bopf.gdx'
+$gdxin '%gdxinfilepath%landavailablebioen.gdx'
 
-$load ldav = landavailablebioen_bopf
+$load ldav = landavailablebioen
 
 $gdxin
 
@@ -140,7 +140,7 @@ Equations
 impactbioproduction(t)  ..          IBP(t) =e= dfa(t)*(sum((r,l,c),B(r,l,c,t)$(rsou(r))*(cobp(r,c,t)$(rsou(r)))+k(t)*ef(r,l)$(rsou(r)))) ;
 
 # the production of biomass resource r in grid cell c in decade t
-biomassproduction(r,l,c,t) ..       B(r,l,c,t)$(rsou(r)) =e= A(r,l,c,t)$(rsou(r))*ga(c)*y(r,c,t)$(rsou(r)) ;
+biomassproduction(r,l,c,t)$(rsou(r)) ..       B(r,l,c,t)$(rsou(r)) =e= A(r,l,c,t)$(rsou(r))*ga(c)*y(r,c,t)$(rsou(r)) ;
 
 landavailability(l,c,t) ..          ldav(c,l,t) =g= sum((r),A(r,l,c,t)$rsou(r)) ;
 
@@ -154,4 +154,4 @@ landavailability(l,c,t) ..          ldav(c,l,t) =g= sum((r),A(r,l,c,t)$rsou(r)) 
 
 # used as output variable
 # for energy crop r, how many landuse l are allocatd for resource productoin (only include energy crops)
-totallandallocation(l,r,t) ..       LdAlc(l,r,t)$(rsou(r)) =e= sum((c),A(r,l,c,t)$(rsou(r))*ga(c)) ;
+totallandallocation(l,r,t)$(rsou(r)) ..       LdAlc(l,r,t)$(rsou(r)) =e= sum((c),A(r,l,c,t)$(rsou(r))*ga(c)) ;
