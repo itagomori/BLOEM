@@ -87,7 +87,7 @@ Parameters
 
 * Setting gdx input filepath
 
-$setglobal gdxinfilepath 'C:\Users\vicke\Desktop\model\BLOEM\BLOEM-GitHub\input\gdx\'
+$setglobal gdxinfilepath 'C:\Users\vicke\Desktop\BLOEM\BLOEM-GitHub\input\gdx\'
 
 * Set technology discount factor w(j)
 $gdxin '%gdxinfilepath%discfactorwj.gdx'
@@ -172,7 +172,7 @@ $gdxin '%gdxinfilepath%ccsliqmincp.gdx'
 $load mincp = ccsliqmincp
 
 $gdxin
-
+;
 
 * ---------------------------------------------------------------------------------------------------------
 * Declare variables
@@ -247,7 +247,7 @@ Equations
 
     bioenergyconversion(r,c,t)      'production of bioenergy products'
     bioelectricityconversion(r,c,t) 'production of bioelectricity'
-    
+
     totalbioenergy(r,t)             'total production per product per decade'
     totalbioelectricity(r,t)        'total production of bioelectricity per decade'
     totalcapadd(j,t)                'total capacity added per decade'

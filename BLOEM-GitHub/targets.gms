@@ -56,7 +56,7 @@ Parameter biochar(t) /  2020         0 # 0.1 EJ
 
 * Setting gdx input filepath
 
-$setglobal gdxinfilepath 'C:\Users\vicke\Desktop\model\BLOEM\BLOEM-GitHub\input\gdx\'
+$setglobal gdxinfilepath 'C:\Users\vicke\Desktop\BLOEM\BLOEM-GitHub\input\gdx\'
 
 
 * Set bioenergy production targets
@@ -113,7 +113,7 @@ Equations
 ;
 
 #bioenergytarget(r,c,t)$(rliq(r)) ..              pb(r,c,t)$(rliq(r))+ex(r,c,t)$(rliq(r)) =g= HE(r,c,t)$(rliq(r))+im(r,c,t)$(rliq(r)) ;
-bioenergytarget(r,c,t)$(rliq(r)) ..               HE(r,c,t)$(rliq(r)) =g= pb(r,c,t)$(rliq(r)) ;
+bioenergytarget(r,c,t)$(rliq(r)) ..               HE(r,c,t)$(rliq(r)) =e= pb(r,c,t)$(rliq(r)) ;
 
 bioelectarget(t) ..                               sum((r,c), E(r,c,t)$(rele(r))) =g= bioelec(t) ;
 

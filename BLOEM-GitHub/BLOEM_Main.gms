@@ -47,7 +47,7 @@ Sets
 
 * Sets subsets (gdx-based)
 
-$setglobal gdxinfilepath 'C:\Users\vicke\Desktop\model\BLOEM\BLOEM-GitHub\input\gdx\'
+$setglobal gdxinfilepath 'C:\Users\vicke\Desktop\BLOEM\BLOEM-GitHub\input\gdx\'
 
 Sets
 cccs(c) 'ccs site'
@@ -146,7 +146,7 @@ Free variables Z ;
 * Modules
 * ---------------------------------------------------------------------------------------------------------
 
-$setglobal modulespath 'C:\Users\vicke\Desktop\model\BLOEM\BLOEM-GitHub\'
+$setglobal modulespath 'C:\Users\vicke\Desktop\BLOEM\BLOEM-GitHub\'
 
 $include %modulespath%biomassproduction.gms
 $include %modulespath%logistics.gms
@@ -207,7 +207,7 @@ Display Vseq.l ;
 
 * Set gdx output filepath;
 
-$setglobal gdxoutfilepath 'C:\Users\vicke\Desktop\model\BLOEM\BLOEM-GitHub\output\gdx\'
+$setglobal gdxoutfilepath 'C:\Users\vicke\Desktop\BLOEM\BLOEM-GitHub\output\gdx\'
 
 # Unload:
 
@@ -248,9 +248,15 @@ Ein   # bioenergy into grid cell
 
 Eout  # bioenergy out of grid cell
 
+EE    # total bioenergy production per product per decade
+
+En    # bioenergy flow for product r between grid cells c and cn in time t
+
 Bin   # biomass resource into grid cell
 
 Bout  # biomass resource out of grid cell
+
+Bn    # biomass flow for crop r between grid cells c and cn in time t
 
 Vcap  # carbon captured
 

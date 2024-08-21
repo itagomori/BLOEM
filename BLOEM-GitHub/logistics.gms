@@ -55,16 +55,16 @@ Parameter trco(r) / agrires          0.0020,
 
 * Setting gdx input filepath
 
-$setglobal gdxinfilepaht 'C:\Users\vicke\Desktop\model\BLOEM\BLOEM-GitHub\input\gdx\'
+$setglobal gdxinfilepaht 'C:\Users\vicke\Desktop\BLOEM\BLOEM-GitHub\input\gdx\'
 
 
 * Import distance between grid cells mx(c,cn):
 # columns: c, cn, value
 # 300 km radius currently applied
 
-$gdxin '%gdxinfilepath%mxbiomass.gdx'
+$gdxin '%gdxinfilepath%mxbiomass_300km.gdx'
 
-$load mxbiomass=mxbiomass
+$load mxbiomass=mxbiomass_300km
 
 $gdxin
 
@@ -90,9 +90,9 @@ $gdxin
 
 * Import flag to logistics interconnections flagbt(c,cn):
 
-$gdxin '%gdxinfilepath%flagbiomass.gdx'
+$gdxin '%gdxinfilepath%flagbiomass_300km.gdx'
 
-$load flagbiomass=flagbiomass
+$load flagbiomass=flagbiomass_300km
 
 $gdxin
 
