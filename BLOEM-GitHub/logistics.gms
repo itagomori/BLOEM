@@ -143,7 +143,7 @@ Variables
     CP(j,c,t)       'rate of operation of technology j in grid cell c in time t'
 ;
 
-Positive variables IBT, IET, HE, Bn, En, Bin, Bout, Ein, Eout, E, CP;
+Positive variables IBT, IET, HE, Bn, En, Bin, Bout, Ein, Eout, B, E, CP;
 
 * Variable bounds:
 HB.up(r,c,t)=0;

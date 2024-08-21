@@ -239,9 +239,6 @@ execute_unload '%gdxoutfilepath%scen_c.gdx'
 
 E     # bioenergy production
 
-EE    # total bioenergy production
-
-*S     # co-products production
 HE    # local bioenergy consumption for product r in grid cell c in time t
 
 Ein   # bioenergy into grid cell
