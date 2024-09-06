@@ -36,7 +36,7 @@ Parameters
 
 * Set fuel consumption for biomass production fp(r):
 
-Parameter fp(r)    / wood        0.056621 /;
+Parameter fp(r)    / foresres        0.056621 /;
 ;
 
 
@@ -52,7 +52,7 @@ Scalar nf     /298/ ;
 
 * Set emission factor for biomass transportation eft(r):
 
-Parameter eft(r)   / wood        0.002956 /;
+Parameter eft(r)   / foresres        0.002956 /;
 ;
 
 
@@ -128,16 +128,16 @@ Equations
 impactemissions(t) ..                           ITG(t) =e= dfa(t)*k(t)*GG(t) ;
 
 
-totalemissions(t) ..                            GG(t) =e= Gbp(t)+Gfr(t)+Gbt(t)+Gbc(t)+Get(t)-sum((c),Vseq(c,t)$(cs(c))) ;
+totalemissions(t) ..                            GG(t) =e= Gbp(t)+Gfr(t)+Gbt(t)+Gbc(t)+Get(t); #-sum((c),Vseq(c,t)$(cs(c))) ;
 
 # note on total emissions: without emissions from luc, which are added post optmization
 
-emissionsbioprod(t) ..                          Gbp(t) =e= sum((r,l,c),fp(r)$(rc(r))*B(r,l,c,t)$(rc(r))*fd) ;
+emissionsbioprod(t) ..                          Gbp(t) =e= sum((r,l,c),fp(r)$(rres(r))*B(r,l,c,t)$(rres(r))*fd) ;
 
-emissionsfertilz(t) ..                          Gfr(t) =e= sum((r,l,c),eff(r,c)$(rc(r))*A(r,l,c,t)$(rc(r))*ga(c)*nf/1000) ;
+emissionsfertilz(t) ..                          Gfr(t) =e= sum((r,l,c),eff(r,c)$(rres(r))*A(r,l,c,t)$(rres(r))*ga(c)*nf/1000) ;
 
-emissionsbiotransp(t) ..                        Gbt(t) =e= sum((r,c,cn),eft(r)$(rc(r))*mx(c,cn)*tal(c)*Bn(r,c,cn,t)$(rc(r))/1000) ;
+emissionsbiotransp(t) ..                        Gbt(t) =e= sum((r,c,cn),eft(r)$(rres(r))*mx(c,cn)*tal(c)*Bn(r,c,cn,t)$(rres(r))/1000) ;
 
-emissionsbioconv(t) ..                          Gbc(t) =e= sum((r,j,c),efc(r)$(rp(r))*CP(j,c,t)*beta(r,j)$(rp(r))/1000) ;
+emissionsbioconv(t) ..                          Gbc(t) =e= sum((r,j,c),efc(r)$(rliq(r))*CP(j,c,t)*beta(r,j)$(rliq(r))/1000) ;
 
-emissionsbioentransp(t) ..                      Get(t) =e= sum((r,c,cn),efw(r)$(rp(r))*mxe(c,cn)*tal(c)*En(r,c,cn,t)$(rp(r))/1000) ;
+emissionsbioentransp(t) ..                      Get(t) =e= sum((r,c,cn),efw(r)$(rliq(r))*mxe(c,cn)*tal(c)*En(r,c,cn,t)$(rliq(r))/1000) ;

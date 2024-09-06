@@ -80,10 +80,10 @@ Positive variables HE;
 Equations
 
     bioenergytarget(r,c,t)           'meet demand for bioenergy in each decade'
-    bioelectarget(r,c,t)             'meet demand for bioelectricity in each decade'
+    #bioelectarget(r,c,t)             'meet demand for bioelectricity in each decade'
 
 ;
 
-bioenergytarget(r,c,t)$(rp(r)) ..               pb(r,c,t)$(rp(r))+ex(r,c,t)$(rp(r)) =e= HE(r,c,t)$(rp(r)) ;
+bioenergytarget(r,c,t)$(rliq(r)) ..               pb(r,c,t)$(rliq(r))+ex(r,c,t)$(rliq(r)) =e= HE(r,c,t)$(rliq(r)) ;
 
-bioelectarget(r,c,t)$(re(r)) ..                 pb(r,c,t)$(re(r)) =l= E(r,c,t)$(re(r)) ;
+#bioelectarget(r,c,t)$(re(r)) ..                 pb(r,c,t)$(re(r)) =l= E(r,c,t)$(re(r)) ;

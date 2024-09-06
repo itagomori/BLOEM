@@ -40,7 +40,7 @@ Parameters
 
 * Set biomass and biofuels transportation costs trco(r)
 
-Parameter trco(r) / wood               0.0032 /;
+Parameter trco(r) / foresres               0.0032 /;
 ;
 
 
@@ -64,11 +64,11 @@ $gdxin
 
 * Import distance between grid cells | connect to demand mwe(c,cn):
 
-$gdxin '%gdxinfilepath%mxedistpopden.gdx'
+#$gdxin '%gdxinfilepath%mxedistpopden.gdx'
 
-$load mxe=mxedistmax
+#$load mxe=mxedistmax
 
-$gdxin
+#$gdxin
 
 
 * Import tortuosity factors tal(c):
@@ -166,29 +166,29 @@ Equations
 
 ;
 
-impactbiotransport(t) ..                        IBT(t) =e= dfa(t)*sum((r,c,cn),trco(r)$(rc(r))*Bn(r,c,cn,t)$(rc(r))*mx(c,cn)*tal(c)) ;
+impactbiotransport(t) ..                        IBT(t) =e= dfa(t)*sum((r,c,cn),trco(r)$(rres(r))*Bn(r,c,cn,t)$(rres(r))*mx(c,cn)*tal(c)) ;
 
 
-resourcebalance(r,c,t)$(rc(r)) ..               sum((l),B(r,l,c,t)$(rc(r)))+Bin(r,c,t)$(rc(r))-Bout(r,c,t)$(rc(r))+HB(r,c,t)$(rc(r)) =e= 0 ;
+resourcebalance(r,c,t)$(rres(r)) ..               sum((l),B(r,l,c,t)$(rres(r)))+Bin(r,c,t)$(rres(r))-Bout(r,c,t)$(rres(r))+HB(r,c,t)$(rres(r)) =e= 0 ;
 
-biomassintocell(r,c,t)$(rc(r)) ..               Bin(r,c,t)$(rc(r)) =e= sum((cn),Bn(r,cn,c,t)$(rc(r))*flagbt(cn,c)) ;
+biomassintocell(r,c,t)$(rres(r)) ..               Bin(r,c,t)$(rres(r)) =e= sum((cn),Bn(r,cn,c,t)$(rres(r))*flagbt(cn,c)) ;
 
-biomassoutocell(r,c,t)$(rc(r)) ..               Bout(r,c,t)$(rc(r)) =e= sum((cn),Bn(r,c,cn,t)$(rc(r))*flagbt(c,cn)) ;
+biomassoutocell(r,c,t)$(rres(r)) ..               Bout(r,c,t)$(rres(r)) =e= sum((cn),Bn(r,c,cn,t)$(rres(r))*flagbt(c,cn)) ;
 
-maxbiomassoutocell(r,c,t)$(rc(r)) ..            Bout(r,c,t)$(rc(r)) =l= sum((l),B(r,l,c,t)$(rc(r))) ;
-
-
-localdemandforcrops(r,c,t)$(rc(r)) ..           HB(r,c,t)$(rc(r)) =e= sum((j),CP(j,c,t)*beta(r,j)$(rc(r))*uf) ;
+maxbiomassoutocell(r,c,t)$(rres(r)) ..            Bout(r,c,t)$(rres(r)) =l= sum((l),B(r,l,c,t)$(rres(r))) ;
 
 
-impactbioendtransport(t) ..                     IET(t) =e= dfa(t)*sum((r,c,cn),trco(r)$(rp(r))*En(r,c,cn,t)$(rp(r))*mxe(c,cn)*tal(c)) ;
+localdemandforcrops(r,c,t)$(rres(r)) ..           HB(r,c,t)$(rres(r)) =e= sum((j),CP(j,c,t)*beta(r,j)$(rres(r))*uf) ;
 
 
-bioenergybalance(r,c,t)$(rp(r)) ..              E(r,c,t)$(rp(r))+Ein(r,c,t)$(rp(r))-Eout(r,c,t)$(rp(r)) =e= HE(r,c,t)$(rp(r)) ;
+impactbioendtransport(t) ..                     IET(t) =e= dfa(t)*sum((r,c,cn),trco(r)$(rliq(r))*En(r,c,cn,t)$(rliq(r))*mxe(c,cn)*tal(c)) ;
 
-bioenergyintogridcell(r,c,t)$(rp(r)) ..         Ein(r,c,t)$(rp(r)) =e= sum((cn),En(r,cn,c,t)$(rp(r))*flagmxein(cn,c)) ;
 
-bioenergyoutogridcell(r,c,t)$(rp(r)) ..         Eout(r,c,t)$(rp(r)) =e= sum((cn),En(r,c,cn,t)$(rp(r))*flagmxe(c,cn)) ;
+bioenergybalance(r,c,t)$(rliq(r)) ..              E(r,c,t)$(rliq(r))+Ein(r,c,t)$(rliq(r))-Eout(r,c,t)$(rliq(r)) =e= HE(r,c,t)$(rliq(r)) ;
 
-maxbioenergytransp(r,c,t)$(rp(r)) ..            Eout(r,c,t)$(rp(r)) =l= E(r,c,t)$(rp(r)) ;
+bioenergyintogridcell(r,c,t)$(rliq(r)) ..         Ein(r,c,t)$(rliq(r)) =e= sum((cn),En(r,cn,c,t)$(rliq(r))*flagmxein(cn,c)) ;
+
+bioenergyoutogridcell(r,c,t)$(rliq(r)) ..         Eout(r,c,t)$(rliq(r)) =e= sum((cn),En(r,c,cn,t)$(rliq(r))*flagmxe(c,cn)) ;
+
+maxbioenergytransp(r,c,t)$(rliq(r)) ..            Eout(r,c,t)$(rliq(r)) =l= E(r,c,t)$(rliq(r)) ;
 

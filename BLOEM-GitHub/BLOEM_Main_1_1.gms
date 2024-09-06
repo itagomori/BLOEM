@@ -2,7 +2,7 @@ $ontext
 * ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 * Bioenergy Allocation Spatially Explicit Model - BLOEM
 * Authors: Isabela Schmidt Tagomori & Aline Carvalho
-* Last update: 13.08.2024
+* Last update: 31.08.2024
 * Version: 1.0
 * Coupled IAM: COFFEE
 * Region: Europe 
@@ -17,28 +17,27 @@ $eolcom #
 * ---------------------------------------------------------------------------------------------------------
 
 Sets
-    r 'resources'     / forestresidues /
+    r 'resources'     / foresres, pyrolysisoil, biogasoil, greendiesel, bionaphta /
     c 'grid cell'     / 1*3391 /  # European grid cells
     t 'decade'        / 2025 /
-    j 'technology'    / POFCC /
+    j 'technology'    / PO, POFCC /
     l 'landcover'     / forest, agriculture, pasture, other /
     q 'period g-luc'  / 1*3 / 
 
-    rc(r) 'crops'               / wood /
-    ri(r) 'intermediates'       / pyrolysisoil /
-    rp(r) 'liquid biofuels'     / biogasoil / 
-    re(r) 'bioelectricity'      / bioelectricity /
-    rs(r) 'co-products'         / greendiesel, bionaphta /
+    rres(r) 'residues'            / foresres /
+    rint(r) 'intermediates'       / pyrolysisoil /
+    rliq(r) 'liquid biofuels'     / biogasoil / 
+    #rele(r) 'bioelectricity'     / bioelectricity /
+    rcop(r) 'co-products'         / greendiesel, bionaphta /
 
-    #jc(j) 'ccs technologies'    / E1GC, BJTC, DFTC /
+    #jc(j) 'ccs technologies'    / E1GC, BJTC, DFTC / 
+    # Fiquei na duvida se essa linha pode ser deletada.
 
     #cs(c) 'storage sites'       / 1835, 2597, 2650, 2652, 2698, 2716, 2744 /
 
     lp(l) 'protected areas'     / forest, other / # other = other land, including savannahs, scrubblands, etc.
     #lb(l) 'bioland base'        / bioland /
 
-    lr(l,r)  'land vs crops'    / forest  .wood      
-                                  other   .wood       /;
 ;
 
 
@@ -104,12 +103,12 @@ Variables
     IBT(t)          'impact of biomass transportation in time t'  # [US$]
     IBC(t)          'impact of biomass conversion in time t'  # [US$]
     IET(t)          'impact of bioenergy transportation in time t'  # [US$]
-    ICC(t)          'impact of carbon transportation and storage in time t'  # [US$]
+    #ICC(t)          'impact of carbon transportation and storage in time t'  # [US$]
     ITG(t)          'impact of carbon emissions in time t'  # [US$]
           
 ;
 
-Positive variables  IBP, IBT, IBC, IET, ICC;
+Positive variables  IBP, IBT, IBC, IET; #ICC;
 
 Free variables  Z ;
 
@@ -118,12 +117,12 @@ Free variables  Z ;
 * Modules
 * ---------------------------------------------------------------------------------------------------------
 
-$setglobal modulespath 'C:\BLOEM\BLOEMEurope_GAMS\'
+$setglobal modulespath 'C:\BLOEM\github\BLOEM\BLOEM-GitHub\'
 
 $include %modulespath%biomassproduction.gms
 $include %modulespath%logistics.gms
 $include %modulespath%technologiesportfolio.gms
-$include %modulespath%carboncaptureandstorage.gms
+#$include %modulespath%carboncaptureandstorage.gms
 $include %modulespath%emissions.gms
 $include %modulespath%targets.gms
 
@@ -138,10 +137,10 @@ Equations
         
 ;
 
-cost ..                                         Z =e= sum((t),IBP(t)+IBT(t)+IBC(t)+IET(t)+ICC(t)+ITG(t));
+cost ..                                         Z =e= sum((t),IBP(t)+IBT(t)+IBC(t)+IET(t)+ITG(t));
 
 
-Model BLOEM_BLUES_1_1 /all/ ;
+Model BLOEM_Europe /all/ ;
 
 option reslim = 1000000 ;
 option lp = cplex ;
@@ -155,10 +154,10 @@ names no
 memoryemphasis 1
 threads 1
 $offecho
-BLOEM_BLUES_1_1.OptFile = 1;
+BLOEM_Europe.OptFile = 1;
 
 
-Solve BLOEM_BLUES_1_1 using lp minimizing Z ;
+Solve BLOEM_Europe using lp minimizing Z ;
 
 Display Z.l ;
 
@@ -168,7 +167,7 @@ Display LdAlc.l ;
 
 Display GG.l, Gbp.l, Gfr.l, Gbt.l, Gbc.l, Get.l ;
 
-Display IBP.l, IBT.l, IBC.l, IET.l, ICC.l, ITG.l ;
+Display IBP.l, IBT.l, IBC.l, IET.l, ITG.l; # ICC.l ;
 
 Display TCA.l ;
 
@@ -180,7 +179,7 @@ Display Vseq.l ;
 
 * Set gdx output filepath
 
-$setglobal gdxoutfilepath 'C:\BLOEM\BLOEMEurope_GAMS\gdx_files'
+$setglobal gdxoutfilepath 'C:\BLOEM\BLOEMEurope_GAMS\gdx_files\output\'
 
 # Unload:
 
@@ -254,7 +253,7 @@ ITOM  # impact of o&m
 
 IET   # impact of bioenergy transportation
 
-ICC   # impact of carbon transportation and storage
+#ICC   # impact of carbon transportation and storage
 
 ITG   # impact of emissions [carbon tax scenarios]
 

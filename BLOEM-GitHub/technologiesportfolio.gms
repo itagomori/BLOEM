@@ -60,6 +60,7 @@ Parameters
 Table tci(j,t) 'total capital investment for technology j in grid cell c in decade d'  # [US$/kW]
 
                 2025        #2030        2040        2050        
+    PO          5528       
     POFCC       5528        #5528        5528        5528        
   ;
 
@@ -68,6 +69,7 @@ Table tci(j,t) 'total capital investment for technology j in grid cell c in deca
 Table fom(j,t) 'fixed O&M costs for technology j in grid cell c in decade d'  # [US$/kW/y]
 
                 2025        #2030        2040        2050         
+    PO          223
     POFCC       223         #223         223         223         
 ;
 
@@ -75,14 +77,16 @@ Table fom(j,t) 'fixed O&M costs for technology j in grid cell c in decade d'  # 
 
 Table vom(j,t) 'variable O&M costs for technology j in grid cell c in decade d'  # [US$/kWy]
 
-                2020        #2030        2040        2050         
+                2025        #2030        2040        2050         
+    PO          0
     POFCC       0           #0           0           0           
 
 ;
 
 * Set technology discount factor w(j)
 
-Parameter w(j)   / POFCC    0.9807549 /;
+Parameter w(j)   / PO       0.9807549, 
+                   POFCC    0.9807549/;
 ;
 
 * Set technologies retirement factors for added capacities
@@ -90,6 +94,7 @@ Parameter w(j)   / POFCC    0.9807549 /;
 Table rf(j,tn,t) 'retirement factor of capacity added in time tn'
 
                 2025        #2030        2040        2050        
+    PO. 2025      0 
     POFCC. 2025   0          # 0           0           1           
     #SGC. 2030   0           0           0           0           
     #SGC. 2040   0           0           0           0           
@@ -101,7 +106,8 @@ Table rf(j,tn,t) 'retirement factor of capacity added in time tn'
 Table cf(j,t) 'capacity factors'  # [factor 0-1]
 
                 2025        #2030        2040        2050        
-    POFC         1           #1           1           1           
+    PO            1
+    POFCC         1           #1           1           1           
 
 ;
 
@@ -109,28 +115,31 @@ Table cf(j,t) 'capacity factors'  # [factor 0-1]
 
 Table beta(r,j) 'ratio of consumption or production of resource r by technology j'  # [GJ/GJ]
 
-                        POFCC    
-    wood                -1          
-    biogasoil            2        
-
+                          PO      POFCC 
+    foresres             -1        0 
+    pyrolysisoil          1        -1
+    biogasoil             0        1  
+    greendiesel           0        1
+    bionaphta             0        1
 ;
 
 * Set technologies mode of operation: for bagasse options
 
 Table avj(r,j,t) 'operation mode for technologies with intermediates'  # [fraction] 0-1
 
-                        2025    #2030    2040    2050             
-    #wood. POFCC        0       #1       1       1              
-    
+                           2025    #2030    2040    2050             
+    pyrolysisoil. PO        1       #1       1       1              
+    pyrolysisoil. POFCC     1 
 
 
 * Set production of biofuels with CCS
 
-Table mincp(j,t) 'biofuel production with ccs'
+#Table mincp(j,t) 'biofuel production with ccs'
 
-                2025        #2030        2040        2050        
-    POFCC        0                     
-;
+#                2025        #2030        2040        2050        
+#    PO           0    
+#    POFCC        0                   
+#;
 
 * ----------------------------------------------------------------------------------------------------------
 * Import data
@@ -191,7 +200,7 @@ Positive variables IBC, ITCI, ITOM, CJ, CA, CR, CP, E, S, TCA;
 * Variable bounds
 CJ.up("POFCC",c,t)=10e6;
 
-CA.fx(j,c,"2025")=0;
+#CA.fx(j,c,"2025")=0;
 
 
 * ---------------------------------------------------------------------------------------------------------
@@ -241,22 +250,22 @@ capacitybalance(j,c,t) ..                       CJ(j,c,t) =e= cjo(j,c,t)+CJ(j,c,
 retiredcapacity(j,c,t) ..                       CR(j,c,t) =e= cre(j,c,t)+sum((tn),CA(j,c,tn)*rf(j,tn,t)) ;
 
 
-bioenergyconversion(r,c,t)$(rp(r)) ..           E(r,c,t)$(rp(r)) =e= sum((j),CP(j,c,t)*beta(r,j)*uf) ;
+bioenergyconversion(r,c,t)$(rliq(r)) ..           E(r,c,t)$(rliq(r)) =e= sum((j),CP(j,c,t)*beta(r,j)*uf) ;
 
-bioelectricityconversion(r,c,t)$(re(r)) ..      E(r,c,t)$(re(r)) =e= sum((j),CP(j,c,t)*beta(r,j)) ;
+#bioelectricityconversion(r,c,t)$(re(r)) ..      E(r,c,t)$(re(r)) =e= sum((j),CP(j,c,t)*beta(r,j)) ;
 
-intermediateconversion(r,c,t)$(ri(r)) ..        I(r,c,t)$(ri(r)) =e= sum((j),CP(j,c,t)*beta(r,j)*uf*avj(r,j,t)) ;
+intermediateconversion(r,c,t)$(rint(r)) ..        I(r,c,t)$(rint(r)) =e= sum((j),CP(j,c,t)*beta(r,j)*uf*avj(r,j,t)) ;
 
-coproductsconversion(r,c,t)$(rs(r)) ..          S(r,c,t)$(rs(r)) =e= sum((j),CP(j,c,t)*beta(r,j)*uf) ;
-
-
-intermediatebalance(r,c,t)$(ri(r)) ..           I(r,c,t)$(ri(r)) =e= 0 ;
+coproductsconversion(r,c,t)$(rcop(r)) ..          S(r,c,t)$(rcop(r)) =e= sum((j),CP(j,c,t)*beta(r,j)*uf) ;
 
 
-totalbioenergy(r,t) ..                          EE(r,t)$(rp(r)) =e= sum((c),E(r,c,t)$(rp(r)));
+intermediatebalance(r,c,t)$(rint(r)) ..           I(r,c,t)$(rint(r)) =e= 0 ;
 
-totalbioelectricity(r,t) ..                     EE(r,t)$(re(r)) =e= sum((c),E(r,c,t)$(re(r)));
+
+totalbioenergy(r,t) ..                          EE(r,t)$(rliq(r)) =e= sum((c),E(r,c,t)$(rliq(r)));
+
+#totalbioelectricity(r,t) ..                     EE(r,t)$(re(r)) =e= sum((c),E(r,c,t)$(re(r)));
 
 totalcapadd(j,t) ..                             TCA(j,t) =e= sum((c),CA(j,c,t)) ;
 
-biofuelswithccs(j,t)$(jc(j)) ..                 sum((r,c),CP(j,c,t)$(jc(j))*beta(r,j)$(rp(r))*uf) =e= mincp(j,t)$(jc(j)) ;
+#biofuelswithccs(j,t)$(jc(j)) ..                 sum((r,c),CP(j,c,t)$(jc(j))*beta(r,j)$(rp(r))*uf) =e= mincp(j,t)$(jc(j)) ;

@@ -39,9 +39,8 @@ Parameters
 Table ef(r,l) 'emission factors for direct land use change' # [tCO2/GJ] primary energy,
 
                     forest        other        pasture
-wood                0.052         0.051        0.000
+foresres            0.000         0.000        0.000
 ;
-
 
 * ----------------------------------------------------------------------------------------------------------
 * Import data
@@ -115,6 +114,11 @@ A.fx(r,"agriculture",c,t)=0;
 #A.fx(r,"forest",c,t)=0;
 A.fx(r,"pasture",c,t)=0;
 
+# except for forests, other types of land cannot produce forestry residues
+A.fx('foresres','other',c,t)=0;
+A.fx('foresres','agriculture',c,t)=0;
+A.fx('foresres','pasture',c,t)=0;
+
 
 * ---------------------------------------------------------------------------------------------------------
 * Define Equations
@@ -130,11 +134,11 @@ Equations
 
 ;
 
-impactbioproduction(t) ..                       IBP(t) =e= dfa(t)*sum((r,l,c),B(r,l,c,t)$(rc(r))*(cobp(r,c,t)$(rc(r))+k(t)*ef(r,l)$(rc(r)))) ;
+impactbioproduction(t) ..                       IBP(t) =e= dfa(t)*sum((r,l,c),B(r,l,c,t)$(rres(r))*(cobp(r,c,t)$(rres(r))+k(t)*ef(r,l)$(rres(r)))) ;
 
 
-production(r,l,c,t)$(rc(r)) ..                  B(r,l,c,t)$(rc(r)) =l= A(r,l,c,t)$(rc(r))*ga(c)*y(r,c,t)$(rc(r)) ;
+production(r,l,c,t)$(rres(r)) ..                  B(r,l,c,t)$(rres(r)) =l= A(r,l,c,t)$(rres(r))*ga(c)*y(r,c,t)$(rres(r)) ;
 
-landavailability(l,c,t) ..                      ldav(l,c,t) =g= sum((r),A(r,l,c,t)$(rc(r))) ;
+landavailability(l,c,t) ..                      ldav(l,c,t) =g= sum((r),A(r,l,c,t)$(rres(r))) ;
 
-totallandallocation(l,r,t) ..                   LdAlc(l,r,t)$(rc(r)) =e= sum((c),A(r,l,c,t)$(rc(r))*ga(c)) ;
+totallandallocation(l,r,t) ..                   LdAlc(l,r,t)$(rres(r)) =e= sum((c),A(r,l,c,t)$(rres(r))*ga(c)) ;
