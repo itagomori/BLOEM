@@ -74,7 +74,7 @@ Parameter efc(r)   / biogasoil          0.000000 /;
 
 * Setting gdx input filepath
 
-$setglobal gdxinfilepath 'C:\BLOEM\BLOEMEurope_GAMS\gdx_files\'
+$setglobal gdxinfilepath 'C:\BLOEM\BLOEMEurope_GAMS\gdx_files\output\'
 
 
 * Import emission factors for fertilizer use:

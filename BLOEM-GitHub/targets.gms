@@ -46,12 +46,12 @@ Table ex(r,c,t) 'exportation of biofuels'  # [GJ]
 
 * Setting gdx input filepath
 
-$setglobal gdxinfilepath 'C:\BLOEM\BLOEMEurope_GAMS\gdx_files\'
+$setglobal gdxinfilepath 'C:\BLOEM\BLOEMEurope_GAMS\gdx_files\output\'
 
 
 * Set bioenergy production targets
 
-$gdxin '%gdxinfilepath%bioenergytargetsbr_ndcnovabr.gdx'
+$gdxin '%gdxinfilepath%bioenergytargetsbr.gdx'
 
 $load pb=bioenergytargetsbr
 
