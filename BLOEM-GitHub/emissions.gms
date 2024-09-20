@@ -74,7 +74,7 @@ Parameter efc(r)   / biogasoil          0.000000 /;
 
 * Setting gdx input filepath
 
-$setglobal gdxinfilepath 'C:\BLOEM\BLOEMEurope_GAMS\gdx_files\output\'
+$setglobal gdxinfilepath 'C:\BLOEM\EuropeRegion\input\'
 
 
 * Import emission factors for fertilizer use:
@@ -101,11 +101,11 @@ Variables
     Gfr(t)          'GHG emissions from fertilizer use in biomass production'  # [tCO2eq]
     Gbt(t)          'GHG emissions from biomass transportation'  # [tCO2eq]
     Gbc(t)          'GHG emissions from biomass conversion'  # [tCO2eq]
-    Get(t)          'GHG emissions from bioenergy, biofuels, transportation'  # [tCO2eq]
+    #Get(t)          'GHG emissions from bioenergy, biofuels, transportation'  # [tCO2eq]
 
 ;
 
-Positive variables Gbp, Gfr, Gbt, Gbc, Get;
+Positive variables Gbp, Gfr, Gbt, Gbc; # Get;
 
 
 * ---------------------------------------------------------------------------------------------------------
@@ -121,14 +121,14 @@ Equations
     emissionsfertilz(t)              'emissions from fertilizer use in biomass production'
     emissionsbiotransp(t)            'emissions from biomass transportation'
     emissionsbioconv(t)              'emissions from biomass conversion'
-    emissionsbioentransp(t)          'emissions from biofuel transportation'
+    #emissionsbioentransp(t)          'emissions from biofuel transportation'
 
 ;
 
 impactemissions(t) ..                           ITG(t) =e= dfa(t)*k(t)*GG(t) ;
 
 
-totalemissions(t) ..                            GG(t) =e= Gbp(t)+Gfr(t)+Gbt(t)+Gbc(t)+Get(t); #-sum((c),Vseq(c,t)$(cs(c))) ;
+totalemissions(t) ..                            GG(t) =e= Gbp(t)+Gfr(t)+Gbt(t)+Gbc(t); #Get(t)-sum((c),Vseq(c,t)$(cs(c))) ;
 
 # note on total emissions: without emissions from luc, which are added post optmization
 
@@ -140,4 +140,4 @@ emissionsbiotransp(t) ..                        Gbt(t) =e= sum((r,c,cn),eft(r)$(
 
 emissionsbioconv(t) ..                          Gbc(t) =e= sum((r,j,c),efc(r)$(rliq(r))*CP(j,c,t)*beta(r,j)$(rliq(r))/1000) ;
 
-emissionsbioentransp(t) ..                      Get(t) =e= sum((r,c,cn),efw(r)$(rliq(r))*mxe(c,cn)*tal(c)*En(r,c,cn,t)$(rliq(r))/1000) ;
+#emissionsbioentransp(t) ..                      Get(t) =e= sum((r,c,cn),efw(r)$(rliq(r))*mxe(c,cn)*tal(c)*En(r,c,cn,t)$(rliq(r))/1000) ;

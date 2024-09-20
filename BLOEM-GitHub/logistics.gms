@@ -50,7 +50,7 @@ Parameter trco(r) / foresres               0.0032 /;
 
 * Setting gdx input filepath
 
-$setglobal gdxinfilepath 'C:\BLOEM\BLOEMEurope_GAMS\gdx_files\output\'
+$setglobal gdxinfilepath 'C:\BLOEM\EuropeRegion\input\'
 
 
 * Import distance between grid cells mx(c,cn):
@@ -91,20 +91,20 @@ $gdxin
 
 * Import grid cell connection to demand flagmxe(c,cn):
 
-$gdxin '%gdxinfilepath%flagmxe.gdx'
+#$gdxin '%gdxinfilepath%flagmxe.gdx'
 
-$load flagmxe=flagmxe
+#$load flagmxe=flagmxe
 
-$gdxin
+#$gdxin
 
 
 * Import grid cell connection to demand flagmxe(c,cn):
 
-$gdxin '%gdxinfilepath%flagmxein.gdx'
+#$gdxin '%gdxinfilepath%flagmxein.gdx'
 
-$load flagmxein=flagmxein
+#$load flagmxein=flagmxein
 
-$gdxin
+#$gdxin
 
 ;
 
@@ -115,13 +115,13 @@ $gdxin
 Variables
 
     IBT(t)          'impact of biomass transportation in time t'  # [US$]
-    IET(t)          'impact of bioenergy transportation in time t'  # [US$]
+    #IET(t)          'impact of bioenergy transportation in time t'  # [US$]
 
     HB(r,c,t)       'local biomass consumption for crop r in grid cell c in time t' 
     HE(r,c,t)       'local bioenergy consumption for product r in grid cell c in time t'
 
     Bn(r,c,cn,t)    'biomass flow for crop r between grid cells c and cn in time t'
-    En(r,c,cn,t)    'bioenergy flow for product r between grid cells c and cn in time t'
+    #En(r,c,cn,t)    'bioenergy flow for product r between grid cells c and cn in time t'
 
     Bin(r,c,t)      'crop r into grid cell c in time t'
     Bout(r,c,t)     'crop r out of grid cell c in time t'
@@ -136,10 +136,14 @@ Variables
 
 ;
 
-Positive variables IBT, IET, HE, Bn, En, Bin, Bout, Ein, Eout, B, E, CP;
+Positive variables IBT, IET, HE, Bn, Bin, Bout, B, E, CP; #Ein, Eout, En, 
 
 * Variable bounds:
 HB.up(r,c,t)=0;
+
+* Flows of biofuels not allowed:
+Ein.fx(r,c,t)=0;
+Eout.fx(r,c,t)=0;
 
 
 * ---------------------------------------------------------------------------------------------------------
@@ -157,12 +161,12 @@ Equations
 
     localdemandforcrops(r,c,t)       'local demand for crops due to technology operation'
 
-    impactbioendtransport(t)         'impact of transporting bioenergy from production to demand grid cells'
+    #impactbioendtransport(t)         'impact of transporting bioenergy from production to demand grid cells'
 
     bioenergybalance(r,c,t)          'bioenergy balance in grid cell c in decade d'
-    bioenergyintogridcell(r,c,t)     'bioenergy into grid cell'
-    bioenergyoutogridcell(r,c,t)     'bioenergy out of grid cell'
-    maxbioenergytransp(r,c,t)        'max bioenergy out of grid cell'
+    #bioenergyintogridcell(r,c,t)     'bioenergy into grid cell'
+    #bioenergyoutogridcell(r,c,t)     'bioenergy out of grid cell'
+    #maxbioenergytransp(r,c,t)        'max bioenergy out of grid cell'
 
 ;
 
@@ -181,14 +185,14 @@ maxbiomassoutocell(r,c,t)$(rres(r)) ..            Bout(r,c,t)$(rres(r)) =l= sum(
 localdemandforcrops(r,c,t)$(rres(r)) ..           HB(r,c,t)$(rres(r)) =e= sum((j),CP(j,c,t)*beta(r,j)$(rres(r))*uf) ;
 
 
-impactbioendtransport(t) ..                     IET(t) =e= dfa(t)*sum((r,c,cn),trco(r)$(rliq(r))*En(r,c,cn,t)$(rliq(r))*mxe(c,cn)*tal(c)) ;
+#impactbioendtransport(t) ..                     IET(t) =e= dfa(t)*sum((r,c,cn),trco(r)$(rliq(r))*En(r,c,cn,t)$(rliq(r))*mxe(c,cn)*tal(c)) ;
 
 
 bioenergybalance(r,c,t)$(rliq(r)) ..              E(r,c,t)$(rliq(r))+Ein(r,c,t)$(rliq(r))-Eout(r,c,t)$(rliq(r)) =e= HE(r,c,t)$(rliq(r)) ;
 
-bioenergyintogridcell(r,c,t)$(rliq(r)) ..         Ein(r,c,t)$(rliq(r)) =e= sum((cn),En(r,cn,c,t)$(rliq(r))*flagmxein(cn,c)) ;
+#bioenergyintogridcell(r,c,t)$(rliq(r)) ..         Ein(r,c,t)$(rliq(r)) =e= sum((cn),En(r,cn,c,t)$(rliq(r))*flagmxein(cn,c)) ;
 
-bioenergyoutogridcell(r,c,t)$(rliq(r)) ..         Eout(r,c,t)$(rliq(r)) =e= sum((cn),En(r,c,cn,t)$(rliq(r))*flagmxe(c,cn)) ;
+#bioenergyoutogridcell(r,c,t)$(rliq(r)) ..         Eout(r,c,t)$(rliq(r)) =e= sum((cn),En(r,c,cn,t)$(rliq(r))*flagmxe(c,cn)) ;
 
-maxbioenergytransp(r,c,t)$(rliq(r)) ..            Eout(r,c,t)$(rliq(r)) =l= E(r,c,t)$(rliq(r)) ;
+#maxbioenergytransp(r,c,t)$(rliq(r)) ..            Eout(r,c,t)$(rliq(r)) =l= E(r,c,t)$(rliq(r)) ;
 

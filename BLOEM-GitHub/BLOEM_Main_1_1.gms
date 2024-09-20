@@ -102,13 +102,13 @@ Variables
     IBP(t)          'impact of biomass production in time t'  # [US$]
     IBT(t)          'impact of biomass transportation in time t'  # [US$]
     IBC(t)          'impact of biomass conversion in time t'  # [US$]
-    IET(t)          'impact of bioenergy transportation in time t'  # [US$]
+    #IET(t)          'impact of bioenergy transportation in time t'  # [US$]
     #ICC(t)          'impact of carbon transportation and storage in time t'  # [US$]
     ITG(t)          'impact of carbon emissions in time t'  # [US$]
           
 ;
 
-Positive variables  IBP, IBT, IBC, IET; #ICC;
+Positive variables  IBP, IBT, IBC; #IET; ICC;
 
 Free variables  Z ;
 
@@ -137,7 +137,7 @@ Equations
         
 ;
 
-cost ..                                         Z =e= sum((t),IBP(t)+IBT(t)+IBC(t)+IET(t)+ITG(t));
+cost ..                                         Z =e= sum((t),IBP(t)+IBT(t)+IBC(t)+ITG(t));
 
 
 Model BLOEM_Europe /all/ ;
@@ -158,16 +158,16 @@ BLOEM_Europe.OptFile = 1;
 
 
 Solve BLOEM_Europe using lp minimizing Z ;
-
+$stop
 Display Z.l ;
 
 Display EE.l ;
 
 Display LdAlc.l ;
 
-Display GG.l, Gbp.l, Gfr.l, Gbt.l, Gbc.l, Get.l ;
+Display GG.l, Gbp.l, Gfr.l, Gbt.l, Gbc.l; # Get.l ;
 
-Display IBP.l, IBT.l, IBC.l, IET.l, ITG.l; # ICC.l ;
+Display IBP.l, IBT.l, IBC.l, ITG.l; # ICC.l, IET.l ;
 
 Display TCA.l ;
 

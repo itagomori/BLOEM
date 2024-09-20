@@ -147,7 +147,7 @@ Table avj(r,j,t) 'operation mode for technologies with intermediates'  # [fracti
 
 * Setting gdx input filepath
 
-$setglobal gdxinfilepath 'C:\BLOEM\BLOEMEurope_GAMS\gdx_files\output\'
+$setglobal gdxinfilepath 'C:\BLOEM\EuropeRegion\input\'
 
 
 * Import existing capacity (cjo):
