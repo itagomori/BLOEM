@@ -31,7 +31,7 @@ Sets
     rcop(r) 'co-products'         / greendiesel, bionaphta /
 
     #jc(j) 'ccs technologies'    / E1GC, BJTC, DFTC / 
-    # Fiquei na duvida se essa linha pode ser deletada.
+    
 
     #cs(c) 'storage sites'       / 1835, 2597, 2650, 2652, 2698, 2716, 2744 /
 
@@ -233,7 +233,7 @@ Gbt   # emissions from biomass transport
 
 Gbc   # emissions from biomass conversion
 
-Get   # emissions from biofuel transportation
+#Get   # emissions from biofuel transportation
 
 ;
 
@@ -251,7 +251,7 @@ ITCI  # impact of capital investment
 
 ITOM  # impact of o&m
 
-IET   # impact of bioenergy transportation
+#IET   # impact of bioenergy transportation
 
 #ICC   # impact of carbon transportation and storage
 

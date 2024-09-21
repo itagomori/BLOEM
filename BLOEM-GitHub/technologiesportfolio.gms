@@ -15,6 +15,7 @@ $ontext
 ---------------------------------------------------------------
 Portfolio of technologies:
 ---------------------------------------------------------------
+PO = Pyrolysis Oil Production
 POFCC = Pyrolysis Oil in FCC
 ---------------------------------------------------------------
 $offtext
@@ -219,7 +220,7 @@ Equations
     retiredcapacity(j,c,t)           'retired capacity of technology j'
 
     bioenergyconversion(r,c,t)       'production of bioenergy products'
-    bioelectricityconversion(r,c,t)  'production of bioelectricity'
+    #bioelectricityconversion(r,c,t)  'production of bioelectricity'
     intermediateconversion(r,c,t)    'production of intermediates'
     coproductsconversion(r,c,t)      'production of co-products'
 
@@ -227,11 +228,11 @@ Equations
 
     totalbioenergy(r,t)              'total production per product per decade'
 
-    totalbioelectricity(r,t)         'total production of bioelectricity per decade'
+    #totalbioelectricity(r,t)         'total production of bioelectricity per decade'
 
     totalcapadd(j,t)                 'total capacity added per decade'
 
-    biofuelswithccs(j,t)             'biofuels production with ccs per decade'
+    #biofuelswithccs(j,t)             'biofuels production with ccs per decade'
 
 ;
 
