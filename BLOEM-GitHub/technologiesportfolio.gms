@@ -69,54 +69,54 @@ Parameters
 
 Table tci(j,t) 'total capital investment for technology j in grid cell c in decade d'  # [US$/kW]
 
-                2020        2030        2040        2050        
-    SGC         1           1           1           1           
-    E1G         647         647         647         647         
-    E2G         1400        1400        1400        1400        
-    BJT         5528        5528        5528        5528        
-    DFT         5350        5350        5350        5350        
-    BDS         21          21          21          21          
-    COG         1304        1304        1304        1304        
-    E1GC        650         650         650         650               
-    BJTC        5600        5600        5600        5600        
-    DFTC        5420        5420        5420        5420
-    SUG         0           0           0           0        
+                2020       # 2030        2040        2050        
+    SGC         1          # 1           1           1           
+    E1G         647        # 647         647         647         
+    E2G         1400       # 1400        1400        1400        
+    BJT         5528       # 5528        5528        5528        
+    DFT         5350       # 5350        5350        5350        
+    BDS         21         # 21          21          21          
+    COG         1304       # 1304        1304        1304        
+    E1GC        650        # 650         650         650               
+    BJTC        5600       # 5600        5600        5600        
+    DFTC        5420       # 5420        5420        5420
+    SUG         0          # 0           0           0        
 ;
 
 * Set technologies fixed o&m costs
 
 Table fom(j,t) 'fixed O&M costs for technology j in grid cell c in decade d'  # [US$/kW/y]
 
-                2020        2030        2040        2050        
-    SGC         0           0           0           0           
-    E1G         10          10          10          10          
-    E2G         110         110         110         110         
-    BJT         223         223         223         223         
-    DFT         217         217         217         217         
-    BDS         8           8           8           8           
-    COG         24          24          24          24          
-    E1GC        11          11          11          11          
-    BJTC        227         227         227         227         
-    DFTC        220         220         220         220  
-    SUG         0           0           0           0       
+                2020       # 2030        2040        2050        
+    SGC         0          # 0           0           0           
+    E1G         10         # 10          10          10          
+    E2G         110        # 110         110         110         
+    BJT         223        # 223         223         223         
+    DFT         217        # 217         217         217         
+    BDS         8          # 8           8           8           
+    COG         24         # 24          24          24          
+    E1GC        11         # 11          11          11          
+    BJTC        227        # 227         227         227         
+    DFTC        220        # 220         220         220  
+    SUG         0          # 0           0           0       
 ;
 
 * Set technologies variable o&m costs
 
 Table vom(j,t) 'variable O&M costs for technology j in grid cell c in decade d'  # [US$/kWy]
 
-                2020        2030        2040        2050        
-    SGC         1           1           1           1           
-    E1G         0           0           0           0           
-    E2G         50          50          50          50          
-    BJT         0           0           0           0           
-    DFT         0           0           0           0           
-    BDS         78          78          78          78          
-    COG         0           0           0           0           
-    E1GC        0           0           0           0           
-    BJTC        0           0           0           0           
-    DFTC        0           0           0           0
-    SUG         0           0           0           0           
+                2020       # 2030        2040        2050        
+    SGC         1          # 1           1           1           
+    E1G         0          # 0           0           0           
+    E2G         50         # 50          50          50          
+    BJT         0          # 0           0           0           
+    DFT         0          # 0           0           0           
+    BDS         78         # 78          78          78          
+    COG         0          # 0           0           0           
+    E1GC        0          # 0           0           0           
+    BJTC        0          # 0           0           0           
+    DFTC        0          # 0           0           0
+    SUG         0          # 0           0           0           
 ;
 
 * Set technology discount factor w(j)
@@ -138,61 +138,61 @@ Parameter w(j)   / SGC    0.9807549,
 
 Table rf(j,tn,t) 'retirement factor of capacity added in time tn'
 
-                2020        2030        2040        2050        
-    SGC. 2020   0           0           0           1           
-    SGC. 2030   0           0           0           0           
-    SGC. 2040   0           0           0           0           
-    SGC. 2050   0           0           0           0           
+                2020      #  2030        2040        2050        
+    SGC. 2020   0         #  0           0           1           
+    SGC. 2030   0         #  0           0           0           
+    SGC. 2040   0         #  0           0           0           
+    SGC. 2050   0         #  0           0           0           
     
-    E1G. 2020   0           0           0           1           
-    E1G. 2030   0           0           0           0           
-    E1G. 2040   0           0           0           0           
-    E1G. 2050   0           0           0           0           
+    E1G. 2020   0         #  0           0           1           
+    E1G. 2030   0         #  0           0           0           
+    E1G. 2040   0         #  0           0           0           
+    E1G. 2050   0         #  0           0           0           
     
-    E2G. 2020   0           0           0           1           
-    E2G. 2030   0           0           0           0           
-    E2G. 2040   0           0           0           0           
-    E2G. 2050   0           0           0           0           
+    E2G. 2020   0         #  0           0           1           
+    E2G. 2030   0         #  0           0           0           
+    E2G. 2040   0         #  0           0           0           
+    E2G. 2050   0         #  0           0           0           
     
-    BJT. 2020   0           0           0.5         0.5         
-    BJT. 2030   0           0           0           0.5         
-    BJT. 2040   0           0           0           0           
-    BJT. 2050   0           0           0           0           
+    BJT. 2020   0         #  0           0.5         0.5         
+    BJT. 2030   0         #  0           0           0.5         
+    BJT. 2040   0         #  0           0           0           
+    BJT. 2050   0         #  0           0           0           
     
-    DFT. 2020   0           0           0.5         0.5         
-    DFT. 2030   0           0           0           0.5         
-    DFT. 2040   0           0           0           0           
-    DFT. 2050   0           0           0           0           
+    DFT. 2020   0         #  0           0.5         0.5         
+    DFT. 2030   0         #  0           0           0.5         
+    DFT. 2040   0         #  0           0           0           
+    DFT. 2050   0         #  0           0           0           
     
-    BDS. 2020   0           0           1           0           
-    BDS. 2030   0           0           0           1           
-    BDS. 2040   0           0           0           0           
-    BDS. 2050   0           0           0           0           
+    BDS. 2020   0         #  0           1           0           
+    BDS. 2030   0         #  0           0           1           
+    BDS. 2040   0         #  0           0           0           
+    BDS. 2050   0         #  0           0           0           
     
-    COG. 2020   0           0           0           1           
-    COG. 2030   0           0           0           0           
-    COG. 2040   0           0           0           0           
-    COG. 2050   0           0           0           0           
+    COG. 2020   0         #  0           0           1           
+    COG. 2030   0         #  0           0           0           
+    COG. 2040   0         #  0           0           0           
+    COG. 2050   0         #  0           0           0           
     
-    E1GC. 2020  0           0           0           1           
-    E1GC. 2030  0           0           0           0           
-    E1GC. 2040  0           0           0           0           
-    E1GC. 2050  0           0           0           0           
+    E1GC. 2020  0         #  0           0           1           
+    E1GC. 2030  0         #  0           0           0           
+    E1GC. 2040  0         #  0           0           0           
+    E1GC. 2050  0         #  0           0           0           
     
-    BJTC. 2020  0           0           0.5         0.5         
-    BJTC. 2030  0           0           0           0.5         
-    BJTC. 2040  0           0           0           0           
-    BJTC. 2050  0           0           0           0           
+    BJTC. 2020  0         #  0           0.5         0.5         
+    BJTC. 2030  0         #  0           0           0.5         
+    BJTC. 2040  0         #  0           0           0           
+    BJTC. 2050  0         #  0           0           0           
     
-    DFTC. 2020  0           0           0.5         0.5         
-    DFTC. 2030  0           0           0           0.5         
-    DFTC. 2040  0           0           0           0           
-    DFTC. 2050  0           0           0           0
+    DFTC. 2020  0         #  0           0.5         0.5         
+    DFTC. 2030  0         #  0           0           0.5         
+    DFTC. 2040  0         #  0           0           0           
+    DFTC. 2050  0         #  0           0           0
 
-    SUG. 2020   0           0           0           0           
-    SUG. 2030   0           0           0           0           
-    SUG. 2040   0           0           0           0           
-    SUG. 2050   0           0           0           0           
+    SUG. 2020   0         #  0           0           0           
+    SUG. 2030   0         #  0           0           0           
+    SUG. 2040   0         #  0           0           0           
+    SUG. 2050   0         #  0           0           0           
     
 ;
 
@@ -200,18 +200,18 @@ Table rf(j,tn,t) 'retirement factor of capacity added in time tn'
 
 Table cf(j,t) 'capacity factors'  # [factor 0-1]
 
-                2020        2030        2040        2050        
-    SGC         1           1           1           1           
-    E1G         1           1           1           1         
-    E2G         1           1           1           1        
-    BJT         1           1           1           1        
-    DFT         1           1           1           1        
-    BDS         1           1           1           1          
-    COG         1           1           1           1        
-    E1GC        1           1           1           1               
-    BJTC        1           1           1           1        
-    DFTC        1           1           1           1    
-    SUG         1           1           1           1    
+                2020       # 2030        2040        2050        
+    SGC         1          # 1           1           1           
+    E1G         1          # 1           1           1         
+    E2G         1          # 1           1           1        
+    BJT         1          # 1           1           1        
+    DFT         1          # 1           1           1        
+    BDS         1          # 1           1           1          
+    COG         1          # 1           1           1        
+    E1GC        1          # 1           1           1               
+    BJTC        1          # 1           1           1        
+    DFTC        1          # 1           1           1    
+    SUG         1          # 1           1           1    
 ;
 
 * Set technologies rate of consumption or production of resource 'r'
@@ -239,15 +239,15 @@ Table beta(r,j) 'ratio of consumption or production of resource r by technology 
 
 Table avj(r,j,t) 'operation mode for technologies with intermediates'  # [fraction] 0-1
 
-                        2020    2030    2040    2050             
-    bagasse. SGC        1       1       1       1              
-    bagasse. E2G        1       1       1       1              
-    bagasse. COG        1       1       1       1              
+                        2020  #  2030    2040    2050             
+    bagasse. SGC        1     #  1       1       1              
+    bagasse. E2G        1     #  1       1       1              
+    bagasse. COG        1     #  1       1       1              
 
-    sgcnjuice. SGC      1       1       1       1              
-    sgcnjuice. E1G      1       1       1       1       
-    sgcnjuice. E1GC     0       1       1       1     
-    sgcnjuice. SUG      0       0       0       0                
+    sgcnjuice. SGC      1     #  1       1       1              
+    sgcnjuice. E1G      1     #  1       1       1       
+    sgcnjuice. E1GC     0     #  1       1       1     
+    sgcnjuice. SUG      0     #  0       0       0                
 ;
 
 
@@ -255,10 +255,10 @@ Table avj(r,j,t) 'operation mode for technologies with intermediates'  # [fracti
 
 Table mincp(j,t) 'biofuel production with ccs'
 
-                2020        2030        2040        2050        
-    E1GC        0           0.01e8      0.40e8      0.63e8               
-    BJTC        0           0           0           0        
-    DFTC        0           0           0.36e8      3.76e8    
+                2020       # 2030        2040        2050        
+    E1GC        0          # 0.01e8      0.40e8      0.63e8               
+    BJTC        0          # 0           0           0        
+    DFTC        0          # 0           0.36e8      3.76e8    
 ;
 
 * ----------------------------------------------------------------------------------------------------------
@@ -267,7 +267,7 @@ Table mincp(j,t) 'biofuel production with ccs'
 
 * Setting gdx input filepath
 
-$setglobal gdxinfilepath 'X:\user\tagomorii\BLOEM\GDXinput\Main\'
+$setglobal gdxinfilepath 'C:\Users\diego\OneDrive\BLOEM-v1.1\itagomori-BLOEM-23e1a91\InputData\'
 
 
 * Import existing capacity (cjo):

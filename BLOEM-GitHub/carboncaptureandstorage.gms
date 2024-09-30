@@ -46,10 +46,10 @@ Parameters
 
 Table gama(j,t) 'rate of carbon capture by technology j'  # [tCO2/GJ]
 
-                2020        2030        2040        2050        
-    E1GC        0.02896     0.02896     0.02896     0.02896       
-    BJTC        0.30769     0.30769     0.30769     0.30769     
-    DFTC        0.30769     0.30769     0.30769     0.30769     
+                2020       # 2030        2040        2050        
+    E1GC        0.02896    # 0.02896     0.02896     0.02896       
+    BJTC        0.30769    # 0.30769     0.30769     0.30769     
+    DFTC        0.30769    # 0.30769     0.30769     0.30769     
 ;
 
 
@@ -83,7 +83,7 @@ Parameter ofco(c)   / 1835      0.00,
 
 * Setting gdx input filepath
 
-$setglobal gdxinfilepath 'X:\user\tagomorii\BLOEM\GDXinput\Main\'
+$setglobal gdxinfilepath 'C:\Users\diego\OneDrive\BLOEM-v1.1\itagomori-BLOEM-23e1a91\InputData\'
 
 
 * Import onshore carbon transportation costs onco(c,cn):

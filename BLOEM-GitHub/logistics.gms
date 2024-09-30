@@ -57,7 +57,7 @@ Parameter trco(r) / sugarcane          0.0020,
 
 * Setting gdx input filepath
 
-$setglobal gdxinfilepath 'X:\user\tagomorii\BLOEM\GDXinput\Main\'
+$setglobal gdxinfilepath 'C:\Users\diego\OneDrive\BLOEM-v1.1\itagomori-BLOEM-23e1a91\InputData\'
 
 
 * Import distance between grid cells mx(c,cn):

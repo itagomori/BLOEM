@@ -19,7 +19,7 @@ $eolcom #
 Sets
     r 'resources'     / sugarcane, oilcrops, wood, bagasse, sgcnjuice, ethanol1g, ethanol2g, biojet, dieselbiofuel, biodiesel, bioelectricity, bionaphta, biolpg, sugarjuice /
     c 'grid cell'     / 1*2912 /  # Brazilian grid cells
-    t 'decade'        / 2020, 2030, 2040, 2050 /
+    t 'decade'        / 2020 #, 2030, 2040, 2050 /
     j 'technology'    / SGC, E1G, E2G, BJT, DFT, BDS, COG, E1GC, BJTC, DFTC, SUG /
     l 'landcover'     / forest, agriculture, pasture, other, bioland /
     q 'period g-luc'  / 1*3 / 
@@ -77,18 +77,18 @@ Parameters
 
 * Set dfa(t)
 
-Parameter dfa(t)  / 2020   6.759024,
-                    2030   2.605896,
-                    2040   1.004686,
-                    2050   0.387350 /;
+Parameter dfa(t)  / 2020   6.759024/;#,
+                   # 2030   2.605896,
+                   # 2040   1.004686,
+                   # 2050   0.387350 /;
 ;
 
 * Set dfb(t)
 
-Parameter dfb(t)  / 2020   1.0000000000,
-                    2030   0.3855432894,
-                    2040   0.1486436280,
-                    2050   0.0573085533 /;
+Parameter dfb(t)  / 2020   1.0000000000/;#,
+                  #  2030   0.3855432894,
+                  #  2040   0.1486436280,
+                  #  2050   0.0573085533 /;
 ;
 
 $offlisting
@@ -98,10 +98,10 @@ $offlisting
 * Set carbon tax scenario
 * ----------------------------------------------------------------------------------------------------------
 
-Parameter k(t)   / 2020   0,
-                   2030   0,
-                   2040   0,
-                   2050   0 /;
+Parameter k(t)   / 2020   0/;#,
+                  # 2030   0,
+                  # 2040   0,
+                  # 2050   0 /;
 ;
 
 
@@ -131,7 +131,7 @@ Free variables  Z ;
 * Modules
 * ---------------------------------------------------------------------------------------------------------
 
-$setglobal modulespath 'X:\user\tagomorii\BLOEM\ModelVersions\Modules\Main_11\'
+$setglobal modulespath 'C:\Users\diego\OneDrive\Área de Trabalho\PPE - MESTRADO\Calculos e rodadaas\BLOEM\BLOEM-GitHub'
 
 $include %modulespath%biomassproduction.gms
 $include %modulespath%logistics.gms
@@ -193,7 +193,7 @@ Display Vseq.l ;
 
 * Set gdx output filepath
 
-$setglobal gdxoutfilepath 'X:\user\tagomorii\BLOEM\GDXoutput\B-NDC\'
+$setglobal gdxoutfilepath 'C:\Users\diego\OneDrive\Área de Trabalho\PPE - MESTRADO\Calculos e rodadaas\Outputs'
 
 # Unload:
 
@@ -202,6 +202,8 @@ execute_unload '%gdxoutfilepath%wgv_a.gdx'
 #B     # biomass production
 
 A     # land allocation
+
+DLUC  # dLUC emission results
 
 #Bn    # crop trade matrix
 
