@@ -2,7 +2,7 @@ $ontext
 * ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 * Bioenergy Allocation Spatially Explicit Model - BLOEM
 * Author: Isabela Schmidt Tagomori
-* Last update: 12.05.2021
+* Last update: 30.09.2024
 * Version: 1.0
 * Coupled IAM: BLUES
 * Region: Brazil 
@@ -51,7 +51,7 @@ wood                0.052         0.051        0.000
 
 * Setting gdx input filepath
 
-$setglobal gdxinfilepath 'X:\user\tagomorii\BLOEM\GDXinput\Main\'
+$setglobal gdxinfilepath 'C:\Users\diego\OneDrive\BLOEM-v1.1\itagomori-BLOEM-23e1a91\InputData\'
 
 
 * Import land availability:
@@ -104,6 +104,7 @@ Variables
 
     LdAlc(l,r,t)    'total land allocated per land type per crop per decade' # [km2]
 
+    DLUC(r,l,c,t)            'total dLUC emission' # [tCO2]
 ;
 
 Positive variables IBP, A, B;
@@ -130,10 +131,13 @@ Equations
     landavailability(l,c,t)          'area allocation constrained by total land availability in each grid cell'
     totallandallocation(l,r,t)       'total land allocated per land type per crop per decade'
 
+    dlucemissions                    'Total emissions from dLUC'
 ;
 
 impactbioproduction(t) ..                       IBP(t) =e= dfa(t)*sum((r,l,c),B(r,l,c,t)$(rc(r))*(cobp(r,c,t)$(rc(r))+k(t)*ef(r,l)$(rc(r)))) ;
 
+
+dlucemissions(r,l,c,t) ..                       DLUC(r,l,c,t) =e= B(r,l,c,t)$rc(r)*ef(r,l)$(rc(r));
 
 production(r,l,c,t)$(rc(r)) ..                  B(r,l,c,t)$(rc(r)) =l= A(r,l,c,t)$(rc(r))*ga(c)*y(r,c,t)$(rc(r)) ;
 
