@@ -19,7 +19,7 @@ $eolcom #
 Sets
     r 'resources'     / sugarcane, oilcrops, wood, bagasse, sgcnjuice, ethanol1g, ethanol2g, biojet, dieselbiofuel, biodiesel, bioelectricity, bionaphta, biolpg, sugarjuice /
     c 'grid cell'     / 1*2912 /  # Brazilian grid cells
-    t 'decade'        / 2020 #, 2030, 2040, 2050 /
+    t 'decade'        / 2020/ #, 2030, 2040, 2050 /
     j 'technology'    / SGC, E1G, E2G, BJT, DFT, BDS, COG, E1GC, BJTC, DFTC, SUG /
     l 'landcover'     / forest, agriculture, pasture, other, bioland /
     q 'period g-luc'  / 1*3 / 
@@ -131,7 +131,7 @@ Free variables  Z ;
 * Modules
 * ---------------------------------------------------------------------------------------------------------
 
-$setglobal modulespath 'C:\Users\diego\OneDrive\Área de Trabalho\PPE - MESTRADO\Calculos e rodadaas\BLOEM\BLOEM-GitHub'
+$setglobal modulespath 'C:\Users\diego\OneDrive\Desktop\PPE_MESTRADO\Calculos e rodadaas\BLOEM\BLOEM-GitHub-Dev\BLOEM\BLOEM-GitHub\'
 
 $include %modulespath%biomassproduction.gms
 $include %modulespath%logistics.gms
@@ -193,7 +193,7 @@ Display Vseq.l ;
 
 * Set gdx output filepath
 
-$setglobal gdxoutfilepath 'C:\Users\diego\OneDrive\Área de Trabalho\PPE - MESTRADO\Calculos e rodadaas\Outputs'
+$setglobal gdxoutfilepath 'C:\Users\diego\OneDrive\Desktop\PPE_MESTRADO\Calculos e rodadaas\Outputs\'
 
 # Unload:
 
