@@ -38,10 +38,10 @@ Parameters
 
 Table ef(r,l) 'emission factors for direct land use change' # [tCO2/GJ] primary energy,
 
-                    forest        other        pasture
+                    pasturelow    pasturemed   pasturehigh #forest        other        pasture
 sugarcane           0.044         0.030        0.000
 oilcrops            0.235         0.257        0.000   
-wood                0.052         0.051        0.000
+#wood                0.052         0.051        0.000
 ;
 
 
@@ -51,12 +51,14 @@ wood                0.052         0.051        0.000
 
 * Setting gdx input filepath
 
-$setglobal gdxinfilepath 'C:\Users\diego\OneDrive\BLOEM-v1.1\itagomori-BLOEM-23e1a91\InputData\'
+#$setglobal gdxinfilepath 'C:/Users/diego/OneDrive/BLOEM-v1.1/itagomori-BLOEM-23e1a91/InputData/'
+$setglobal gdxinfilepath 'C:/Users/diego/OneDrive/Desktop/PPE_MESTRADO/Calculos e rodadaas/BLOEM_OUTUBRO/biomassproductionInputs/'
 
 
 * Import land availability:
 
-$gdxin '%gdxinfilepath%landavailablebioen_bopf.gdx'
+#$gdxin '%gdxinfilepath%landavailablebioen_bopf.gdx'
+$gdxin '%gdxinfilepath%landavailable_pastures.gdx'
 
 $load ldav=ldavbase
 
@@ -110,13 +112,16 @@ Variables
 Positive variables IBP, A, B;
 
 * Variable bounds
-A.up(r,l,c,t)=0.75;
+A.up(r,l,c,t)=1;#0.75;
 A.lo(r,l,c,t)=0;
 
 * Land availability, types of land
-A.fx(r,"agriculture",c,t)=0;
+A.fx(r,"pasturelow",c,t) = 0;
+A.fx(r,"pasturemed",c,t) = 0;
+A.fx(r,"pasturehigh",c,t) = 0;
+#A.fx(r,"agriculture",c,t)=0;
 #A.fx(r,"forest",c,t)=0;
-A.fx(r,"pasture",c,t)=0;
+#A.fx(r,"pasture",c,t)=0;
 
 
 * ---------------------------------------------------------------------------------------------------------

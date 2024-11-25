@@ -2,7 +2,7 @@ $ontext
 * ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 * Bioenergy Allocation Spatially Explicit Model - BLOEM
 * Authors: Isabela Schmidt Tagomori and Diego Amaral
-* Last update: 08.08.2024
+* Last update: 04.11.2024
 * Version: 1.1
 * Coupled IAM: BLUES
 * Region: Brazil 
@@ -19,14 +19,14 @@ $eolcom #
 Sets
     r 'resources'     / sugarcane, oilcrops, wood, bagasse, sgcnjuice, ethanol1g, ethanol2g, biojet, dieselbiofuel, biodiesel, bioelectricity, bionaphta, biolpg, sugarjuice /
     c 'grid cell'     / 1*2912 /  # Brazilian grid cells
-    t 'decade'        / 2020 #, 2030, 2040, 2050 /
+    t 'decade'        / 2020 /#, 2030, 2040, 2050 /
     j 'technology'    / SGC, E1G, E2G, BJT, DFT, BDS, COG, E1GC, BJTC, DFTC, SUG /
-    l 'landcover'     / forest, agriculture, pasture, other, bioland /
+    l 'landcover'     / bioland, pasturehigh, pasturelow, pasturemed /#/ forest, agriculture, pasture, other, bioland /
     q 'period g-luc'  / 1*3 / 
 
-    rc(r) 'crops'               / sugarcane, oilcrops, wood /
+    rc(r) 'crops'               / sugarcane, oilcrops/#, wood /
     ri(r) 'intermediates'       / bagasse, sgcnjuice /
-    rp(r) 'liquid biofuels'     / ethanol1g, ethanol2g, biojet, dieselbiofuel, biodiesel / # ethanol1gccs, biojetccs, dieselbiofuelccs moved towards techs
+    rp(r) 'liquid biofuels'     / ethanol1g, ethanol2g, biojet, dieselbiofuel, biodiesel / # ethanol1gccs, biojetccs, diesebiofuelccs moved towards techs
     re(r) 'bioelectricity'      / bioelectricity /
     rs(r) 'co-products'         / bionaphta, biolpg, sugarjuice /
 
@@ -34,15 +34,23 @@ Sets
 
     cs(c) 'storage sites'       / 1835, 2597, 2650, 2652, 2698, 2716, 2744 /
 
-    lp(l) 'protected areas'     / forest, other / # other = other land, including savannahs, scrubblands, etc.
-    lb(l) 'bioland base'        / bioland /
+    #lp(l) 'protected areas'     / forest, other / # other = other land, including savannahs, scrubblands, etc.
+    #lb(l) 'bioland base'        / bioland /
 
-    lr(l,r)  'land vs crops'    / forest  .sugarcane
-                                  forest  .oilcrops
-                                  forest  .wood      
-                                  other   .sugarcane
-                                  other   .oilcrops
-                                  other   .wood       /;
+    lr(l,r)  'land vs crops'    / bioland  .sugarcane
+                                  bioland  .oilcrops
+                                  pasturelow  .sugarcane
+                                  pasturelow  .oilcrops
+                                  pasturemed  .sugarcane
+                                  pasturemed  .oilcrops
+                                  pasturehigh  .sugarcane
+                                  pasturehigh  .oilcrops    /;
+#                                  forest  .sugarcane
+#                                  forest  .oilcrops
+#                                  forest  .wood      
+#                                  other   .sugarcane
+#                                  other   .oilcrops
+#                                  other   .wood       /;
 ;
 
 
@@ -131,7 +139,7 @@ Free variables  Z ;
 * Modules
 * ---------------------------------------------------------------------------------------------------------
 
-$setglobal modulespath 'C:\Users\diego\OneDrive\Área de Trabalho\PPE - MESTRADO\Calculos e rodadaas\BLOEM\BLOEM-GitHub'
+$setglobal modulespath 'C:/Users/diego/OneDrive/Desktop/PPE_MESTRADO/Calculos e rodadaas/BLOEM/BLOEM-GitHub/'
 
 $include %modulespath%biomassproduction.gms
 $include %modulespath%logistics.gms
@@ -187,13 +195,15 @@ Display TCA.l ;
 
 Display Vseq.l ;
 
+Display pb;
+
 * ---------------------------------------------------------------------------------------------------------
 * Export results
 * ---------------------------------------------------------------------------------------------------------
 
 * Set gdx output filepath
 
-$setglobal gdxoutfilepath 'C:\Users\diego\OneDrive\Área de Trabalho\PPE - MESTRADO\Calculos e rodadaas\Outputs'
+$setglobal gdxoutfilepath 'C:/Users/diego/OneDrive/Desktop/PPE_MESTRADO/Calculos e rodadaas/BLOEM_OUTUBRO/BLOEM_OutputsNovembro/'
 
 # Unload:
 

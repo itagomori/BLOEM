@@ -88,7 +88,7 @@ Parameter efc(r)   / ethanol1g          0.000000,
 
 * Setting gdx input filepath
 
-$setglobal gdxinfilepath 'C:\Users\diego\OneDrive\BLOEM-v1.1\itagomori-BLOEM-23e1a91\InputData\'
+$setglobal gdxinfilepath 'C:/Users/diego/OneDrive/BLOEM-v1.1/itagomori-BLOEM-23e1a91/InputData/'
 
 
 * Import emission factors for fertilizer use:
