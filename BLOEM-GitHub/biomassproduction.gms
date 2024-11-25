@@ -53,7 +53,7 @@ $setglobal gdxinfilepath 'C:\BLOEM\EuropeRegion\input\'
 
 * Import land availability:
 
-$gdxin '%gdxinfilepath%landavailablebioen_bopf.gdx'
+$gdxin '%gdxinfilepath%landavailablebioen.gdx'
 
 $load ldav=ldavbase
 

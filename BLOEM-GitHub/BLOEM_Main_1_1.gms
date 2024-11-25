@@ -5,7 +5,7 @@ $ontext
 * Last update: 31.08.2024
 * Version: 1.0
 * Coupled IAM: COFFEE
-* Region: Europe 
+* Region: Europe
 * Time frame: 2025
 * ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 $offtext
@@ -18,20 +18,20 @@ $eolcom #
 
 Sets
     r 'resources'     / foresres, pyrolysisoil, biogasoil, greendiesel, bionaphta /
-    c 'grid cell'     / 1*3391 /  # European grid cells
+    c 'grid cell'     / 1*3386 /  # European grid cells
     t 'decade'        / 2025 /
     j 'technology'    / PO, POFCC /
     l 'landcover'     / forest, agriculture, pasture, other /
-    q 'period g-luc'  / 1*3 / 
+    q 'period g-luc'  / 1*3 /
 
     rres(r) 'residues'            / foresres /
     rint(r) 'intermediates'       / pyrolysisoil /
-    rliq(r) 'liquid biofuels'     / biogasoil / 
+    rliq(r) 'liquid biofuels'     / greendiesel /
     #rele(r) 'bioelectricity'     / bioelectricity /
-    rcop(r) 'co-products'         / greendiesel, bionaphta /
+    rcop(r) 'co-products'         / biogasoil, greendiesel, bionaphta /
 
-    #jc(j) 'ccs technologies'    / E1GC, BJTC, DFTC / 
-    
+    #jc(j) 'ccs technologies'    / E1GC, BJTC, DFTC /
+
 
     #cs(c) 'storage sites'       / 1835, 2597, 2650, 2652, 2698, 2716, 2744 /
 
@@ -53,13 +53,13 @@ Alias(l,landuse,landcover);
 * ----------------------------------------------------------------------------------------------------------
 
 Scalar
-    
+
     uf       'unit coversion factor kW to GJ'           /31.536/  # [factor]
 
 ;
 
 Parameters
-    
+
     dfa(t)              'discount factor back to base year, including annual discounting'
 
     dfb(t)              'discount factor back to base year'
@@ -96,7 +96,7 @@ Parameter k(t)   / 2025   0 /;
 * ---------------------------------------------------------------------------------------------------------
 
 Variables
-    
+
     Z               'total system cost'  # [US$]
 
     IBP(t)          'impact of biomass production in time t'  # [US$]
@@ -105,7 +105,7 @@ Variables
     #IET(t)          'impact of bioenergy transportation in time t'  # [US$]
     #ICC(t)          'impact of carbon transportation and storage in time t'  # [US$]
     ITG(t)          'impact of carbon emissions in time t'  # [US$]
-          
+
 ;
 
 Positive variables  IBP, IBT, IBC; #IET; ICC;
@@ -132,9 +132,9 @@ $include %modulespath%targets.gms
 * ---------------------------------------------------------------------------------------------------------
 
 Equations
-    
+
     cost         'objective function'
-        
+
 ;
 
 cost ..                                         Z =e= sum((t),IBP(t)+IBT(t)+IBC(t)+ITG(t));
@@ -158,7 +158,7 @@ BLOEM_Europe.OptFile = 1;
 
 
 Solve BLOEM_Europe using lp minimizing Z ;
-$stop
+
 Display Z.l ;
 
 Display EE.l ;
@@ -171,7 +171,7 @@ Display IBP.l, IBT.l, IBC.l, ITG.l; # ICC.l, IET.l ;
 
 Display TCA.l ;
 
-Display Vseq.l ;
+#Display Vseq.l ;
 
 * ---------------------------------------------------------------------------------------------------------
 * Export results
@@ -215,9 +215,9 @@ EE    # total bioenergy production
 
 S     # co-products production
 
-Vcap  # carbon captured
+#Vcap  # carbon captured
 
-Vseq  # carbon stored
+#Vseq  # carbon stored
 
 ;
 

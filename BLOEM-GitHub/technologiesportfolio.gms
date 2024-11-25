@@ -201,7 +201,7 @@ Positive variables IBC, ITCI, ITOM, CJ, CA, CR, CP, E, S, TCA;
 * Variable bounds
 CJ.up("POFCC",c,t)=10e6;
 
-#CA.fx(j,c,"2025")=0;
+#CA.fx(j,c,"2025")=0; não adiciona capacidade nova no ano 2025
 
 
 * ---------------------------------------------------------------------------------------------------------
@@ -263,7 +263,7 @@ coproductsconversion(r,c,t)$(rcop(r)) ..          S(r,c,t)$(rcop(r)) =e= sum((j)
 intermediatebalance(r,c,t)$(rint(r)) ..           I(r,c,t)$(rint(r)) =e= 0 ;
 
 
-totalbioenergy(r,t) ..                          EE(r,t)$(rliq(r)) =e= sum((c),E(r,c,t)$(rliq(r)));
+totalbioenergy(r,t)$(rliq(r)) ..                  EE(r,t)$(rliq(r)) =e= sum((c),E(r,c,t)$(rliq(r)));
 
 #totalbioelectricity(r,t) ..                     EE(r,t)$(re(r)) =e= sum((c),E(r,c,t)$(re(r)));
 
