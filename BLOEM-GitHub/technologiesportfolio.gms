@@ -118,10 +118,11 @@ Table beta(r,j) 'ratio of consumption or production of resource r by technology 
 
                           PO      POFCC 
     foresres             -1        0 
-    pyrolysisoil          1        -1
-    biogasoil             0        1  
-    greendiesel           0        1
-    bionaphta             0        1
+    pyrolysisoil          0.794   -1
+    biogasoil             0        0.106  
+    greendiesel           0        0.116
+    bionaphta             0        0.235
+    biocoke               0        0.543
 ;
 
 * Set technologies mode of operation: for bagasse options

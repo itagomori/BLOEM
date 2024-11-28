@@ -17,7 +17,7 @@ $eolcom #
 * ---------------------------------------------------------------------------------------------------------
 
 Sets
-    r 'resources'     / foresres, pyrolysisoil, biogasoil, greendiesel, bionaphta /
+    r 'resources'     / foresres, pyrolysisoil, biogasoil, greendiesel, bionaphta, biocoke /
     c 'grid cell'     / 1*3386 /  # European grid cells
     t 'decade'        / 2025 /
     j 'technology'    / PO, POFCC /
@@ -28,7 +28,7 @@ Sets
     rint(r) 'intermediates'       / pyrolysisoil /
     rliq(r) 'liquid biofuels'     / greendiesel /
     #rele(r) 'bioelectricity'     / bioelectricity /
-    rcop(r) 'co-products'         / biogasoil, greendiesel, bionaphta /
+    rcop(r) 'co-products'         / biogasoil, greendiesel, bionaphta, biocoke /
 
     #jc(j) 'ccs technologies'    / E1GC, BJTC, DFTC /
 
