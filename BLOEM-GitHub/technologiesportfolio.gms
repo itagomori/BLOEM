@@ -272,7 +272,7 @@ $setglobal gdxinfilepath 'C:\Users\diego\OneDrive\BLOEM-v1.1\itagomori-BLOEM-23e
 
 * Import existing capacity (cjo):
 
-$gdxin '%gdxinfilepath%cjoexist.gdx'
+$gdxin '%gdxinfilepath%novocjoexist.gdx'
 
 $load cjo=cjoexist
 
