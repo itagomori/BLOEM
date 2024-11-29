@@ -63,12 +63,12 @@ Table ex(r,c,t) 'exportation of biofuels'  # [GJ]
 
 * Setting gdx input filepath
 
-$setglobal gdxinfilepath 'C:\Users\diego\OneDrive\BLOEM-v1.1\itagomori-BLOEM-23e1a91\InputData\'
+$setglobal gdxinfilepath 'C:\Users\diego\OneDrive\Desktop\PPE_MESTRADO\Calculos e rodadaas\BLOEM_Dezembro\'
 
 
 * Set bioenergy production targets
 
-$gdxin '%gdxinfilepath%bioenergytargetsbr_ndcnovabr.gdx'
+$gdxin '%gdxinfilepath%bioenergytargetsbr_PoggioBiofuels_pop.gdx'
 
 $load pb=bioenergytargetsbr
 
