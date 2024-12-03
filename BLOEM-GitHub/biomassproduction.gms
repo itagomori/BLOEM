@@ -25,7 +25,7 @@ Parameters
 
     y(r,c,t)            'biomass yields' # [GJ/km2]
 
-    ef(r,l)             'emission factors for direct land use change' # [tCO2/GJ] primary energy
+    #ef(r,l)             'emission factors for direct land use change' # [tCO2/GJ] primary energy
 
     efi(r,l)            'emission factors for instantaneous land use change' # [tCO2/km2] used only for post-processing
 
@@ -36,13 +36,13 @@ Parameters
 
 * Set aggregate emission factors for land use change
 
-Table ef(r,l) 'emission factors for direct land use change' # [tCO2/GJ] primary energy,
+#Table ef(r,l) 'emission factors for direct land use change' # [tCO2/GJ] primary energy,
 
-                    forest        other        pasture
-sugarcane           0.044         0.030        0.000
-oilcrops            0.235         0.257        0.000   
-wood                0.052         0.051        0.000
-;
+#                    forest        other        pasture
+#sugarcane           0.044         0.030        0.000
+#oilcrops            0.235         0.257        0.000   
+#wood                0.052         0.051        0.000
+#;
 
 
 * ----------------------------------------------------------------------------------------------------------
@@ -51,12 +51,12 @@ wood                0.052         0.051        0.000
 
 * Setting gdx input filepath
 
-$setglobal gdxinfilepath 'C:\Users\diego\OneDrive\BLOEM-v1.1\itagomori-BLOEM-23e1a91\InputData\'
+$setglobal gdxinfilepath 'C:\Users\diego\OneDrive\Desktop\PPE_MESTRADO\Calculos e rodadaas\BLOEM_OUTUBRO\'
 
 
 * Import land availability:
 
-$gdxin '%gdxinfilepath%landavailablebioen_bopf.gdx'
+$gdxin '%gdxinfilepath%landavailable_pastures_biocane_biosoy.gdx'
 
 $load ldav=ldavbase
 
@@ -114,9 +114,12 @@ A.up(r,l,c,t)=0.75;
 A.lo(r,l,c,t)=0;
 
 * Land availability, types of land
-A.fx(r,"agriculture",c,t)=0;
+#A.fx(r,"agriculture",c,t)=0;
 #A.fx(r,"forest",c,t)=0;
-A.fx(r,"pasture",c,t)=0;
+#A.fx(r,"other",c,t)=0;
+#A.fx(r,"pasture",c,t)=0;
+A.fx("sugarcane","biolandsoja",c,t)=0;
+A.fx("oilcrops","biolandcane",c,t)=0;
 
 
 * ---------------------------------------------------------------------------------------------------------
@@ -131,13 +134,13 @@ Equations
     landavailability(l,c,t)          'area allocation constrained by total land availability in each grid cell'
     totallandallocation(l,r,t)       'total land allocated per land type per crop per decade'
 
-    dlucemissions                    'Total emissions from dLUC'
+    #dlucemissions                    'Total emissions from dLUC'
 ;
 
-impactbioproduction(t) ..                       IBP(t) =e= dfa(t)*sum((r,l,c),B(r,l,c,t)$(rc(r))*(cobp(r,c,t)$(rc(r))+k(t)*ef(r,l)$(rc(r)))) ;
+impactbioproduction(t) ..                       IBP(t) =e= dfa(t)*sum((r,l,c),B(r,l,c,t)$(rc(r))*(cobp(r,c,t)$(rc(r))));#+k(t)*ef(r,l)$(rc(r)))) ;
 
 
-dlucemissions(r,l,c,t) ..                       DLUC(r,l,c,t) =e= B(r,l,c,t)$rc(r)*ef(r,l)$(rc(r));
+#dlucemissions(r,l,c,t) ..                       DLUC(r,l,c,t) =e= B(r,l,c,t)$rc(r)*ef(r,l)$(rc(r));
 
 production(r,l,c,t)$(rc(r)) ..                  B(r,l,c,t)$(rc(r)) =l= A(r,l,c,t)$(rc(r))*ga(c)*y(r,c,t)$(rc(r)) ;
 
