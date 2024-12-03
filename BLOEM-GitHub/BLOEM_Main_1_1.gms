@@ -21,7 +21,7 @@ Sets
     c 'grid cell'     / 1*2912 /  # Brazilian grid cells
     t 'decade'        / 2020/ #, 2030, 2040, 2050 /
     j 'technology'    / SGC, E1G, E2G, BJT, DFT, BDS, COG, E1GC, BJTC, DFTC, SUG /
-    l 'landcover'     / forest, agriculture, pasture, other, bioland /
+    l 'landcover'     / pasturelow, pasturemed, pasturehigh, biolandcane, biolandsoja /#forest, agriculture, pasture, other, bioland /
     q 'period g-luc'  / 1*3 / 
 
     rc(r) 'crops'               / sugarcane, oilcrops, wood /
@@ -34,15 +34,20 @@ Sets
 
     cs(c) 'storage sites'       / 1835, 2597, 2650, 2652, 2698, 2716, 2744 /
 
-    lp(l) 'protected areas'     / forest, other / # other = other land, including savannahs, scrubblands, etc.
-    lb(l) 'bioland base'        / bioland /
+ #   lp(l) 'protected areas'     / forest, other / # other = other land, including savannahs, scrubblands, etc.
+ #   lb(l) 'bioland base'        / bioland /
 
-    lr(l,r)  'land vs crops'    / forest  .sugarcane
-                                  forest  .oilcrops
-                                  forest  .wood      
-                                  other   .sugarcane
-                                  other   .oilcrops
-                                  other   .wood       /;
+    lr(l,r)  'land vs crops'    / pasturelow  .sugarcane
+                                  pasturelow  .oilcrops
+                                  pasturelow  .wood
+                                  pasturemed  .sugarcane
+                                  pasturemed  .oilcrops
+                                  pasturemed  .wood
+                                  pasturehigh  .sugarcane
+                                  pasturehigh  .oilcrops
+                                  pasturehigh  .wood      
+                                  biolandcane  .sugarcane
+                                  biolandsoja  .oilcrops /;
 ;
 
 
