@@ -120,6 +120,7 @@ A.lo(r,l,c,t)=0;
 #A.fx(r,"pasture",c,t)=0;
 A.fx("sugarcane","biolandsoja",c,t)=0;
 A.fx("oilcrops","biolandcane",c,t)=0;
+A.fx(r,"pasturelow",c,"2020")=0;
 
 
 * ---------------------------------------------------------------------------------------------------------
