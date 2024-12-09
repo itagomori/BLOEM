@@ -35,7 +35,8 @@ Sets
     cs(c) 'storage sites'       / 1835, 2597, 2650, 2652, 2698, 2716, 2744 /
 
  #   lp(l) 'protected areas'     / forest, other / # other = other land, including savannahs, scrubblands, etc.
- #   lb(l) 'bioland base'        / bioland /
+    lbc(l) 'biolandcane base'     / biolandcane /
+    lbs(l) 'biolandsoja base'     / biolandsoja /
 
     lr(l,r)  'land vs crops'    / pasturelow  .sugarcane
                                   pasturelow  .oilcrops
@@ -136,7 +137,7 @@ Free variables  Z ;
 * Modules
 * ---------------------------------------------------------------------------------------------------------
 
-$setglobal modulespath 'C:\Users\diego\OneDrive\Desktop\PPE_MESTRADO\Calculos e rodadaas\BLOEM\BLOEM-GitHub-Dev\BLOEM\BLOEM-GitHub\'
+$setglobal modulespath 'C:\Users\diego\OneDrive\Desktop\PPE_MESTRADO\Calculos e rodadaas\BLOEM_Dezembro\BLOEM-LUC-2050\BLOEM\BLOEM-GitHub\'
 
 $include %modulespath%biomassproduction.gms
 $include %modulespath%logistics.gms

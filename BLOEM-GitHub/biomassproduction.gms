@@ -104,6 +104,7 @@ Variables
 
     LdAlc(l,r,t)    'total land allocated per land type per crop per decade' # [km2]
     LdCane(l,r,t)   'total sugarcane land allocated for ethanol' #[km2]
+    LdSoy(l,r,t)    'total soy land allocated for biodiesel' #[km2]
 
     DLUC(r,l,c,t)            'total dLUC emission' # [tCO2]
 ;
@@ -122,6 +123,8 @@ A.lo(r,l,c,t)=0;
 A.fx("sugarcane","biolandsoja",c,t)=0;
 A.fx("oilcrops","biolandcane",c,t)=0;
 A.fx(r,"pasturelow",c,"2020")=0;
+A.fx(r,"pasturemed",c,"2020")=0;
+A.fx(r,"pasturehigh",c,"2020")=0;
 
 
 * ---------------------------------------------------------------------------------------------------------
@@ -138,6 +141,10 @@ Equations
 
     sugarcanearea(l,r,t)             'Area for sugarcane'
     totalsugarcane(l,r,t)            'total bioland allocated for sugarcane ethanol'
+
+    soyarea(l,r,t)                   'Area for soy'
+    totalsoy(l,r,t)                  'total bioland allocated for soy biodiesel'
+
     #dlucemissions                    'Total emissions from dLUC'
 ;
 
@@ -152,6 +159,10 @@ landavailability(l,c,t) ..                      ldav(l,c,t) =g= sum((r),A(r,l,c,
 
 totallandallocation(l,r,t) ..                   LdAlc(l,r,t)$(rc(r)) =e= sum((c),A(r,l,c,t)$(rc(r))*ga(c)) ;
 
+soyarea(l,r,t) ..                               LdSoy(l,r,t) =e= sum((c),A(r,l,c,t)$lbs(l)) ;
+
+totalsoy(l,r,t) ..                              LdSoy(l,r,t) =l= 0.20*sum((c),ldav(l,c,t)$lbs(l)) ;
+
 sugarcanearea(l,r,t) ..                         LdCane(l,r,t) =e= sum((c),A(r,l,c,t)$lbc(l)) ;
 
-totalsugarcane(l,r,t) ..                        LdCane(l,r,t) =l= 0.45*sum((c),ldav(l,c,t)$lbc(l)) ;
+totalsugarcane(l,r,t) ..                        LdCane(l,r,t) =l= 0.50*sum((c),ldav(l,c,t)$lbc(l)) ;
