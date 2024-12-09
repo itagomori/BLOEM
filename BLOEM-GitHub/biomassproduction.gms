@@ -51,7 +51,7 @@ Parameters
 
 * Setting gdx input filepath
 
-$setglobal gdxinfilepath 'C:\Users\diego\OneDrive\Desktop\PPE_MESTRADO\Calculos e rodadaas\BLOEM_OUTUBRO\'
+$setglobal gdxinfilepath 'C:\Users\diego\OneDrive\Desktop\PPE_MESTRADO\Calculos e rodadaas\BLOEM_OUTUBRO\biomassproductionInputs\'
 
 
 * Import land availability:
@@ -103,6 +103,7 @@ Variables
     B(r,l,c,t)      'biomass production for crop r in land type l in grid cell c in time t'  # [GJ]
 
     LdAlc(l,r,t)    'total land allocated per land type per crop per decade' # [km2]
+    LdCane(l,r,t)   'total sugarcane land allocated for ethanol' #[km2]
 
     DLUC(r,l,c,t)            'total dLUC emission' # [tCO2]
 ;
@@ -135,6 +136,8 @@ Equations
     landavailability(l,c,t)          'area allocation constrained by total land availability in each grid cell'
     totallandallocation(l,r,t)       'total land allocated per land type per crop per decade'
 
+    sugarcanearea(l,r,t)             'Area for sugarcane'
+    totalsugarcane(l,r,t)            'total bioland allocated for sugarcane ethanol'
     #dlucemissions                    'Total emissions from dLUC'
 ;
 
@@ -148,3 +151,7 @@ production(r,l,c,t)$(rc(r)) ..                  B(r,l,c,t)$(rc(r)) =l= A(r,l,c,t
 landavailability(l,c,t) ..                      ldav(l,c,t) =g= sum((r),A(r,l,c,t)$(rc(r))) ;
 
 totallandallocation(l,r,t) ..                   LdAlc(l,r,t)$(rc(r)) =e= sum((c),A(r,l,c,t)$(rc(r))*ga(c)) ;
+
+sugarcanearea(l,r,t) ..                         LdCane(l,r,t) =e= sum((c),A(r,l,c,t)$lbc(l)) ;
+
+totalsugarcane(l,r,t) ..                        LdCane(l,r,t) =l= 0.45*sum((c),ldav(l,c,t)$lbc(l)) ;
