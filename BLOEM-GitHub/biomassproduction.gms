@@ -106,15 +106,15 @@ Variables
 Positive variables IBP, A, B;
 
 * Variable bounds
-A.up(r,l,c,t)=0.75;
+A.up(r,l,c,t)=1;
 A.lo(r,l,c,t)=0;
 
 * Land availability, types of land
-A.fx(r,"agriculture",c,t)=0;
+#A.fx(r,"agriculture",c,t)=0;
 #A.fx(r,"forest",c,t)=0;
-A.fx(r,"pasture",c,t)=0;
+#A.fx(r,"pasture",c,t)=0;
 
-# except for forests, other types of land cannot produce forestry residues
+# except for forests, other types of land cannot produce forest residues
 A.fx('foresres','other',c,t)=0;
 A.fx('foresres','agriculture',c,t)=0;
 A.fx('foresres','pasture',c,t)=0;
@@ -137,8 +137,8 @@ Equations
 impactbioproduction(t) ..                       IBP(t) =e= dfa(t)*sum((r,l,c),B(r,l,c,t)$(rres(r))*(cobp(r,c,t)$(rres(r))+k(t)*ef(r,l)$(rres(r)))) ;
 
 
-production(r,l,c,t)$(rres(r)) ..                  B(r,l,c,t)$(rres(r)) =l= A(r,l,c,t)$(rres(r))*ga(c)*y(r,c,t)$(rres(r)) ;
+production(r,l,c,t)$(rres(r)) ..                B(r,l,c,t)$(rres(r)) =l= A(r,l,c,t)$(rres(r))*ga(c)*y(r,c,t)$(rres(r)) ;
 
 landavailability(l,c,t) ..                      ldav(l,c,t) =g= sum((r),A(r,l,c,t)$(rres(r))) ;
 
-totallandallocation(l,r,t) ..                   LdAlc(l,r,t)$(rres(r)) =e= sum((c),A(r,l,c,t)$(rres(r))*ga(c)) ;
+totallandallocation(l,r,t)$(rres(r)) ..         LdAlc(l,r,t)$(rres(r)) =e= sum((c),A(r,l,c,t)$(rres(r))*ga(c)) ;

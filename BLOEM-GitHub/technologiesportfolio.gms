@@ -118,9 +118,9 @@ Table beta(r,j) 'ratio of consumption or production of resource r by technology 
 
                           PO      POFCC 
     foresres             -1        0 
-    pyrolysisoil          0.794   -1
-    biogasoil             0        0.106  
-    greendiesel           0        0.116
+    pyrolysisoil          0.69    -1
+    greendiesel           0        0.116  
+    biogasoil             0        0.106
     bionaphta             0        0.235
     biocoke               0        0.543
 ;
@@ -200,7 +200,7 @@ Variables
 Positive variables IBC, ITCI, ITOM, CJ, CA, CR, CP, E, S, TCA;
 
 * Variable bounds
-CJ.up("POFCC",c,t)=10e6;
+#CJ.up("POFCC",c,t)=10e6;
 
 #CA.fx(j,c,"2025")=0; não adiciona capacidade nova no ano 2025
 

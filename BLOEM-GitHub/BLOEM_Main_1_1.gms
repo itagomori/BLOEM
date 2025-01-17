@@ -28,7 +28,7 @@ Sets
     rint(r) 'intermediates'       / pyrolysisoil /
     rliq(r) 'liquid biofuels'     / greendiesel /
     #rele(r) 'bioelectricity'     / bioelectricity /
-    rcop(r) 'co-products'         / biogasoil, greendiesel, bionaphta, biocoke /
+    rcop(r) 'co-products'         / biogasoil, bionaphta, biocoke /
 
     #jc(j) 'ccs technologies'    / E1GC, BJTC, DFTC /
 
@@ -159,6 +159,7 @@ BLOEM_Europe.OptFile = 1;
 
 Solve BLOEM_Europe using lp minimizing Z ;
 
+
 Display Z.l ;
 
 Display EE.l ;
@@ -185,11 +186,13 @@ $setglobal gdxoutfilepath 'C:\BLOEM\BLOEMEurope_GAMS\gdx_files\output\'
 
 execute_unload '%gdxoutfilepath%wgv_a.gdx'
 
-#B     # biomass production
+B     # biomass production
 
 A     # land allocation
 
-#Bn    # crop trade matrix
+Bn    # crop trade matrix
+
+HB
 
 ;
 

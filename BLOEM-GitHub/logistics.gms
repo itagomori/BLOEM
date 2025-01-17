@@ -29,6 +29,8 @@ Parameters
 
     flagbt(c,cn)        'flag to determine logistic interconnections for biomass' # [binary, 0:1]
 
+    flagbtout(cn,c)     'flag to determine logistic interconnections for biomass' # [binary, 0:1]
+
     flagmxe(c,cn)       'flag to determine logistic interconnections for biofuels to consumer centers' # [binary, 0:1]
 
     flagmxein(cn,c)     'flag to determine logistic interconnections for biofuels to consumer centers' # [binary, 0:1]
@@ -85,6 +87,14 @@ $gdxin
 $gdxin '%gdxinfilepath%flagmx.gdx'
 
 $load flagbt=flagmx
+
+$gdxin
+
+* Import flag to logistics interconnections flagbtout (cn,c):
+
+$gdxin '%gdxinfilepath%flagmxout.gdx'
+
+$load flagbtout=flagmxout
 
 $gdxin
 
