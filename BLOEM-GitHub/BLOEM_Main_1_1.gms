@@ -162,7 +162,7 @@ Solve BLOEM_Europe using lp minimizing Z ;
 
 Display Z.l ;
 
-Display EE.l ;
+#Display EE.l ;
 
 Display LdAlc.l ;
 
@@ -180,7 +180,7 @@ Display TCA.l ;
 
 * Set gdx output filepath
 
-$setglobal gdxoutfilepath 'C:\BLOEM\BLOEMEurope_GAMS\gdx_files\output\'
+$setglobal gdxoutfilepath 'C:\BLOEM\github\BLOEM\output\'
 
 # Unload:
 
@@ -193,6 +193,8 @@ A     # land allocation
 Bn    # crop trade matrix
 
 HB
+
+HE
 
 ;
 

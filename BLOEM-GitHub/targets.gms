@@ -34,8 +34,8 @@ Parameters
 Table ex(r,c,t) 'exportation of biofuels'  # [GJ]
 
                                 2025    #2030    2040    2050             
-    biogasoil.        1744      0       #0       0       0              
-    biogasoil.        1799      0       #0       0       0              
+    greendiesel.        1744      0       #0       0       0              
+    greendiesel.        1799      0       #0       0       0              
 
 ;
 

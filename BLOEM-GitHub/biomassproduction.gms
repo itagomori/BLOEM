@@ -134,11 +134,11 @@ Equations
 
 ;
 
-impactbioproduction(t) ..                       IBP(t) =e= dfa(t)*sum((r,l,c),B(r,l,c,t)$(rres(r))*(cobp(r,c,t)$(rres(r))+k(t)*ef(r,l)$(rres(r)))) ;
+impactbioproduction(t) ..                       IBP(t) =e= dfa(t)*sum((r,l,c),B(r,l,c,t)$(rres(r))*(cobp(r,c,t)$(rres(r)))) ;#+k(t)*ef(r,l)$(rres(r)))) ;
 
 
 production(r,l,c,t)$(rres(r)) ..                B(r,l,c,t)$(rres(r)) =l= A(r,l,c,t)$(rres(r))*ga(c)*y(r,c,t)$(rres(r)) ;
 
 landavailability(l,c,t) ..                      ldav(l,c,t) =g= sum((r),A(r,l,c,t)$(rres(r))) ;
 
-totallandallocation(l,r,t)$(rres(r)) ..         LdAlc(l,r,t)$(rres(r)) =e= sum((c),A(r,l,c,t)$(rres(r))*ga(c)) ;
+totallandallocation(l,r,t) ..                   LdAlc(l,r,t)$(rres(r)) =e= sum((c),A(r,l,c,t)$(rres(r))*ga(c)) ;

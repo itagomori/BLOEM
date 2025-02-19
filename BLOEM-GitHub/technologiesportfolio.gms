@@ -61,8 +61,8 @@ Parameters
 Table tci(j,t) 'total capital investment for technology j in grid cell c in decade d'  # [US$/kW]
 
                 2025        #2030        2040        2050        
-    PO          5528       
-    POFCC       5528        #5528        5528        5528        
+    PO          1670       
+    POFCC       0000        #5528        5528        5528        
   ;
 
 * Set technologies fixed o&m costs
@@ -70,8 +70,8 @@ Table tci(j,t) 'total capital investment for technology j in grid cell c in deca
 Table fom(j,t) 'fixed O&M costs for technology j in grid cell c in decade d'  # [US$/kW/y]
 
                 2025        #2030        2040        2050         
-    PO          223
-    POFCC       223         #223         223         223         
+    PO           84
+    POFCC       000         #223         223         223         
 ;
 
 * Set technologies variable o&m costs
@@ -118,7 +118,7 @@ Table beta(r,j) 'ratio of consumption or production of resource r by technology 
 
                           PO      POFCC 
     foresres             -1        0 
-    pyrolysisoil          0.69    -1
+    pyrolysisoil          0.86    -1
     greendiesel           0        0.116  
     biogasoil             0        0.106
     bionaphta             0        0.235
@@ -252,21 +252,21 @@ capacitybalance(j,c,t) ..                       CJ(j,c,t) =e= cjo(j,c,t)+CJ(j,c,
 retiredcapacity(j,c,t) ..                       CR(j,c,t) =e= cre(j,c,t)+sum((tn),CA(j,c,tn)*rf(j,tn,t)) ;
 
 
-bioenergyconversion(r,c,t)$(rliq(r)) ..           E(r,c,t)$(rliq(r)) =e= sum((j),CP(j,c,t)*beta(r,j)*uf) ;
+bioenergyconversion(r,c,t)$(rliq(r)) ..         E(r,c,t)$(rliq(r)) =e= sum((j),CP(j,c,t)*beta(r,j)*uf) ;
 
 #bioelectricityconversion(r,c,t)$(re(r)) ..      E(r,c,t)$(re(r)) =e= sum((j),CP(j,c,t)*beta(r,j)) ;
 
-intermediateconversion(r,c,t)$(rint(r)) ..        I(r,c,t)$(rint(r)) =e= sum((j),CP(j,c,t)*beta(r,j)*uf*avj(r,j,t)) ;
+intermediateconversion(r,c,t)$(rint(r)) ..      I(r,c,t)$(rint(r)) =e= sum((j),CP(j,c,t)*beta(r,j)*uf*avj(r,j,t)) ;
 
-coproductsconversion(r,c,t)$(rcop(r)) ..          S(r,c,t)$(rcop(r)) =e= sum((j),CP(j,c,t)*beta(r,j)*uf) ;
-
-
-intermediatebalance(r,c,t)$(rint(r)) ..           I(r,c,t)$(rint(r)) =e= 0 ;
+coproductsconversion(r,c,t)$(rcop(r)) ..        S(r,c,t)$(rcop(r)) =e= sum((j),CP(j,c,t)*beta(r,j)*uf) ;
 
 
-totalbioenergy(r,t)$(rliq(r)) ..                  EE(r,t)$(rliq(r)) =e= sum((c),E(r,c,t)$(rliq(r)));
+intermediatebalance(r,c,t)$(rint(r)) ..         I(r,c,t)$(rint(r)) =e= 0 ;
 
-#totalbioelectricity(r,t) ..                     EE(r,t)$(re(r)) =e= sum((c),E(r,c,t)$(re(r)));
+
+totalbioenergy(r,t) ..                          EE(r,t)$(rliq(r)) =e= sum((c),E(r,c,t)$(rliq(r)));
+
+#totalbioelectricity(r,t) ..                    EE(r,t)$(re(r)) =e= sum((c),E(r,c,t)$(re(r)));
 
 totalcapadd(j,t) ..                             TCA(j,t) =e= sum((c),CA(j,c,t)) ;
 
