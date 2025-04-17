@@ -32,6 +32,7 @@ Sets
 
     #jc(j) 'ccs technologies'    / E1GC, BJTC, DFTC /
 
+    ps(c) 'port sites'       / 1233 /
 
     #cs(c) 'storage sites'       / 1835, 2597, 2650, 2652, 2698, 2716, 2744 /
 
@@ -72,7 +73,7 @@ Parameters
 
 * Set dfa(t)
 
-Parameter dfa(t)  / 2025   6.759024 /;
+Parameter dfa(t)  / 2025   1.0000 /;
 ;
 
 * Set dfb(t)
@@ -180,7 +181,7 @@ Display TCA.l ;
 
 * Set gdx output filepath
 
-$setglobal gdxoutfilepath 'C:\BLOEM\github\BLOEM\output\'
+$setglobal gdxoutfilepath 'C:\BLOEM\github\output\'
 
 # Unload:
 
@@ -195,6 +196,8 @@ Bn    # crop trade matrix
 HB
 
 HE
+
+Bmar
 
 ;
 

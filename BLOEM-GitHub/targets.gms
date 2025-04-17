@@ -34,8 +34,8 @@ Parameters
 Table ex(r,c,t) 'exportation of biofuels'  # [GJ]
 
                                 2025    #2030    2040    2050             
-    greendiesel.        1744      0       #0       0       0              
-    greendiesel.        1799      0       #0       0       0              
+    greendiesel.        1233      0       #0       0       0              
+    #greendiesel.        1744      0       #0       0       0              
 
 ;
 
@@ -46,7 +46,7 @@ Table ex(r,c,t) 'exportation of biofuels'  # [GJ]
 
 * Setting gdx input filepath
 
-$setglobal gdxinfilepath 'C:\BLOEM\EuropeRegion\input\'
+$setglobal gdxinfilepath 'C:\BLOEM\github\input\'
 
 
 * Set bioenergy production targets

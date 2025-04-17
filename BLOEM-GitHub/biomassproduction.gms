@@ -48,7 +48,7 @@ foresres            0.000         0.000        0.000
 
 * Setting gdx input filepath
 
-$setglobal gdxinfilepath 'C:\BLOEM\EuropeRegion\input\'
+$setglobal gdxinfilepath 'C:\BLOEM\github\input\'
 
 
 * Import land availability:

@@ -42,7 +42,7 @@ Sets
 
 
 Alias(r,crop,resource);
-Alias(c,cn,cm,gridcell);
+Alias(c,cm,cn,gridcell);
 Alias(t,tn,decade);
 Alias(j,technology);
 Alias(l,landuse,landcover);
@@ -120,7 +120,7 @@ Free variables  Z ;
 $setglobal modulespath 'C:\BLOEM\github\BLOEM\BLOEM-GitHub\'
 
 $include %modulespath%biomassproduction.gms
-$include %modulespath%logistics.gms
+$include %modulespath%logistics_maritime.gms
 $include %modulespath%technologiesportfolio.gms
 #$include %modulespath%carboncaptureandstorage.gms
 $include %modulespath%emissions.gms
@@ -180,7 +180,7 @@ Display TCA.l ;
 
 * Set gdx output filepath
 
-$setglobal gdxoutfilepath 'C:\BLOEM\github\BLOEM\output\'
+$setglobal gdxoutfilepath 'C:\BLOEM\github\output\'
 
 # Unload:
 

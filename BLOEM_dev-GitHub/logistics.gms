@@ -1,11 +1,11 @@
 $ontext
 * ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 * Bioenergy Allocation Spatially Explicit Model - BLOEM
-* Author: Aline Carvalho & Isabela Schmidt Tagomori
-* Last update: 21.02.2025
+* Author: Isabela Schmidt Tagomori & Aline Carvalho
+* Last update: 10.08.2024
 * Version: 1.0
 * Coupled IAM: COFFEE
-* Region: Europe
+* Region: Europe 
 * Time frame: 2025
 * Module: Logistics
 * ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -17,15 +17,9 @@ $offtext
 
 Parameters
 
-    trco(r)             'road biomass transportation costs' # [US$/GJ/km]
+    trco(r)             'biomass transportation costs' # [US$/GJ/km]
 
-    varMtrco(r)         'variable maritime biomass transportation costs' # [US$/GJ/km]
-
-    fixMtrco(r)         'fixed maritime biomass transportation costs' # [US$/GJ]
-
-    #mmx(c,cm,cn)        'distance between grid cells for maritime routes' # [km]
-
-    mx(c,cn)         'distance between grid cells for road routes' # [km]
+    mx(c,cn)            'distance between grid cells' # [km]
 
     mxe(c,cn)           'distance between grid cells - connection to demand' # [km] used in place of mx(c,cn) to reduce computational effort
 
@@ -46,20 +40,11 @@ Parameters
 ;
 
 
-* Set biomass and biofuels road transportation costs trco(r)
+* Set biomass and biofuels transportation costs trco(r)
 
 Parameter trco(r) / foresres               0.0032 /;
 ;
 
-* Set biomass and biofuels variable maritime transportation costs varMtrco(r)
-
-Parameter varMtrco(r) / foresres               0.0005 /;
-;
-
-* Set biomass and biofuels fixed maritime transportation costs fixMtrco(r)
-
-Parameter fixMtrco(r) / foresres               0.001 /;
-;
 
 * ----------------------------------------------------------------------------------------------------------
 * Import data
@@ -67,7 +52,7 @@ Parameter fixMtrco(r) / foresres               0.001 /;
 
 * Setting gdx input filepath
 
-$setglobal gdxinfilepath 'C:\BLOEM\github\input\'
+$setglobal gdxinfilepath 'C:\BLOEM\EuropeRegion\input\'
 
 
 * Import distance between grid cells mx(c,cn):
@@ -77,14 +62,6 @@ $gdxin '%gdxinfilepath%mxdistmax.gdx'
 $load mx=mxdistmax
 
 $gdxin
-
-* Import distance between grid cells mx(c,cm,cn):
-
-#$gdxin '%gdxinfilepath%mmxdistmax.gdx'
-
-#$load mmx=mmxdistmax
-
-#$gdxin
 
 
 * Import distance between grid cells | connect to demand mwe(c,cn):
@@ -148,11 +125,9 @@ $gdxin
 Variables
 
     IBT(t)          'impact of biomass transportation in time t'  # [US$]
-    IMBT(t)         'impact of biomass maritime transportation in time t'  # [US$]
-    IRBT(t)         'impact of biomass road transportation in time t'  # [US$]
     #IET(t)          'impact of bioenergy transportation in time t'  # [US$]
 
-    HB(r,c,t)       'local biomass consumption for crop r in grid cell c in time t'
+    HB(r,c,t)       'local biomass consumption for crop r in grid cell c in time t' 
     HE(r,c,t)       'local bioenergy consumption for product r in grid cell c in time t'
 
     Bn(r,c,cn,t)    'biomass flow for crop r between grid cells c and cn in time t'
@@ -171,7 +146,7 @@ Variables
 
 ;
 
-Positive variables IBT, IET, HE, Bn, Bin, Bout, B, E, CP; #Ein, Eout, En, IMBT, IRBT
+Positive variables IBT, IET, HE, Bn, Bin, Bout, B, E, CP; #Ein, Eout, En, 
 
 * Variable bounds:
 HB.up(r,c,t)=0;
@@ -185,11 +160,10 @@ Eout.fx(r,c,t)=0;
 * Equations
 * ---------------------------------------------------------------------------------------------------------
 
-Equations
+Equations 
 
-    #impactbiotransport(t)            'impact of transporting biomass among grid cells'
-    #impactroadbiotransport(t)        'impact of road transporting biomass among grid cells'
-    impactbiotransport(t)    'impact of maritime transporting biomass among grid cells'
+    impactbiotransport(t)            'impact of transporting biomass among grid cells'
+
     resourcebalance(r,c,t)           'resource balance in each grid cell'
     biomassintocell(r,c,t)           'biomass into grid cell'
     biomassoutocell(r,c,t)           'biomass out of grid cell'
@@ -199,18 +173,15 @@ Equations
 
     #impactbioendtransport(t)         'impact of transporting bioenergy from production to demand grid cells'
 
-    #bioenergybalance(r,c,t)          'bioenergy balance in grid cell c in decade d'
+    bioenergybalance(r,c,t)          'bioenergy balance in grid cell c in decade d'
     #bioenergyintogridcell(r,c,t)     'bioenergy into grid cell'
     #bioenergyoutogridcell(r,c,t)     'bioenergy out of grid cell'
     #maxbioenergytransp(r,c,t)        'max bioenergy out of grid cell'
 
 ;
 
-#impactbiotransport(t) ..                          IBT(t) =e= IRBT(t)+IMBT(t)
+impactbiotransport(t) ..                        IBT(t) =e= dfa(t)*sum((r,c,cn),trco(r)$(rres(r))*Bn(r,c,cn,t)$(rres(r))*mx(c,cn)*tal(c)) ;
 
-#impactroadbiotransport(t) ..                      IRBT(t) =e= dfa(t)*sum((r,c,cm,cn)$(rres(r)),trco(r)*Bn(r,c,cn,t)*mx(c,cm,cn)*tal(c)) ;
-
-impactbiotransport(t) ..                          IBT(t) =e= dfa(t)*sum((r,c,cn),(trco(r)$(rres(r))*Bn(r,c,cn,t)$(rres(r))*mx(c,cn)*tal(c))) ; #+(fixMtrco(r)$(rres(r))*Bn(r,c,cn,t)$(rres(r)))
 
 resourcebalance(r,c,t)$(rres(r)) ..               sum((l),B(r,l,c,t)$(rres(r)))+Bin(r,c,t)$(rres(r))-Bout(r,c,t)$(rres(r))+HB(r,c,t)$(rres(r)) =e= 0 ;
 
@@ -227,7 +198,7 @@ localdemandforcrops(r,c,t)$(rres(r)) ..           HB(r,c,t)$(rres(r)) =e= sum((j
 #impactbioendtransport(t) ..                     IET(t) =e= dfa(t)*sum((r,c,cn),trco(r)$(rliq(r))*En(r,c,cn,t)$(rliq(r))*mxe(c,cn)*tal(c)) ;
 
 
-#bioenergybalance(r,c,t)$(rliq(r)) ..              E(r,c,t)$(rliq(r))+Ein(r,c,t)$(rliq(r))-Eout(r,c,t)$(rliq(r)) =e= HE(r,c,t)$(rliq(r)) ;
+bioenergybalance(r,c,t)$(rliq(r)) ..              E(r,c,t)$(rliq(r))+Ein(r,c,t)$(rliq(r))-Eout(r,c,t)$(rliq(r)) =e= HE(r,c,t)$(rliq(r)) ;
 
 #bioenergyintogridcell(r,c,t)$(rliq(r)) ..         Ein(r,c,t)$(rliq(r)) =e= sum((cn),En(r,cn,c,t)$(rliq(r))*flagmxein(cn,c)) ;
 

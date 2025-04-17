@@ -23,9 +23,9 @@ Parameters
 
     fixMtrco(r)         'fixed maritime biomass transportation costs' # [US$/GJ]
 
-    #mmx(c,cm,cn)        'distance between grid cells for maritime routes' # [km]
+    mmx(c,cm,cn)        'distance between grid cells for maritime routes' # [km]
 
-    mx(c,cn)         'distance between grid cells for road routes' # [km]
+    mx(c,cm,cn)         'distance between grid cells for road routes' # [km]
 
     mxe(c,cn)           'distance between grid cells - connection to demand' # [km] used in place of mx(c,cn) to reduce computational effort
 
@@ -58,7 +58,7 @@ Parameter varMtrco(r) / foresres               0.0005 /;
 
 * Set biomass and biofuels fixed maritime transportation costs fixMtrco(r)
 
-Parameter fixMtrco(r) / foresres               0.001 /;
+Parameter fixMtrco(r) / foresres               0.01 /;
 ;
 
 * ----------------------------------------------------------------------------------------------------------
@@ -67,10 +67,10 @@ Parameter fixMtrco(r) / foresres               0.001 /;
 
 * Setting gdx input filepath
 
-$setglobal gdxinfilepath 'C:\BLOEM\github\input\'
+$setglobal gdxinfilepath 'C:\BLOEM\EuropeRegion\input\'
 
 
-* Import distance between grid cells mx(c,cn):
+* Import distance between grid cells mx(c,cm,cn):
 
 $gdxin '%gdxinfilepath%mxdistmax.gdx'
 
@@ -80,11 +80,11 @@ $gdxin
 
 * Import distance between grid cells mx(c,cm,cn):
 
-#$gdxin '%gdxinfilepath%mmxdistmax.gdx'
+$gdxin '%gdxinfilepath%mmxdistmax.gdx'
 
-#$load mmx=mmxdistmax
+$load mmx=mmxdistmax
 
-#$gdxin
+$gdxin
 
 
 * Import distance between grid cells | connect to demand mwe(c,cn):
@@ -171,7 +171,7 @@ Variables
 
 ;
 
-Positive variables IBT, IET, HE, Bn, Bin, Bout, B, E, CP; #Ein, Eout, En, IMBT, IRBT
+Positive variables IBT, IET, HE, Bn, Bin, Bout, B, E, CP; #Ein, Eout, En,
 
 * Variable bounds:
 HB.up(r,c,t)=0;
@@ -187,9 +187,9 @@ Eout.fx(r,c,t)=0;
 
 Equations
 
-    #impactbiotransport(t)            'impact of transporting biomass among grid cells'
-    #impactroadbiotransport(t)        'impact of road transporting biomass among grid cells'
-    impactbiotransport(t)    'impact of maritime transporting biomass among grid cells'
+    impactbiotransport(t)            'impact of transporting biomass among grid cells'
+    impactroadbiotransport(t)        'impact of road transporting biomass among grid cells'
+    impactmaritimebiotransport(t)    'impact of maritime transporting biomass among grid cells'
     resourcebalance(r,c,t)           'resource balance in each grid cell'
     biomassintocell(r,c,t)           'biomass into grid cell'
     biomassoutocell(r,c,t)           'biomass out of grid cell'
@@ -206,11 +206,11 @@ Equations
 
 ;
 
-#impactbiotransport(t) ..                          IBT(t) =e= IRBT(t)+IMBT(t)
+impactbiotransport(t) ..                          IBT(t) =e= IRBT(t)+IMBT(t)
 
-#impactroadbiotransport(t) ..                      IRBT(t) =e= dfa(t)*sum((r,c,cm,cn)$(rres(r)),trco(r)*Bn(r,c,cn,t)*mx(c,cm,cn)*tal(c)) ;
+impactroadbiotransport(t) ..                      IRBT(t) =e= dfa(t)*sum((r,c,cm,cn)$(rres(r)),trco(r)*Bn(r,c,cn,t)*mx(c,cm,cn)*tal(c)) ;
 
-impactbiotransport(t) ..                          IBT(t) =e= dfa(t)*sum((r,c,cn),(trco(r)$(rres(r))*Bn(r,c,cn,t)$(rres(r))*mx(c,cn)*tal(c))) ; #+(fixMtrco(r)$(rres(r))*Bn(r,c,cn,t)$(rres(r)))
+impactmaritimebiotransport(t) ..                  IMBT(t) =e= dfa(t)*sum((r,c,cm,cn),(fixMtrco(r)$(rres(r))*Bn(r,c,cn,t)$(rres(r)))+(varMtrco(r)$(rres(r))*Bn(r,c,cn,t)$(rres(r))*mmx(c,cm,cn)*tal(c))) ;
 
 resourcebalance(r,c,t)$(rres(r)) ..               sum((l),B(r,l,c,t)$(rres(r)))+Bin(r,c,t)$(rres(r))-Bout(r,c,t)$(rres(r))+HB(r,c,t)$(rres(r)) =e= 0 ;
 
