@@ -44,12 +44,12 @@ Parameters
 
 * Set biomass and biofuels transportation variable costs trco(r)
 
-Parameter trco(r) / foresres               0.0122 /;
+Parameter trco(r) / foresres               0.006 /;
 ;
 
 * Set biomass and biofuels transportation fixed costs ftrco(r)
 
-Parameter ftrco(r) / foresres               0.2677 /;
+Parameter ftrco(r) / foresres               2.27 /;
 ;
 
 * ----------------------------------------------------------------------------------------------------------
