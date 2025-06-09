@@ -61,7 +61,7 @@ Parameters
 Table tci(j,t) 'total capital investment for technology j in grid cell c in decade d'  # [US$/kW]
 
                 2025        #2030        2040        2050        
-    PO          1670       
+    PO          1840       
     POFCC       0000        #5528        5528        5528        
   ;
 
@@ -70,7 +70,7 @@ Table tci(j,t) 'total capital investment for technology j in grid cell c in deca
 Table fom(j,t) 'fixed O&M costs for technology j in grid cell c in decade d'  # [US$/kW/y]
 
                 2025        #2030        2040        2050         
-    PO           84
+    PO           0
     POFCC       000         #223         223         223         
 ;
 
@@ -79,15 +79,15 @@ Table fom(j,t) 'fixed O&M costs for technology j in grid cell c in decade d'  # 
 Table vom(j,t) 'variable O&M costs for technology j in grid cell c in decade d'  # [US$/kWy]
 
                 2025        #2030        2040        2050         
-    PO          0
+    PO          74
     POFCC       0           #0           0           0           
 
 ;
 
 * Set technology discount factor w(j)
 
-Parameter w(j)   / PO       0.9807549, 
-                   POFCC    0.9807549/;
+Parameter w(j)   / PO       0.675, 
+                   POFCC    1/;
 ;
 
 * Set technologies retirement factors for added capacities
@@ -118,11 +118,11 @@ Table beta(r,j) 'ratio of consumption or production of resource r by technology 
 
                           PO      POFCC 
     foresres             -1        0 
-    pyrolysisoil          0.86    -1
-    greendiesel           0        0.116  
-    biogasoil             0        0.106
-    bionaphta             0        0.235
-    biocoke               0        0.543
+    pyrolysisoil          0.78    -1
+    greendiesel           0        0.077  
+    biogasoil             0        0.070
+    bionaphta             0        0.157
+    biocoke               0        0.359
 ;
 
 * Set technologies mode of operation: for bagasse options

@@ -88,7 +88,7 @@ $load tal=totfactor
 $gdxin
 
 
-* Import flag to logistics interconnections flagroad(c,cn):
+* Import flag to logistics interconnections flagmx(c,cn):
 
 $gdxin '%gdxinfilepath%flagmx.gdx'
 
@@ -194,7 +194,7 @@ impactbiotransport(t) ..                          IBT(t) =e= dfa(t)*(sum((r,c,cn
 
 resourcebalance(r,c,t)$(rres(r)) ..               sum((l),B(r,l,c,t)$(rres(r)))+Bin(r,c,t)$(rres(r))-Bout(r,c,t)$(rres(r))+HB(r,c,t)$(rres(r)) =e= 0 ;
 
-biomassintocell(r,c,t)$(rres(r)) ..               Bin(r,c,t)$(rres(r)) =e= sum((cn),Bn(r,cn,c,t)$(rres(r))*flagroad(cn,c)) ;
+biomassintocell(r,c,t)$(rres(r)) ..               Bin(r,c,t)$(rres(r)) =e= sum((cn),Bn(r,cn,c,t)$(rres(r))*flagmx(cn,c)) ;
 
 biomassoutocell(r,c,t)$(rres(r)) ..               Bout(r,c,t)$(rres(r)) =e= sum((cn),Bn(r,c,cn,t)$(rres(r))*flagmx(c,cn)) ;
 
@@ -202,7 +202,7 @@ maxbiomassoutocell(r,c,t)$(rres(r)) ..            Bout(r,c,t)$(rres(r)) =l= sum(
 
 
 totalbiomasstransported(r,c,t)$(ps(c)) ..         Bmar(r,c,t)$(ps(c)) =e= sum((cn),Bn(r,cn,c,t)$(ps(c)))+sum((l),B(r,l,c,t)$(ps(c))) ;
-#totalbiomasstransported(r,c,t)$(rres(r)) ..         Bmar(r,c,t)$(rres(r)) =e= sum((c),B(r,l,c,t)$(rres(r)));
+
 
 localdemandforcrops(r,c,t)$(rres(r)) ..           HB(r,c,t)$(rres(r)) =e= sum((j),CP(j,c,t)*beta(r,j)$(rres(r))*uf) ;
 

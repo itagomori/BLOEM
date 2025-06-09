@@ -55,7 +55,7 @@ Alias(l,landuse,landcover);
 
 Scalar
 
-    uf       'unit coversion factor kW to GJ'           /31.536/  # [factor]
+    uf       'unit coversion factor kWy to GJ'           /31.536/  # [factor]
 
 ;
 
