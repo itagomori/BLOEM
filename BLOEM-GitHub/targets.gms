@@ -17,7 +17,7 @@ $offtext
 
 Parameters
 
-    pb(r,c,t)           'bioenergy production target' # [GJ/y] [kW/y]
+    pb(r,c,t)           'bioenergy production target of main product in kW/y' # [GJ/y] [kW/y]
 
     ex(r,c,t)           'bioenergy exportation target' # [GJ/y] [kW/y]
 

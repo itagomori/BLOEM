@@ -49,7 +49,7 @@ Parameter trco(r) / foresres               0.006 /;
 
 * Set biomass and biofuels transportation fixed costs ftrco(r)
 
-Parameter ftrco(r) / foresres               2.27 /;
+Parameter ftrco(r) / foresres               1.52 /;
 ;
 
 * ----------------------------------------------------------------------------------------------------------
@@ -137,7 +137,7 @@ Variables
     HE(r,c,t)       'local bioenergy consumption for product r in grid cell c in time t'
 
     Bn(r,c,cn,t)    'biomass flow for crop r between grid cells c and cn in time t'
-    Bmar(r,c,t)    'total biomass to be transported in maritime per crop through port cn per decade'
+    Bmar(r,c,t)     'total biomass to be transported in maritime through port cn per crop in time t'
     #En(r,c,cn,t)    'bioenergy flow for product r between grid cells c and cn in time t'
 
     Bin(r,c,t)      'crop r into grid cell c in time t'
