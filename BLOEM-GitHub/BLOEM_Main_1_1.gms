@@ -43,7 +43,7 @@ Sets
 
 
 Alias(r,crop,resource);
-Alias(c,cn,gridcell);
+Alias(c,cm,cn,gridcell);
 Alias(t,tn,decade);
 Alias(j,technology);
 Alias(l,landuse,landcover);
@@ -197,7 +197,11 @@ HB
 
 HE
 
-Bmar
+Bmarn
+
+Bmarin
+
+Bmarout
 
 ;
 
@@ -252,6 +256,10 @@ Z     # total system cost
 IBP   # impact of biomass production
 
 IBT   # impact of biomass transportation
+
+IMBT
+
+IRBT
 
 IBC   # impact of biomass conversion
 
