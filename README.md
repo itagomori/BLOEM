@@ -1,9 +1,10 @@
 # Bioenergy and Land Optimization spatially Explicit Model (BLOEM)
+## Pastures Degradation Version
 
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)\
 [![DOI](https://zenodo.org/badge/504185615.svg)](https://zenodo.org/badge/latestdoi/504185615)
 
-_Author: Isabela Schmidt Tagomori_\
+_Author: Isabela Schmidt Tagomori and Diego Amaral_\
 _Contact: Isabela Schmidt Tagomori - isabela.tagomori@pbl.nl | [@IsabelaTagomori](https://twitter.com/isabelatagomori)_
 
 ## Description
@@ -21,6 +22,16 @@ BLOEM is a model developed to evaluate pathways for bioenergy deployment. Theref
 
 ## Spatial Resolution
 The model formulation here presented is applied to the Brazilian spatial configuration, but it can be applied to different regions, spatial resolutions and time frames, according to the availability of required data and computational effort. The model can be used for standalone runs, but it can also be coupled with different levels (global, regional, national) of integrated assessment models (IAMs), through soft-link.
+
+## Updates from the Pasture Degradation Version
+In this version applied for Brazil, the BLOEM model was uptaded with recent data over:
+- Land used for soybeans and sugarcane crops;
+- Pastures area considering high, medium and low degradation levels;
+- Installed capacities for ethanol and biodiesel production;
+- Location of these biofuel plants.
+
+This allowed for a detailed analysis of LUC emissions from soybean and sugarcane expansion over different types of pastures. 
+Spatially explicit results from BLOEM were coupled with carbon stocks data from [BRLUC](https://brluc.cnpma.embrapa.br/) to obtain LUC emissions that accounted for local differeces concerning soils, climate zones and management practices.
 
 ## Folder Structure and Scripts
 This repository is organized as follows:
