@@ -19,7 +19,7 @@ $eolcom #
 Sets
     r 'resources'     / sugarcane, oilcrops, wood, bagasse, sgcnjuice, ethanol1g, ethanol2g, biojet, dieselbiofuel, biodiesel, bioelectricity, bionaphta, biolpg, sugarjuice /
     c 'grid cell'     / 1*2912 /  # Brazilian grid cells
-    t 'decade'        / 2020/ #, 2030, 2040, 2050 /
+    t 'decade'        / 2020, 2030, 2040, 2050 /
     j 'technology'    / SGC, E1G, E2G, BJT, DFT, BDS, COG, E1GC, BJTC, DFTC, SUG /
     l 'landcover'     / pasturelow, pasturemed, pasturehigh, biolandcane, biolandsoja /#forest, agriculture, pasture, other, bioland /
     q 'period g-luc'  / 1*3 / 
@@ -29,6 +29,8 @@ Sets
     rp(r) 'liquid biofuels'     / ethanol1g, ethanol2g, biojet, dieselbiofuel, biodiesel / # ethanol1gccs, biojetccs, dieselbiofuelccs moved towards techs
     re(r) 'bioelectricity'      / bioelectricity /
     rs(r) 'co-products'         / bionaphta, biolpg, sugarjuice /
+    tf(t) 'future'              /2030, 2040, 2050 /
+
 
     jc(j) 'ccs technologies'    / E1GC, BJTC, DFTC /
 
@@ -83,18 +85,18 @@ Parameters
 
 * Set dfa(t)
 
-Parameter dfa(t)  / 2020   6.759024/;#,
-                   # 2030   2.605896,
-                   # 2040   1.004686,
-                   # 2050   0.387350 /;
+Parameter dfa(t)  / 2020   6.759024,
+                    2030   2.605896,
+                    2040   1.004686,
+                    2050   0.387350 /;
 ;
 
 * Set dfb(t)
 
-Parameter dfb(t)  / 2020   1.0000000000/;#,
-                  #  2030   0.3855432894,
-                  #  2040   0.1486436280,
-                  #  2050   0.0573085533 /;
+Parameter dfb(t)  / 2020   1.0000000000,
+                    2030   0.3855432894,
+                    2040   0.1486436280,
+                    2050   0.0573085533 /;
 ;
 
 $offlisting
@@ -104,10 +106,10 @@ $offlisting
 * Set carbon tax scenario
 * ----------------------------------------------------------------------------------------------------------
 
-Parameter k(t)   / 2020   0/;#,
-                  # 2030   0,
-                  # 2040   0,
-                  # 2050   0 /;
+Parameter k(t)   / 2020   0,
+                   2030   0,
+                   2040   0,
+                   2050   0 /;
 ;
 
 
@@ -199,7 +201,7 @@ Display Vseq.l ;
 
 * Set gdx output filepath
 
-$setglobal gdxoutfilepath 'C:\Users\diego\OneDrive\Desktop\PPE_MESTRADO\Calculos e rodadaas\Outputs\'
+$setglobal gdxoutfilepath 'C:\Users\diego\OneDrive\Desktop\Cenergia\Petrobras\Tese Clarissa\'
 
 # Unload:
 
