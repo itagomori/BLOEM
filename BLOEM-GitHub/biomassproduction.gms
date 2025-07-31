@@ -56,7 +56,7 @@ $setglobal gdxinfilepath 'C:\Users\diego\OneDrive\Desktop\PPE_MESTRADO\Calculos 
 
 * Import land availability:
 
-$gdxin '%gdxinfilepath%landavailable_pastures_biocane_biosoy.gdx'
+$gdxin '%gdxinfilepath%landavailable_pastures_FIXbiocane_biosoy_2020a50.gdx'
 
 $load ldav=ldavbase
 
@@ -125,6 +125,10 @@ A.fx("oilcrops","biolandcane",c,t)=0;
 A.fx(r,"pasturelow",c,"2020")=0;
 A.fx(r,"pasturemed",c,"2020")=0;
 A.fx(r,"pasturehigh",c,"2020")=0;
+A.fx("wood","biolandsoja",c,t)=0;
+A.fx("wood","biolandcane",c,t)=0;
+#A.fx(r,"biolandsoja",c,tf(t))=0;
+#A.fx(r,"biolandcane",c,tf(t))=0;
 
 
 * ---------------------------------------------------------------------------------------------------------
@@ -159,10 +163,10 @@ landavailability(l,c,t) ..                      ldav(l,c,t) =g= sum((r),A(r,l,c,
 
 totallandallocation(l,r,t) ..                   LdAlc(l,r,t)$(rc(r)) =e= sum((c),A(r,l,c,t)$(rc(r))*ga(c)) ;
 
-soyarea(l,r,t) ..                               LdSoy(l,r,t) =e= sum((c),A(r,l,c,t)$lbs(l)) ;
+soyarea(l,r,t) ..                               LdSoy(l,r,t) =e= sum((c),A(r,l,c,"2020")$lbs(l)) ;
 
-totalsoy(l,r,t) ..                              LdSoy(l,r,t) =l= 0.20*sum((c),ldav(l,c,t)$lbs(l)) ;
+totalsoy(l,r,t) ..                              LdSoy(l,r,t) =l= sum((c),ldav(l,c,t)$lbs(l)) ;
 
-sugarcanearea(l,r,t) ..                         LdCane(l,r,t) =e= sum((c),A(r,l,c,t)$lbc(l)) ;
+sugarcanearea(l,r,t) ..                         LdCane(l,r,t) =e= sum((c),A(r,l,c,"2020")$lbc(l)) ;
 
-totalsugarcane(l,r,t) ..                        LdCane(l,r,t) =l= 0.50*sum((c),ldav(l,c,t)$lbc(l)) ;
+totalsugarcane(l,r,t) ..                        LdCane(l,r,t) =l= sum((c),ldav(l,c,t)$lbc(l)) ;
