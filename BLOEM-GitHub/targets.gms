@@ -33,26 +33,26 @@ Parameters
 
 Table ex(r,c,t) 'exportation of biofuels'  # [GJ]
 
-                                2020   # 2030    2040    2050             
-    ethanol1g.        1315      0      # 0       0       0              
-    ethanol1g.        2698      0      # 0       0       0              
-    ethanol1g.        2744      0      # 0       0       0              
+                                2020    2030    2040   2050             
+    ethanol1g.        1315      0       0       0       0              
+    ethanol1g.        2698      0       0       0       0              
+    ethanol1g.        2744      0       0       0       0              
 
-    ethanol2g.        1315      0      # 0       0       0              
-    ethanol2g.        2698      0      # 0       0       0              
-    ethanol2g.        2744      0      # 0       0       0              
+    ethanol2g.        1315      0       0       0       0              
+    ethanol2g.        2698      0       0       0       0              
+    ethanol2g.        2744      0       0       0       0              
 
-    biojet.           1315      0      # 0       0       0              
-    biojet.           2698      0      # 0       0       0              
-    biojet.           2744      0      # 0       0       0              
+    biojet.           1315      0       0       0       0              
+    biojet.           2698      0       0       0       0              
+    biojet.           2744      0       0       0       0              
 
-    dieselbiofuel.    1315      0      # 0       0       0              
-    dieselbiofuel.    2698      0      # 0       0       0              
-    dieselbiofuel.    2744      0      # 0       0       0              
+    dieselbiofuel.    1315      0       0       0       0              
+    dieselbiofuel.    2698      0       0       0       0              
+    dieselbiofuel.    2744      0       0       0       0              
 
-    biodiesel.        1315      0      # 0       0       0              
-    biodiesel.        2698      0      # 0       0       0              
-    biodiesel.        2744      0      # 0       0       0              
+    biodiesel.        1315      0       0       0       0              
+    biodiesel.        2698      0       0       0       0              
+    biodiesel.        2744      0       0       0       0              
 
 ;
 
@@ -68,7 +68,7 @@ $setglobal gdxinfilepath 'C:\Users\diego\OneDrive\Desktop\PPE_MESTRADO\Calculos 
 
 * Set bioenergy production targets
 
-$gdxin '%gdxinfilepath%bioenergytargetsbr_PoggioBiofuels_pop.gdx'
+$gdxin '%gdxinfilepath%bioenergytargetsbr_PoggioGlobalTrend_pop.gdx'
 
 $load pb=bioenergytargetsbr
 
