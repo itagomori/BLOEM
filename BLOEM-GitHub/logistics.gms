@@ -48,16 +48,16 @@ Parameters
 
 * Set biomass and biofuels transportation variable costs trco(r)
 
-Parameter trco(r) / foresres               0.006 /;
+Parameter trco(r) / foresres               0.008 /;
 ;
 
 * Set biomass and biofuels transportation fixed costs fixMtrco(r)
 
-Parameter fixMtrco(r) / foresres               0.75 /;
+Parameter fixMtrco(r) / foresres               0.8 /;
 
 * Set maritime biomass transportation variable costs varMtrco(r)
 
-Parameter varMtrco(r) / foresres               0.0004 /;
+Parameter varMtrco(r) / foresres               0.0002 /;
 ;
 
 * ----------------------------------------------------------------------------------------------------------
@@ -161,7 +161,7 @@ Variables
     Bin(r,c,t)      'crop r into grid cell c in time t'
     Bout(r,c,t)     'crop r out of grid cell c in time t'
 
-    Bmar(r,l,c,t)   'total biomass to be transported in maritime through port c per crop r in time t' # [GJ]
+    #Bmar(r,l,c,t)   'total biomass to be transported in maritime through port c per crop r in time t' # [GJ]
     Bmarn(r,c,cn,t) 'biomass flow for crop r between port cells c and cn in time t' # [GJ]
 
     Bmarin(r,c,t)   'crop r into port cell c in time t'
