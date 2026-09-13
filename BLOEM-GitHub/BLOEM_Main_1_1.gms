@@ -73,7 +73,7 @@ Parameters
 
 * Set dfa(t)
 
-Parameter dfa(t)  / 2025   6.759024 /;
+Parameter dfa(t)  / 2025   7.515232 /;
 ;
 
 * Set dfb(t)

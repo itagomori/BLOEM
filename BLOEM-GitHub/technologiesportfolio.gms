@@ -61,7 +61,7 @@ Parameters
 Table tci(j,t) 'total capital investment for technology j in grid cell c in decade d'  # [US$/kW]
 
                 2025        #2030        2040        2050        
-    PO          1884       
+    PO          1908       
     POFCC       0000        #5528        5528        5528        
   ;
 
@@ -79,15 +79,15 @@ Table fom(j,t) 'fixed O&M costs for technology j in grid cell c in decade d'  # 
 Table vom(j,t) 'variable O&M costs for technology j in grid cell c in decade d'  # [US$/kWy]
 
                 2025        #2030        2040        2050         
-    PO          561
+    PO          424
     POFCC       0           #0           0           0           
 
 ;
 
 * Set technology discount factor w(j)
 
-Parameter w(j)   / PO       0.675, 
-                   POFCC    0.675/;
+Parameter w(j)   / PO       0.644886, 
+                   POFCC    0.444/;
 ;
 
 * Set technologies retirement factors for added capacities
